@@ -1,22 +1,23 @@
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="static/css/translate.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/translate.css" />
 	</head>
 	<body>
 		<header>
 			Yay yay yay some sort of header
 		</header>
 		<main>
-			<div id="source">This is the source text</div>
-			<form>
+			<div id="source">{{ project.source_text }}</div>
 				<div id="translation">
-					<textarea placeholder="This is the translation text"></textarea>
-					<input type="submit"></input>
+					<form action="/translate" method="post">
+						<textarea placeholder="This is the translation text" name="translated"></textarea>
+						<input type="text" name="message" placeholder="commit message here"></input>
+						<input type="submit"></input>
+					</form>
 				</div>
-			</form>
 		</main>
 		<footer>
-			There is a fake footer here with links 
+			There is a fake footer with links later 
 		</footer>
 	</body>
 </html>
