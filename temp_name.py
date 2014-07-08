@@ -14,6 +14,17 @@ def process_project():
 @app.route('/create', methods=['POST'])
 def create_project():
 	# process the input data and redirect to translate page
+	title = request.form.get('title')
+	description = request.form.get('description')
+	source_text = request.form.get('source-text')
+
+	project = model.Project(title = title,
+						description = description,
+						source_text = source_text)
+
+	model.session.add(project)
+	model.session.commit()
+
 	return redirect('/translate')
 
 @app.route('/translate', methods=['GET'])
