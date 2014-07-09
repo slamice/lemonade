@@ -1,23 +1,30 @@
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="/static/css/translate.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/layouts/translate.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="/static/js/translate.js"></script>
 	</head>
 	<body>
 		<header>
-			Yay yay yay some sort of header
 		</header>
 		<main>
 			<div id="source">{{ project.source_text }}</div>
-				<div id="translation">
-					<form action="/translate" method="post">
-						<textarea placeholder="This is the translation text" name="translated"></textarea>
-						<input type="text" name="message" placeholder="commit message here"></input>
-						<input type="submit"></input>
-					</form>
-				</div>
+			<div id="translation">
+				<form>
+					<textarea placeholder="This is the translation text" name="translated"></textarea>
+					<input type="text" name="message" placeholder="commit message here"></input>
+					<input type="submit"></input>
+				</form>
+			</div>
 		</main>
 		<footer>
-			There is a fake footer with links later 
+			<div>
+				<a href="/commits">View commits</a>
+			</div>
+			<div>
+				<a href="/projects">View projects</a>
+			</div>
 		</footer>
 	</body>
 </html>

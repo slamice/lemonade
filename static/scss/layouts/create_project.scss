@@ -1,0 +1,25 @@
+@import 'base/all';
+
+header {
+	height: 75px;
+	background-color: $red-red;
+	width: 100%;
+}
+
+main {
+	width: 50%;
+	margin: 30px auto;
+
+	form {
+		width: 600px;
+
+		textarea {
+			height: 400px;
+		}
+	}
+}
+
+footer {
+	background-color: $red-red;
+	height: 75px;
+}

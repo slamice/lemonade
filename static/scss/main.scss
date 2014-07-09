@@ -1,0 +1,58 @@
+@import 'vendor/bourbon/bourbon';
+@import 'vendor/base/base';
+@import 'base/all';
+
+html body {
+	margin: 0;
+	padding: 0;
+	color: $dark-brown;
+
+	a {
+		color: white;
+	}
+}
+
+textarea,
+#{$all-text-inputs},
+select[multiple=multiple] {
+  @include box-sizing(border-box);
+  @include transition(border-color);
+  background-color: white;
+  border-radius: $form-border-radius;
+  border: 0;
+  box-shadow: none;
+  color: $dark-brown;
+  font-family: $form-font-family;
+  font-size: $form-font-size;
+  margin-bottom: $base-line-height / 2;
+  padding: ($base-line-height / 3) ($base-line-height / 3);
+  width: 100%;
+
+  &:hover {
+    // border-color: $form-border-color-hover;
+  }
+
+  &:focus {
+    border-color: none;
+    box-shadow: none;
+    outline: none;
+  }
+}
+
+%button {
+  -webkit-font-smoothing: antialiased;
+  background-color: $red-red;
+  border-radius: $base-border-radius;
+  color: white;
+  display: inline-block;
+  font-size: $base-font-size;
+  font-weight: bold;
+  line-height: 1;
+  padding: .5em .75em;
+  text-decoration: none;
+
+  &:hover {
+    background-color: $washed-red;
+    color: white;
+  }
+}

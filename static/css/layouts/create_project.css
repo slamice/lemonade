@@ -1,0 +1,16 @@
+header {
+  height: 75px;
+  background-color: #dd1b3d;
+  width: 100%; }
+
+main {
+  width: 50%;
+  margin: 30px auto; }
+  main form {
+    width: 600px; }
+    main form textarea {
+      height: 400px; }
+
+footer {
+  background-color: #dd1b3d;
+  height: 75px; }

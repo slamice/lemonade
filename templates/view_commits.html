@@ -5,10 +5,17 @@
 		<header>
 			Yay yay yay some sort of header
 		</header>
-		<div class="project-title">This is the source text</div>
-		<div class="commit-datetime">Here is the date-time</div>
-		<div class="commit-message">This is the translation text</div>
-		<div class="diffs">Throw in all the diffs and stuff here</div>
+
+		<h1>All the commits!</h1>
+
+		{% for commit in commits %}
+		<div>
+			<div class="project-title">{{commit.project.title}}</div>
+			<div class="commit-datetime">{{commit.timestamp}}</div>
+			<div class="commit-message">{{commit.message}}</div>
+			<div class="diffs">{{commit.translation}}</div>
+		</div>
+		{% endfor %}
 		<footer>
 		</footer>
 	</body>

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request, session
 import model
 import datetime
+import pdb
 
 app = Flask(__name__)
 
@@ -44,8 +45,11 @@ def save():
 	project_id = session['current_proj']
 	project = model.session.query(model.Project).filter_by(id = project_id).one()
 	
-	translated = request.form.get('translated')
-	message = request.form.get('message')
+	pdb.set_trace()
+	print "WE ARE PRINTING STUFF"
+	print request.data
+	translated = request.data.get('text')
+	message = request.data.get('message')
 	timestamp = datetime.datetime.now()
 
 	commit = model.Commit(project_id = project_id,
@@ -56,17 +60,17 @@ def save():
 	model.session.add(commit)
 	model.session.commit()
 
-	return render_template('translate.html', project = project)
+	return "", 200
 
 @app.route('/projects', methods=['GET'])
 def show_projects():
 	return render_template('view_projects.html')
 
-@app.route('/commits/<int:id>', methods=['GET'])
-def show_commits(id):
-	# id refers to project id
-	# need to process commits for each project
-	return render_template('view_commits.html')
+@app.route('/commits', methods=['GET'])
+def show_commits():
+	project_id = session['current_proj']
+	commits = model.session.query(model.Commit).filter_by(project_id = project_id).all()
+	return render_template('view_commits.html', commits = commits)
 
 
 app.secret_key = 'Omgwassuuuuuuup'
