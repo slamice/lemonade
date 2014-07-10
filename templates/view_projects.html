@@ -1,15 +1,23 @@
 <html>
 	<head>
+		<link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+		<!-- <link rel="stylesheet" type="text/css" href="/static/css/layouts/view_projects.css" /> -->
 	</head>
 	<body>
 		<header>
-			Yay yay yay some sort of header
 		</header>
-		<div class="project-title">This is the source text</div>
-		<div class="commit-message">This is the translation text</div>
-		<div class="source-preview">Here is some dummy source text preview</div>
+
+		<h1>Look at all these projects!</h1>
+		Or how about a <a href="/create">new project</a>?
+		{% for project in projects %}
+			<div class="project">
+				<div class="project-title"><a href="/select_project/{{ project.id }}">{{ project.title }}</a></div>
+				<div class="description">{{project.description}}</div>
+				<div class="source-text">{{project.source_text}}</div>
+			</div>
+		{% endfor %}
+
 		<footer>
-			There is a fake footer here with links 
 		</footer>
 	</body>
 </html>

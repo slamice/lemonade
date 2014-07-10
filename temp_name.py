@@ -27,22 +27,22 @@ def create_project():
 	model.session.commit()
 
 	project_id = project.id
-	session['current_proj'] = project_id
+	session['project_id'] = project_id
 
 	return redirect('/translate')
 
 @app.route('/translate', methods=['GET'])
 def show_editor():
-	project_id = session['current_proj']
+	project_id = session['project_id']
 	project = model.session.query(model.Project).filter_by(id = project_id).one()
 
 	commits = model.session.query(model.Commit).filter_by(project_id = project_id).all()
 	
 	#if requesting text from commit list
-	if 'revert_id' in session:
-		revert_id = session['revert_id']
-		return_commit = model.session.query(model.Commit).filter_by(id = revert_id).one()
-		session.pop('revert_id')
+	if 'commit_id' in session:
+		commit_id = session['commit_id']
+		return_commit = model.session.query(model.Commit).filter_by(id = commit_id).one()
+		session.pop('commit_id')
 
 	# loads latest commit by default
 	elif commits:
@@ -60,7 +60,7 @@ def show_editor():
 
 @app.route('/translate', methods=['POST'])
 def save_commit():
-	project_id = session['current_proj']
+	project_id = session['project_id']
 
 	translated = request.form.get('translated')
 	message = request.form.get('message')
@@ -78,18 +78,24 @@ def save_commit():
 
 @app.route('/projects', methods=['GET'])
 def show_projects():
-	return render_template('view_projects.html')
+	projects = model.session.query(model.Project).all()
+	return render_template('view_projects.html', projects = projects)
+
+@app.route('/select_project/<int:id>')
+def process_select_project(id):
+	session['project_id'] = id
+	return redirect('/translate')
 
 @app.route('/commits', methods=['GET'])
 def show_commits():
-	project_id = session['current_proj']
+	project_id = session['project_id']
 	commits = model.session.query(model.Commit).filter_by(project_id = project_id).all()
 
 	return render_template('view_commits.html', commits = commits)
 
-@app.route('/revert/<int:id>')
-def process_revert(id):
-	session['revert_id'] = id
+@app.route('/select_commit/<int:id>')
+def process_select_commit(id):
+	session['commit_id'] = id
 	return redirect('/translate')
 
 app.secret_key = 'Omgwassuuuuuuup'

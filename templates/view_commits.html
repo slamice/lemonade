@@ -12,7 +12,7 @@
 		<div class="project-title"><h1>{{commits[0].project.title}}</h1></div>
 		{% for commit in commits %}
 		<div class="commit-log">
-			<div class="commit-message"><a href="/revert/{{commit.id}}">{{commit.message}}</a></div>
+			<div class="commit-message"><a href="/select_commit/{{commit.id}}">{{commit.message}}</a></div>
 			<div class="commit-datetime">{{commit.timestamp}}</div>
 			<!-- For now, the diffs are whole versions of the translation
 			Maybe make a separate page for the diffs later? -->
