@@ -37,17 +37,21 @@ def show_editor():
 	project = model.session.query(model.Project).filter_by(id = project_id).one()
 
 	commits = model.session.query(model.Commit).filter_by(project_id = project_id).all()
-	# if there is a commit associated with current project, it takes the last commit object
-	if commits:
-		last_commit = commits[-1]
+	
+	if session['revert_id']:
+		revert_id = session['revert_id']
+		return_commit = model.session.query(model.Commit).filter_by(id = revert_id).one()
+		session.pop('revert_id')
+	elif commits:
+		return_commit = commits[-1]
 	else:
-		last_commit = model.Commit(project_id = project_id,
+		return_commit = model.Commit(project_id = project_id,
 						timestamp = datetime.datetime.now(),
 						translation = "",
 						message = "")
 
 	return render_template('translate.html', project = project,
-											 last_commit = last_commit)
+											 return_commit = return_commit)
 
 @app.route('/translate', methods=['POST'])
 def save_commit():
@@ -81,9 +85,12 @@ def show_commits():
 
 	return render_template('view_commits.html', commits = commits)
 
+@app.route('/revert/<int:id>')
+def process_revert(id):
+	session['revert_id'] = id
+	return redirect('/translate')
 
 app.secret_key = 'Omgwassuuuuuuup'
-
 
 if __name__ == '__main__':
 	app.run(debug = True)
