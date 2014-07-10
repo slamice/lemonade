@@ -38,12 +38,17 @@ def show_editor():
 
 	commits = model.session.query(model.Commit).filter_by(project_id = project_id).all()
 	
-	if session['revert_id']:
+	#if requesting text from commit list
+	if 'revert_id' in session:
 		revert_id = session['revert_id']
 		return_commit = model.session.query(model.Commit).filter_by(id = revert_id).one()
 		session.pop('revert_id')
+
+	# loads latest commit by default
 	elif commits:
 		return_commit = commits[-1]
+	
+	#if new project with no commits, return empty commit
 	else:
 		return_commit = model.Commit(project_id = project_id,
 						timestamp = datetime.datetime.now(),
@@ -79,9 +84,6 @@ def show_projects():
 def show_commits():
 	project_id = session['current_proj']
 	commits = model.session.query(model.Commit).filter_by(project_id = project_id).all()
-
-	for commit in commits:
-		print commit.timestamp
 
 	return render_template('view_commits.html', commits = commits)
 

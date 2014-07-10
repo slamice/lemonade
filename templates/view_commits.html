@@ -9,7 +9,7 @@
 		</header>
 
 		<p>All the commits for</p>
-		<div class="project-title"><h1>{{commits[1].project.title}}</h1></div>
+		<div class="project-title"><h1>{{commits[0].project.title}}</h1></div>
 		{% for commit in commits %}
 		<div class="commit-log">
 			<div class="commit-message"><a href="/revert/{{commit.id}}">{{commit.message}}</a></div>
