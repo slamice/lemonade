@@ -7,6 +7,6 @@ $(document).ready(function(){
             data: $("form").serialize()
         });
         e.preventDefault();
+        $("input[name*='message']").val('');
     });
-
 });
