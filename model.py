@@ -27,11 +27,11 @@ class Commit(Base):
 	__tablename__ = "commits"
 
 	#id, project_id, new version, time
-	id = 			Column(Integer, primary_key = True)
-	project_id = 	Column(Integer, ForeignKey('projects.id'), nullable = False)
-	timestamp = 	Column(DateTime, nullable = False)
-	translation =	Column(String(3000), nullable = False)
-	message =		Column(String(140), nullable = False)
+	id 			= Column(Integer, primary_key = True)
+	project_id 	= Column(Integer, ForeignKey('projects.id'), nullable = False)
+	timestamp 	= Column(DateTime, nullable = False)
+	translation = Column(String(3000), nullable = False)
+	message 	= Column(String(140), nullable = False)
 
 	project = relationship("Project", backref=backref("Commit"))
 

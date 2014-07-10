@@ -1,16 +1,17 @@
 <html>
 	<head>
+		<link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/layouts/view_commits.css" />
 	</head>
 	<body>
 		<header>
 			Yay yay yay some sort of header
 		</header>
 
-		<h1>All the commits!</h1>
-
+		<p>All the commits for</p>
+		<div class="project-title"><h1>{{commits[1].project.title}}</h1></div>
 		{% for commit in commits %}
-		<div>
-			<div class="project-title">{{commit.project.title}}</div>
+		<div class="commit-log">
 			<div class="commit-datetime">{{commit.timestamp}}</div>
 			<div class="commit-message">{{commit.message}}</div>
 			<div class="diffs">{{commit.translation}}</div>

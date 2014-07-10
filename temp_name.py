@@ -1,7 +1,6 @@
 from flask import Flask, render_template, redirect, request, session
 import model
 import datetime
-import pdb
 
 app = Flask(__name__)
 
@@ -36,20 +35,26 @@ def create_project():
 def show_editor():
 	project_id = session['current_proj']
 	project = model.session.query(model.Project).filter_by(id = project_id).one()
-	# commit = model.session.query(model.Commit).filter_by(project_id = project_id).one()
 
-	return render_template('translate.html', project = project)
+	commits = model.session.query(model.Commit).filter_by(project_id = project_id).all()
+	# if there is a commit associated with current project, it takes the last commit object
+	if commits:
+		last_commit = commits[-1]
+	else:
+		last_commit = model.Commit(project_id = project_id,
+						timestamp = datetime.datetime.now(),
+						translation = "",
+						message = "")
+
+	return render_template('translate.html', project = project,
+											 last_commit = last_commit)
 
 @app.route('/translate', methods=['POST'])
-def save():
+def save_commit():
 	project_id = session['current_proj']
-	project = model.session.query(model.Project).filter_by(id = project_id).one()
-	
-	pdb.set_trace()
-	print "WE ARE PRINTING STUFF"
-	print request.data
-	translated = request.data.get('text')
-	message = request.data.get('message')
+
+	translated = request.form.get('translated')
+	message = request.form.get('message')
 	timestamp = datetime.datetime.now()
 
 	commit = model.Commit(project_id = project_id,
@@ -70,6 +75,10 @@ def show_projects():
 def show_commits():
 	project_id = session['current_proj']
 	commits = model.session.query(model.Commit).filter_by(project_id = project_id).all()
+
+	for commit in commits:
+		print commit.timestamp
+
 	return render_template('view_commits.html', commits = commits)
 
 
