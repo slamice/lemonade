@@ -35,8 +35,8 @@ class Commit(Base):
 
 	project = relationship("Project", backref=backref("Commit"))
 
-	def main():
-		pass
+def main():
+	pass
 
-	if __name__ == "__main___":
-		main()
+if __name__ == "__main___":
+	main()

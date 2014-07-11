@@ -1,10 +1,18 @@
+@import "base/all";
+@import "vendor/bourbon/bourbon";
+
 body {
 	background: url("/static/imgs/mana.jpg");
 	background-size: 100%;
-	width: 100%
+	// @include background(url("/static/imgs/mana.jpg"), size(100% 100%), linear-gradient(red, green), center no-repeat orange scroll);
+	width: 100%;
+
+	h1 {
+		color: #fff;
+	}
 }
 
-#buttons {
-	margin: 300px auto;
+#wrapper {
+	margin: 250px auto;
 	text-align: center;
 }

@@ -2,7 +2,9 @@ body {
   background: url("/static/imgs/mana.jpg");
   background-size: 100%;
   width: 100%; }
+  body h1 {
+    color: #fff; }
 
-#buttons {
-  margin: 300px auto;
+#wrapper {
+  margin: 250px auto;
   text-align: center; }

@@ -33,9 +33,9 @@ def create_project():
 
 @app.route('/translate', methods=['GET'])
 def show_editor():
+	#takes project_id from either projects list, commit list, or created project
 	project_id = session['project_id']
 	project = model.session.query(model.Project).filter_by(id = project_id).one()
-
 	commits = model.session.query(model.Commit).filter_by(project_id = project_id).all()
 	
 	#if requesting text from commit list
