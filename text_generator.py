@@ -4,54 +4,70 @@ import nltk.data
 
 tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
-string1 = """Hi. Hi. Hi. Hi. Hi. Hi. Hi. Hi. Hi. Hi. Hi. Hi. Hi. Hi. Aloha. Banana. Cream. Door. Elephant.
+def tokenize_text(string):
+    return tokenizer.tokenize(string)
 
-And a space."""
-string2 = """Hi. Hi. Hi. Hi. Hi. Apple. Cream. Elephant. Ferengi.
+def grab_diff_info_str(array1, array2):
+    context_diff = difflib.context_diff(array1, array2)
+    context_diff_array = []
+    for line in context_diff:
+        context_diff_array.append(line)
+    context_diff_str = '\n'.join(context_diff_array)
+    return context_diff_str
 
-And a space. Extra text."""
+def grab_before_hunk(context_diff):
+    before_hunk = re.search(r'\*{3} \d*,\d* \*{4}\n\n(.*\n)*?(?=-{3} \d*,\d* -{4})', context_diff)
+    before_hunk = before_hunk.group()
+    return before_hunk
 
-array1 = tokenizer.tokenize(string1)
-array2 = tokenizer.tokenize(string2)
+def grab_after_hunk(context_diff):
+    after_hunk = re.search(r'\-{3} \d*,\d* \-{4}\n\n(.*\n)*?.*(?=(\*{15})|$)', context_diff)
+    after_hunk = after_hunk.group()
+    return after_hunk
 
-context_diff = difflib.context_diff(array1, array2)
-# context_diff would be stored in the db
+def grab_before_start_line_num(before_hunk):
+    before_hunk = before_hunk.split('\n')
+    start_line = re.search(r'\d*(?=,)', before_hunk[0])
+    start_line = int(start_line.group())
+    return start_line
 
-context_diff_array = []
-for line in context_diff:
-    context_diff_array.append(line)
+def grab_before_end_line_num(before_hunk):
+    before_hunk = before_hunk.split('\n')
+    end_line = re.search(r'\d*(?= \*{3})', before_hunk[0])
+    end_line = int(end_line.group())
+    return end_line
 
-context_diff_str = '\n'.join(context_diff_array)
-# print context_diff_str
-# turned context_diff into a string instead of an object
+def generate_new_hunk(after_hunk):
+    after_hunk = after_hunk.split('\n')
+    after_hunk = after_hunk[2:]
+    new_hunk = []
+    for line in after_hunk:
+        new_hunk.append(line[2:])
+    return new_hunk
 
-before_diff = re.search(r'\*{3} .* \*{4}\n\n(.*\n)*(?=(\-{3} .* \-{4}))', context_diff_str)
-before_diff = before_diff.group()
-print before_diff
-# shows the before info (type: str)
+def replace_text(before_num1, before_num2, before_array, new_hunk):
+    replace_from_num = before_num1 - 1
+    replace_to_num = before_num2
+    before_array[replace_from_num:replace_to_num] = new_hunk
+    return ' '.join(before_array)
 
-after_diff = re.search(r'\-{3} .* \-{4}\n\n(.*\n)*((?=-{3})|.*)', context_diff_str)
-after_diff = after_diff.group()
-print after_diff
-# shows the after info (type: str)
+def main():
+    string1 = """Animal. Blue. Cat. Dog. Elephant. Green. Frog. Zoo."""
+    string2 = """Animalia. Blue. Cork. Dork. Meow. Frog. Zoo."""
+    str_array1 = tokenize_text(string1)
+    str_array2 = tokenize_text(string2)
+    context_diff = grab_diff_info_str(str_array1, str_array2)
 
-after_diff_array = after_diff.split('\n')
-# after_diff_array[0]: has line # information
-line_nums = after_diff_array[0]
-# array_diff_array[3~]: have line differences
+    # need to account for multiple hunks
+    before_hunk = grab_before_hunk(context_diff)
+    before_num1 = grab_before_start_line_num(before_hunk)
+    before_num2 = grab_before_end_line_num(before_hunk)
+    # maybe turn the num1 and num2 in to a tuple instead
+    after_hunk = grab_after_hunk(context_diff)
+    new_hunk = generate_new_hunk(after_hunk)
+    print replace_text(before_num1, before_num2, str_array1, new_hunk)
 
-# have to subtract 1 for line numbers because the items are in an array
-start_line = re.search(r'\d*(?=,)', line_nums)
-start_line = int(start_line.group())
-print start_line
+    # print context_diff
 
-end_line = re.search(r'\d*(?= -{3})', line_nums)
-end_line = int(end_line.group())
-print end_line
-
-after_diff_info = after_diff_array[3:]
-replacement_text_array = []
-for line in after_diff_info:
-    replacement_text_array.append(line[2:])
-
-print array1[(start_line-1):(end_line)]
+if __name__ == "__main__":
+    main()
