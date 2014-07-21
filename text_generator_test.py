@@ -12,28 +12,35 @@ def diff(text1, text2):
     diff_hunks_array = diff_str.split('\n@@ ')
     diff_hunks_array = diff_hunks_array[1:]
 
-    diffs_dict = {}
+    diffs_list = []
     for hunk in diff_hunks_array:
         hunk_pieces = hunk.split('\n')
         begin, end = hunk_pieces[0].split(' ')[0][1:].split(',')
-        line_pos = (int(begin), int(end))
+        # line_pos = (int(begin), int(end))
         # pulls line numbers
-        differences = hunk_pieces[3:]
-
-        diffs_dict[line_pos] = []
+        differences = hunk_pieces[2:]
 
         diffs = []
+        line_num = int(begin) - 1
         for line in differences:
+            if line[0] == ' ':
+                line_num += 1
             while line[0] == '-' or line[0] == '+':
-                diffs.append(line)
-                break
-        diffs_dict[line_pos].append(diffs)
-    print diffs_dict
+                if line[0] == '-':
+                    line_num += 1
+                    diffs.append((line_num, '-', None))
+                    break
+                elif line[0] == '+':
+                    diffs.append((line_num, line[0], line[1:]))
+                    break
+        diffs_list.append(diffs)
+    return diffs_list
 
 def apply_diffs(text1, diffs):
     new_text = []
     text1 = text1.split()
     i = 0
+    # i is equal to line number - 1
     while i < (len(text1)-1):
         new_text.append(text1[i])
         # something is going to change here where
