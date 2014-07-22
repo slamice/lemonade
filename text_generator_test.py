@@ -16,8 +16,6 @@ def diff(text1, text2):
     for hunk in diff_hunks_array:
         hunk_pieces = hunk.split('\n')
         begin, end = hunk_pieces[0].split(' ')[0][1:].split(',')
-        # line_pos = (int(begin), int(end))
-        # pulls line numbers
         differences = hunk_pieces[2:]
 
         line_num = int(begin) - 1
@@ -41,19 +39,20 @@ def apply_diffs(text1, diffs):
     text1 = text1.split()
 
     i = 0
-    while i < (len(text1)-1):
-        while (i + 1) == diffs[0][0]:
+    while i < (len(text1)):
+        while len(diffs) > 0 and (i + 1) == diffs[0][0]:
             current = diffs.pop(0)
             if current[1] == '-':
                 i += 1
             elif current[1] == '+':
                 new_text.append(current[2])
-        new_text.append(text1[i])
-        i += 1
+        if 0 <= i and i < len(text1):
+            new_text.append(text1[i])
+            i += 1
     return ' '.join(new_text)
 
 if __name__ == "__main__":
     text1 = "1 2 3 4 5 6 7 a a a a a a a a a zebra a a a a a a a zero"
-    text2 = "1 3' 4' 6' 7' a a a a a a a a a zoo a a a a a a a zonk"
+    text2 = "1 3' 4' 6' 7' a a a a a a a a a zoo a a a a a a a zonk zoop"
     diffs = diff(text1, text2)
     print apply_diffs(text1, diffs)
