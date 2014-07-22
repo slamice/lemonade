@@ -1,8 +1,12 @@
 import difflib
+import nltk.data
+
+tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+
+def tokenize(text):
+    return tokenizer.tokenize(text)
 
 def diff(text1, text2):
-    text1 = text1.split()
-    text2 = text2.split()
     diff = difflib.unified_diff(text1, text2)
 
     diff_array = []
@@ -15,8 +19,13 @@ def diff(text1, text2):
     diffs = []
     for hunk in diff_hunks_array:
         hunk_pieces = hunk.split('\n')
-        begin, end = hunk_pieces[0].split(' ')[0][1:].split(',')
-        differences = hunk_pieces[2:]
+        if len(hunk_pieces[0]) > 8:
+            begin, end = hunk_pieces[0].split(' ')[0][1:].split(',')
+            differences = hunk_pieces[2:]
+        elif len(hunk_pieces[0]) <= 8:
+            begin = hunk_pieces[0][1]
+            end = hunk_pieces[0][4]
+            differences = hunk_pieces[2:]
 
         line_num = int(begin) - 1
         for line in differences:
@@ -36,7 +45,6 @@ def diff(text1, text2):
 
 def apply_diffs(text1, diffs):
     new_text = []
-    text1 = text1.split()
 
     i = 0
     while i < (len(text1)):
@@ -52,7 +60,9 @@ def apply_diffs(text1, diffs):
     return ' '.join(new_text)
 
 if __name__ == "__main__":
-    text1 = "1 2 3 4 5 6 7 a a a a a a a a a zebra a a a a a a a zero"
-    text2 = "1 3' 4' 6' 7' a a a a a a a a a zoo a a a a a a a zonk zoop"
+    text1 = "Here's a sentence. b. c. d. e. f."
+    text2 = "Here's a sentence. b. c. d. zip. f. zop. zoop."
+    text1 = tokenize(text1)
+    text2 = tokenize(text2)
     diffs = diff(text1, text2)
     print apply_diffs(text1, diffs)
