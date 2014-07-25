@@ -104,7 +104,14 @@ def show_projects():
 # display latest version on translate page for selected project
 @app.route('/select_project/<int:id>')
 def process_select_project(id):
-    session['project_id'] = id
+    project_id = id
+    session.clear()
+
+    commits = model.session.query(model.Commit).filter_by(project_id = project_id).all()
+    session['project_id'] = project_id
+    session['commit_id'] = commits[-1].id
+
+    print session
     return redirect('/translate')
 
 # show all commits

@@ -25,13 +25,14 @@ class Project(Base):
 class Commit(Base):
     __tablename__ = "commits"
 
-    #id, project_id, parent_id, time
+    #id, project_id, parent_id, timestamp, message, diffs
     id          = Column(Integer, primary_key = True)
     project_id  = Column(Integer, ForeignKey('projects.id'), nullable = False)
     parent_id   = Column(Integer, nullable = True)
     timestamp   = Column(DateTime, nullable = False)
     message     = Column(String(140), nullable = False)
     diffs       = Column(Text, nullable = False)
+    # diffs: a list of dictionaries
 
     project = relationship("Project", backref=backref("Commit"))
 
