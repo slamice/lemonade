@@ -1,6 +1,8 @@
 from flask import Flask, render_template, redirect, request, session
 import model
 import datetime
+import generators
+import json
 
 app = Flask(__name__)
 
@@ -18,6 +20,8 @@ def input_project():
 @app.route('/create', methods=['POST'])
 def create_project():
     # process the input data and redirect to translate page
+
+    # ADDING A PROJECT OBJECT
     title = request.form.get('title')
     description = request.form.get('description')
     source_text = request.form.get('source-text')
@@ -29,8 +33,22 @@ def create_project():
     model.session.add(project)
     model.session.commit()
 
+    # ADDING AN INITIAL COMMIT OBJECT
     project_id = project.id
+    diffs = json.dumps([])
+    return_commit = model.Commit(project_id = project_id,
+                    parent_id = None,
+                    timestamp = datetime.datetime.now(),
+                    message = "created a project",
+                    diffs = diffs)
+
+    model.session.add(return_commit)
+
+    # after the project & commit objects are added, set the current project & commit
+    model.session.commit()
     session['project_id'] = project_id
+    session['commit_id'] = return_commit.id
+
 
     return redirect('/translate')
 
@@ -49,15 +67,8 @@ def show_editor():
         session.pop('commit_id')
 
     # loads latest commit by default
-    elif commits:
-        return_commit = commits[-1]
-    
-    #if new project with no commits, return empty commit
     else:
-        return_commit = model.Commit(project_id = project_id,
-                        timestamp = datetime.datetime.now(),
-                        translation = "",
-                        message = "")
+        return_commit = commits[-1]
 
     return render_template('translate.html', project = project,
                                              return_commit = return_commit)
@@ -68,13 +79,16 @@ def save_commit():
     project_id = session['project_id']
 
     translated = request.form.get('translated')
+    # compare translated to generated text to generate diffs
     message = request.form.get('message')
     timestamp = datetime.datetime.now()
 
+    #id, project_id, parent_id, timestamp, message, diffs
     commit = model.Commit(project_id = project_id,
+                        parent_id = parent_id,
                         timestamp = timestamp,
-                        translation = translated,
-                        message = message)
+                        message = message,
+                        diffs = diffs)
 
     model.session.add(commit)
     model.session.commit()
