@@ -7,7 +7,11 @@ from sqlalchemy import desc
 
 def generate_new_diffs(text, project_id):
     tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
-    commit_id = model.session.query(model.Commit).filter_by(project_id = project_id).order_by(desc(model.Commit.id)).first().id
+    commit_id = model.session.query(model.Commit). \
+        filter_by(project_id = project_id). \
+        order_by(desc(model.Commit.id)). \
+        first(). \
+        id
 
     text1 = tokenizer.tokenize(text)
     text2 = construct_text_from_commit_id(commit_id)
@@ -28,7 +32,7 @@ def generate_new_diffs(text, project_id):
     diff_hunks_array = diff_str.split('\n@@ ')
     diff_hunks_array = diff_hunks_array[1:]
 
-    # for each hunk, pull line numbers for chunks and append relevant diff lines to a list
+    # for each hunk, pull line numbers for hunks and append relevant diff lines to a list
     diffs = []
 
     for hunk in diff_hunks_array:
@@ -73,7 +77,6 @@ def generate_new_diffs(text, project_id):
     # this returns list of dicts with line nums, +/-, and text if cmd is +
     # eventually this will be put into the database
 
-
 def apply_diffs(text1, diffs):
     new_text = []
 
@@ -96,7 +99,7 @@ def construct_text_from_commit_id(commit_id):
     this_commit = model.session.query(model.Commit).filter_by(id = commit_id).one()
     project_id = this_commit.project_id
     commits = model.session.query(model.Commit).filter(model.Commit.id.between(0, commit_id)).filter_by(project_id = project_id).all()
-    # # grab a list of all the diffs for each commit previous until the null
+    # grab a list of all the diffs for each commit previous until the null
     project_diffs = []
     for commit in commits:
         diffs = json.loads(commit.diffs)
