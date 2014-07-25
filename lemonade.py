@@ -4,14 +4,17 @@ import datetime
 
 app = Flask(__name__)
 
+# show main page
 @app.route('/', methods=['GET'])
 def home():
     return render_template('index.html')
 
+# show project creation page
 @app.route('/create', methods=['GET'])
-def process_project():
+def input_project():
     return render_template('create_project.html')
 
+# process new project
 @app.route('/create', methods=['POST'])
 def create_project():
     # process the input data and redirect to translate page
@@ -31,6 +34,7 @@ def create_project():
 
     return redirect('/translate')
 
+# show translation page for current project/commit
 @app.route('/translate', methods=['GET'])
 def show_editor():
     #takes project_id from either projects list, commit list, or created project
@@ -58,6 +62,7 @@ def show_editor():
     return render_template('translate.html', project = project,
                                              return_commit = return_commit)
 
+# add a new commit to db
 @app.route('/translate', methods=['POST'])
 def save_commit():
     project_id = session['project_id']
@@ -76,16 +81,19 @@ def save_commit():
 
     return "", 200
 
+# show all existing projects
 @app.route('/projects', methods=['GET'])
 def show_projects():
     projects = model.session.query(model.Project).all()
     return render_template('view_projects.html', projects = projects)
 
+# display latest version on translate page for selected project
 @app.route('/select_project/<int:id>')
 def process_select_project(id):
     session['project_id'] = id
     return redirect('/translate')
 
+# show all commits
 @app.route('/commits', methods=['GET'])
 def show_commits():
     project_id = session['project_id']
@@ -96,6 +104,7 @@ def show_commits():
     else:
         return "No commits!"
 
+# display version associated with requested commit
 @app.route('/select_commit/<int:id>')
 def process_select_commit(id):
     session['commit_id'] = id
