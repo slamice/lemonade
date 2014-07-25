@@ -6,6 +6,7 @@ import operator
 from sqlalchemy import desc
 
 def generate_new_diffs(text, project_id):
+
     tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
     commit_id = model.session.query(model.Commit). \
         filter_by(project_id = project_id). \
@@ -13,14 +14,20 @@ def generate_new_diffs(text, project_id):
         first(). \
         id
 
-    text1 = tokenizer.tokenize(text)
-    text2 = construct_text_from_commit_id(commit_id)
-    text2 = tokenizer.tokenize(text2)
+    prev_text = construct_text_from_commit_id(commit_id)
+    prev_tokens = tokenizer.tokenize(prev_text)
+    new_tokens = tokenizer.tokenize(text)
+    # old_tokens: array of sentences from browser
+    # new_tokens: array of sentences constructed by parent_id
 
+    diffs = diff_tokens_to_json(prev_tokens, new_tokens)
+    return diffs
+
+def diff_tokens_to_json(text1, text2):
     # creates diff generator
     diff = difflib.unified_diff(text1, text2)
 
-    # conversion to array string
+    # conversion to array to string
     diff_array = []
     for line in diff:
         diff_array.append(line)
@@ -77,20 +84,23 @@ def generate_new_diffs(text, project_id):
     # this returns list of dicts with line nums, +/-, and text if cmd is +
     # eventually this will be put into the database
 
-def apply_diffs(text1, diffs):
+def apply_diffs(text, diffs):
     new_text = []
 
     i = 0
+    diff_index = 0
     # while there are still lines in the original text to loop through
-    while i < (len(text1)):
-        while len(diffs) > 0 and ((i + 1) == diffs[0].get("line") or diffs[0].get("line") == 0):
-            current = diffs.pop(0)
+    while i < (len(text)):
+        while diff_index < len(diffs) and ((i + 1) == diffs[diff_index].get("line") or diffs[diff_index].get("line") == 0):
+            current = diffs[diff_index]
             if current.get("cmd") == '-':
                 i += 1
+                diff_index += 1
             elif current.get("cmd") == '+':
                 new_text.append(current.get("text"))
-        if 0 <= i and i < len(text1):
-            new_text.append(text1[i])
+                diff_index += 1
+        if 0 <= i and i < len(text):
+            new_text.append(text[i])
             i += 1
     return new_text
 
@@ -116,7 +126,7 @@ def main():
     # "Alphabet soup. Banana. Hello. No."
     # "Banana. California. Arkansas. No."
     # "NO. NO. NO. Yes. Here's something completely different."
-    # construct_text_from_commit_id(1)
+    construct_text_from_commit_id(1)
     text1 = "Ok. Cool. Very cool."
     print generate_new_diffs(text1, 1)
 
