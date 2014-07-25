@@ -120,10 +120,7 @@ def show_commits():
     project_id = session['project_id']
     commits = model.session.query(model.Commit).filter_by(project_id = project_id).all()
 
-    if len(commits) >= 1:
-        return render_template('view_commits.html', commits = commits)
-    else:
-        return "No commits!"
+    return render_template('view_commits.html', commits = commits)
 
 # display version associated with requested commit
 @app.route('/select_commit/<int:id>')
