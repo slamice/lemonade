@@ -49,7 +49,6 @@ def create_project():
     session['project_id'] = project_id
     session['commit_id'] = return_commit.id
 
-
     return redirect('/translate')
 
 # show translation page for current project/commit
@@ -57,31 +56,38 @@ def create_project():
 def show_editor():
     #takes project_id from either projects list, commit list, or created project
     project_id = session['project_id']
+    commit_id = session['commit_id']
     project = model.session.query(model.Project).filter_by(id = project_id).one()
     commits = model.session.query(model.Commit).filter_by(project_id = project_id).all()
-    
+    translation = generators.construct_text_from_commit_id(commit_id)
+
     #if requesting text from commit list
     if 'commit_id' in session:
         commit_id = session['commit_id']
         return_commit = model.session.query(model.Commit).filter_by(id = commit_id).one()
-        session.pop('commit_id')
 
     # loads latest commit by default
     else:
         return_commit = commits[-1]
 
     return render_template('translate.html', project = project,
-                                             return_commit = return_commit)
+                                             return_commit = return_commit,
+                                             translation = translation)
 
 # add a new commit to db
 @app.route('/translate', methods=['POST'])
 def save_commit():
     project_id = session['project_id']
+    commit_id = session['commit_id']
 
-    translated = request.form.get('translated')
-    # compare translated to generated text to generate diffs
-    message = request.form.get('message')
+    # parent_id is the commit_id of the text the new one is being compared to 
+    parent_id = commit_id
     timestamp = datetime.datetime.now()
+    message = request.form.get('message')
+
+    # compare translated to generated text to generate diffs
+    translated = request.form.get('translated')
+    diffs = generators.generate_new_diffs(translated, project_id)
 
     #id, project_id, parent_id, timestamp, message, diffs
     commit = model.Commit(project_id = project_id,
@@ -92,6 +98,9 @@ def save_commit():
 
     model.session.add(commit)
     model.session.commit()
+
+    # reset commit_id in session to the newly created commit
+    session['commit_id'] = commit.id
 
     return "", 200
 
@@ -105,13 +114,11 @@ def show_projects():
 @app.route('/select_project/<int:id>')
 def process_select_project(id):
     project_id = id
-    session.clear()
 
     commits = model.session.query(model.Commit).filter_by(project_id = project_id).all()
     session['project_id'] = project_id
     session['commit_id'] = commits[-1].id
 
-    print session
     return redirect('/translate')
 
 # show all commits
