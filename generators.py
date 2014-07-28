@@ -5,25 +5,35 @@ import difflib
 import operator
 from sqlalchemy import desc
 
-def generate_new_diffs(text, project_id):
+tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
-    tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+def generate_new_diffs(text, project_id):
+    print "GENERATING TOKENS & DIFFS..."
+    # text comes in as string
+
+    # queries for latest commit related to the project
     commit_id = model.session.query(model.Commit). \
         filter_by(project_id = project_id). \
         order_by(desc(model.Commit.id)). \
         first(). \
         id
 
+    # tokenizing string to list of sentences
     prev_text = construct_text_from_commit_id(commit_id)
     prev_tokens = tokenizer.tokenize(prev_text)
+    print "Previous tokens:"
+    print prev_tokens
     new_tokens = tokenizer.tokenize(text)
-    # old_tokens: array of sentences from browser
-    # new_tokens: array of sentences constructed by parent_id
+    print "New tokens:"
+    print new_tokens
+    # prev_tokens: array of sentences constructed by parent_id
+    # new_tokens: array of sentences from browser
 
     diffs = diff_tokens_to_json(prev_tokens, new_tokens)
     return diffs
 
 def diff_tokens_to_json(text1, text2):
+    print "DIFFING TOKENS..."
     # creates diff generator
     diff = difflib.unified_diff(text1, text2)
 
@@ -70,10 +80,12 @@ def diff_tokens_to_json(text1, text2):
                     line_num += 1
                     diff_dict = {'line': line_num, 'cmd': '-', 'text': None}
                     diffs.append(diff_dict)
+                    print "Detected deletion."
                     break
                 elif line[0] == '+':
                     diff_dict = {'line': line_num, 'cmd': '+', 'text': line[1:]}
                     diffs.append(diff_dict)
+                    print "Detected addition."
                     break
 
     # making sure + comes before - so that it doesn't skip lines before it's supposed to
@@ -81,30 +93,10 @@ def diff_tokens_to_json(text1, text2):
     diffs = json.dumps(diffs)
 
     return diffs
-    # this returns list of dicts with line nums, +/-, and text if cmd is +
-    # eventually this will be put into the database
-
-def apply_diffs(text, diffs):
-    new_text = []
-
-    i = 0
-    diff_index = 0
-    # while there are still lines in the original text to loop through
-    while i < (len(text)):
-        while diff_index < len(diffs) and ((i + 1) == diffs[diff_index].get("line") or diffs[diff_index].get("line") == 0):
-            current = diffs[diff_index]
-            if current.get("cmd") == '-':
-                i += 1
-                diff_index += 1
-            elif current.get("cmd") == '+':
-                new_text.append(current.get("text"))
-                diff_index += 1
-        if 0 <= i and i < len(text):
-            new_text.append(text[i])
-            i += 1
-    return new_text
+    # this returns json list of dicts with line nums, +/-, and text if cmd is +
 
 def construct_text_from_commit_id(commit_id):
+    print "CONSTRUCTING NEW TEXT..."
     # fetch all commits for the project_id
     this_commit = model.session.query(model.Commit).filter_by(id = commit_id).one()
     project_id = this_commit.project_id
@@ -115,20 +107,53 @@ def construct_text_from_commit_id(commit_id):
         diffs = json.loads(commit.diffs)
         project_diffs.append(diffs)
 
-    text = [""]
+    text = ""
     # apply the diffs sequentially from initial to requested
     for diffs in project_diffs:
+        print "Applying new set of diffs..."
+        print "Previous text: " + text
         text = apply_diffs(text, diffs)
-    return ' '.join(text)
+        text = ' '.join(text)
+        print "Diff set applied, current version is: " + text
+    return text
+
+def apply_diffs(text, diffs):
+    print "APPLYING DIFFS..."
+    new_text = []
+    text = tokenizer.tokenize(text)
+
+    i = 0
+    diff_index = 0
+    # while there are still lines in the original text to loop through
+    while i < (len(text)):
+        while diff_index < len(diffs) and ((i + 1) == diffs[diff_index].get("line") or diffs[diff_index].get("line") == 0):
+            current = diffs[diff_index]
+            if current.get("cmd") == '-':
+                i += 1
+                diff_index += 1
+                print "Skipped line."
+                print "New text is...\n"
+                print new_text
+            elif current.get("cmd") == '+':
+                new_text.append(current.get("text"))
+                diff_index += 1
+                print "Appended new text."
+                print "New text is...\n"
+                print new_text
+        if 0 <= i and i < len(text):
+            new_text.append(text[i])
+            i += 1
+            print "Appended existing text."
+            print "New text is...\n"
+            print new_text
+    print "Finished looping."
+    print "Returning..."
+    print new_text
+    return new_text
+    # returns a list of sentences
 
 def main():
-    # ""
-    # "Alphabet soup. Banana. Hello. No."
-    # "Banana. California. Arkansas. No."
-    # "NO. NO. NO. Yes. Here's something completely different."
-    construct_text_from_commit_id(1)
-    text1 = "Ok. Cool. Very cool."
-    print generate_new_diffs(text1, 1)
+    pass
 
 if __name__ == "__main__":
     main()
