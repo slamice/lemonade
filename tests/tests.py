@@ -73,7 +73,7 @@ def generate_diffs(before_tokens, after_tokens):
     return diffs
 
 def test_diff_gen_seed():
-    print "\n\nSeeding empty token to added tokens."
+    print "\n\nSeeding empty token, then adding tokens."
     text1 = [""]
     text2 = ["This is a cat.", "This is another cat."]
 
