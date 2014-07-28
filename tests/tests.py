@@ -107,7 +107,7 @@ def test_diff_gen_subtract():
         print "Cool."
 
 def test_diff_gen_addition():
-    print "\n\nSubtracting tokens."
+    print "\n\nAdding tokens."
     text1 = ["This is a cat."]
     text2 = ["This is a cat.", "I am a cat."]
 
@@ -123,12 +123,12 @@ def test_diff_gen_addition():
     else:
         print "Cool."
 
-def test_diff_gen_switch_word():
-    print "\n\nSubtracting tokens."
-    text1 = ["This is a cat."]
-    text2 = ["This is a cat.", "I am a cat."]
+def test_diff_gen_switch_token():
+    print "\n\nSwitching tokens."
+    text1 = ["This is a cat.", "I am a cat."]
+    text2 = ["This is a cat.", "I am not a cat."]
 
-    expected_result = [{"text": "I am a cat.", "line": 1, "cmd": "+"}]
+    expected_result = [{"text": "I am not a cat.", "line": 2, "cmd": "+"}, {"text": None, "line": 2, "cmd": "-"}]
     expected_result = json.dumps(expected_result)
 
     result = generate_diffs(text1, text2)
@@ -144,6 +144,7 @@ def main():
     test_diff_gen_seed()
     test_diff_gen_subtract()
     test_diff_gen_addition()
+    test_diff_gen_switch_token()
 
 if __name__ == "__main__":
     main()
