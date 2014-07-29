@@ -151,56 +151,56 @@ def test_diff_gen_subtract():
     else:
         print "Cool, test passed. Good job, you!"
 
-# def test_diff_gen_addition():
-#     print "\n\nAdding tokens."
-#     text1 = ["This is a cat."]
-#     text2 = ["This is a cat.", "I am a cat."]
+def test_diff_gen_addition():
+    print "\n\nAdding tokens."
+    text1 = ["This is a cat."]
+    text2 = ["This is a cat.", "I am a cat."]
 
-#     expected_result = [{"text": "I am a cat.", "line": 1, "cmd": "+"}]
-#     expected_result = json.dumps(expected_result)
+    expected_result = [{"before_line": 1, "cmd": "+", "after_line": 2, "text": "I am a cat."}]
+    expected_result = json.dumps(expected_result)
 
-#     result = generate_diffs(text1, text2)
+    result = generate_diffs(text1, text2)
 
-#     if expected_result != result:
-#         print "Nope, test failed."
-#         print "Expected: ", str(expected_result)
-#         print "Output: ", str(result)
-#     else:
-#         print "Cool, test passed. Good job, you!"
+    if expected_result != result:
+        print "Nope, test failed."
+        print "Expected: ", str(expected_result)
+        print "Output: ", str(result)
+    else:
+        print "Cool, test passed. Good job, you!"
 
-# def test_diff_gen_switch_token():
-#     print "\n\nSwitching tokens."
-#     text1 = ["This is a cat.", "I am a cat."]
-#     text2 = ["This is a cat.", "I am not a cat."]
+def test_diff_gen_switch_token():
+    print "\n\nSwitching tokens."
+    text1 = ["This is a cat.", "I am a cat."]
+    text2 = ["This is a cat.", "I am not a cat."]
 
-#     expected_result = [{"text": "I am not a cat.", "line": 2, "cmd": "+"}, {"text": None, "line": 2, "cmd": "-"}]
-#     expected_result = json.dumps(expected_result)
+    expected_result = [{"before_line": 2, "cmd": "-", "after_line": 1, "text": None}, {"before_line": 2, "cmd": "+", "after_line": 2, "text": "I am not a cat."}]
+    expected_result = json.dumps(expected_result)
 
-#     result = generate_diffs(text1, text2)
+    result = generate_diffs(text1, text2)
 
-#     if expected_result != result:
-#         print "Nope, test failed."
-#         print "Expected: ", str(expected_result)
-#         print "Output: ", str(result)
-#     else:
-#         print "Cool, test passed. Good job, you!"
+    if expected_result != result:
+        print "Nope, test failed."
+        print "Expected: ", str(expected_result)
+        print "Output: ", str(result)
+    else:
+        print "Cool, test passed. Good job, you!"
 
-# def test_diff_gen_alternate():
-#     print "\n\nSwapping several tokens."
-#     text1 = ["I have a cat.", "Her name is Mana.", "My other cat's name is Jiji.", "Jiji sheds a lot.", "Jiji is also fat."]
-#     text2 = ["Her name is Mana.", "Not the test, my cat.", "Jiji sheds a lot.", "She's my cat."]
+def test_diff_gen_alternate():
+    print "\n\nSwapping several tokens."
+    text1 = ["I have a cat.", "Her name is Mana.", "My other cat's name is Jiji.", "Jiji sheds a lot.", "Jiji is also fat."]
+    text2 = ["Her name is Mana.", "Not the test, my cat.", "Jiji sheds a lot.", "She's my cat."]
 
-#     expected_result = [{"text": None, "line": 1, "cmd": "-"}, {"text": "Not the test, my cat.", "line": 3, "cmd": "+"}, {"text": None, "line": 3, "cmd": "-"}, {"text": "She's my cat.", "line": 5, "cmd": "+"}, {"text": None, "line": 5, "cmd": "-"}]
-#     expected_result = json.dumps(expected_result)
+    expected_result = [{"before_line": 1, "cmd": "-", "after_line": 0, "text": None}, {"before_line": 3, "cmd": "-", "after_line": 1, "text": None}, {"before_line": 3, "cmd": "+", "after_line": 2, "text": "Not the test, my cat."}, {"before_line": 5, "cmd": "-", "after_line": 3, "text": None}, {"before_line": 5, "cmd": "+", "after_line": 4, "text": "She's my cat."}]
+    expected_result = json.dumps(expected_result)
 
-#     result = generate_diffs(text1, text2)
+    result = generate_diffs(text1, text2)
 
-#     if expected_result != result:
-#         print "Nope, test failed."
-#         print "Expected: ", str(expected_result)
-#         print "Output: ", str(result)
-#     else:
-#         print "Cool, test passed. Good job, you!"
+    if expected_result != result:
+        print "Nope, test failed."
+        print "Expected: ", str(expected_result)
+        print "Output: ", str(result)
+    else:
+        print "Cool, test passed. Good job, you!"
 
 # def test_diff_gen_delete_first():
 #     print "\n\nSubtracting the first from several tokens."
@@ -343,9 +343,9 @@ def test_diff_gen_subtract():
 def main():
     test_diff_gen_seed()
     test_diff_gen_subtract()
-    # test_diff_gen_addition()
-    # test_diff_gen_switch_token()
-    # test_diff_gen_alternate()
+    test_diff_gen_addition()
+    test_diff_gen_switch_token()
+    test_diff_gen_alternate()
     # test_diff_gen_delete_first()
     # test_diff_gen_add_first()
 
