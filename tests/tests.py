@@ -243,7 +243,7 @@ def apply_diffs(text, diffs):
                 print "\nNew text is..."
                 print new_tokens
         # if we are still on a line within the original text and there are no diffs for that line, copy existing text
-        if 0 <= i < len(text):
+        if 0 <= i and i < len(tokens):
             new_tokens.append(tokens[i])
             print "Appended existing text."
             print "\nNew text is..."
@@ -271,6 +271,22 @@ def test_apply_seed():
     else:
         print "Cool, test passed. Good job, you!"
 
+def test_apply_subtract():
+    print "\n\nSubtract a token."
+
+    text = "Meow meow meow meow. Too many meows."
+    diffs = json.dumps([{"text": None, "line": 2, "cmd": "-"}])
+
+    expected_result = ["Meow meow meow meow."]
+    result = apply_diffs(text, diffs)
+
+    if expected_result != result:
+        print "Nope, test failed."
+        print "Expected: ", expected_result
+        print "Output: ", result
+    else:
+        print "Cool, test passed. Good job, you!"
+
 def main():
     test_diff_gen_seed()
     test_diff_gen_subtract()
@@ -283,7 +299,8 @@ def main():
     print "---------------------------------------"
 
     test_apply_seed()
-
+    test_apply_subtract()
+    test_apply_addition()
 
 
 if __name__ == "__main__":
