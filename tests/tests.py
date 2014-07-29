@@ -140,11 +140,65 @@ def test_diff_gen_switch_token():
     else:
         print "Cool."
 
+def test_diff_gen_alternate():
+    print "\n\nSwapping several tokens."
+    text1 = ["I have a cat.", "Her name is Mana.", "My other cat's name is Jiji.", "Jiji sheds a lot.", "Jiji is also fat."]
+    text2 = ["Her name is Mana.", "Not the test, my cat.", "Jiji sheds a lot.", "She's my cat."]
+
+    expected_result = [{"text": None, "line": 1, "cmd": "-"}, {"text": "Not the test, my cat.", "line": 3, "cmd": "+"}, {"text": None, "line": 3, "cmd": "-"}, {"text": "She's my cat.", "line": 5, "cmd": "+"}, {"text": None, "line": 5, "cmd": "-"}]
+    expected_result = json.dumps(expected_result)
+
+    result = generate_diffs(text1, text2)
+
+    if expected_result != result:
+        print "Nope, test failed."
+        print "Expected: ", str(expected_result)
+        print "Output: ", str(result)
+    else:
+        print "Cool."
+
+def test_diff_gen_delete_first():
+    print "\n\nSubtracting the first from several tokens."
+    text1 = ["Mana likes to meow.", "Meow.", "Meow.", "Meow meow meow meow meow."]
+    text2 = ["Meow.", "Meow.", "Meow meow meow meow meow."]
+
+    expected_result = [{"text": None, "line": 1, "cmd": "-"}]
+    expected_result = json.dumps(expected_result)
+
+    result = generate_diffs(text1, text2)
+
+    if expected_result != result:
+        print "Nope, test failed."
+        print "Expected: ", str(expected_result)
+        print "Output: ", str(result)
+    else:
+        print "Cool."
+
+def test_diff_gen_add_first():
+    print "\n\nAdding one token in the beginning of a list of several tokens."
+    text1 = ["Mana likes to meow.", "Meow.", "Meow.", "Meow meow meow meow meow."]
+    text2 = ["Meow meow meow meow.", "Mana likes to meow.", "Meow.", "Meow.", "Meow meow meow meow meow."]
+
+    expected_result = [{"text": "Meow meow meow meow.", "line": 0, "cmd": "+"}]
+    expected_result = json.dumps(expected_result)
+
+    result = generate_diffs(text1, text2)
+
+    if expected_result != result:
+        print "Nope, test failed."
+        print "Expected: ", str(expected_result)
+        print "Output: ", str(result)
+    else:
+        print "Cool."
+
 def main():
     test_diff_gen_seed()
     test_diff_gen_subtract()
     test_diff_gen_addition()
     test_diff_gen_switch_token()
+    test_diff_gen_alternate()
+    test_diff_gen_delete_first()
+    test_diff_gen_add_first()
 
 if __name__ == "__main__":
     main()
