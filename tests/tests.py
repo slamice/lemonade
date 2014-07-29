@@ -232,23 +232,26 @@ def apply_diffs(text, diffs):
             if current.get("cmd") == '-':
                 i += 1
                 diff_index += 1
-                print "Skipped line."
-                print "\nNew text is..."
+                print "\nSkipped line."
+                print "New text is..."
                 print new_tokens
             # +: copy a line from original text
             elif current.get("cmd") == '+':
                 new_tokens.append(current.get("text"))
                 diff_index += 1
-                print "Appended new text."
-                print "\nNew text is..."
+                print "\nAppended new text."
+                print "New text is..."
                 print new_tokens
         # if we are still on a line within the original text and there are no diffs for that line, copy existing text
         if 0 <= i and i < len(tokens):
-            new_tokens.append(tokens[i])
-            print "Appended existing text."
-            print "\nNew text is..."
-            print new_tokens
-        i += 1
+            if tokens[i] == "":
+                print "\nWhitespace is stupid."
+            else:
+                new_tokens.append(tokens[i])
+                print "\nAppended existing text."
+                print "New text is..."
+                print new_tokens
+            i += 1
         print "Moving onto next line.\n"
     print "Finished looping. Returning new tokens..."
     print new_tokens
@@ -287,21 +290,36 @@ def test_apply_subtract():
     else:
         print "Cool, test passed. Good job, you!"
 
-def main():
-    test_diff_gen_seed()
-    test_diff_gen_subtract()
-    test_diff_gen_addition()
-    test_diff_gen_switch_token()
-    test_diff_gen_alternate()
-    test_diff_gen_delete_first()
-    test_diff_gen_add_first()
+def test_apply_addition():
+    print "\n\nAdd a token."
 
-    print "---------------------------------------"
+    text = "Meow meow meow meow."
+    diffs = json.dumps([{"text": "Not enough meows.", "line": 1, "cmd": "+"}])
+
+    expected_result = ["Meow meow meow meow.", "Not enough meows."]
+    result = apply_diffs(text, diffs)
+
+    if expected_result != result:
+        print "Nope, test failed."
+        print "Expected: ", expected_result
+        print "Output: ", result
+    else:
+        print "Cool, test passed. Good job, you!"
+
+def main():
+    # test_diff_gen_seed()
+    # test_diff_gen_subtract()
+    # test_diff_gen_addition()
+    # test_diff_gen_switch_token()
+    # test_diff_gen_alternate()
+    # test_diff_gen_delete_first()
+    # test_diff_gen_add_first()
+
+    # print "---------------------------------------"
 
     test_apply_seed()
     test_apply_subtract()
     test_apply_addition()
-
 
 if __name__ == "__main__":
     main()
