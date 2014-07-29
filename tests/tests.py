@@ -264,14 +264,18 @@ def apply_diffs(tokens, diffs):
             print current
         # if out of diffs
         else:
-            print "\nOut of diffs. Appending existing text."
-            new_tokens.append(tokens[i])
-            print "New text is..."
-            print new_tokens
+            current = None
+            if tokens[i] == "":
+                print "\nWhitespace is stupid."
+            else:
+                print "\nOut of diffs. Appending existing text."
+                new_tokens.append(tokens[i])
+                print "New text is..."
+                print new_tokens
             i += 1
 
         # there is no deletion or addition
-        while i + 1 < current.get("before_line"):
+        while current != None and i + 1 < current.get("before_line"):
             print i
             print j
             if tokens[i] == "":
@@ -284,7 +288,8 @@ def apply_diffs(tokens, diffs):
             i += 1
             j += 1
 
-        if current.get("cmd") == "-":
+        # deletion
+        if current != None and current.get("cmd") == "-":
             print i
             print j
             i += 1
@@ -293,7 +298,8 @@ def apply_diffs(tokens, diffs):
             print "New text is..."
             print new_tokens
 
-        elif current.get("cmd") == "+":
+        # addition
+        elif current != None and current.get("cmd") == "+":
             print i
             print j
             j += 1
@@ -304,88 +310,22 @@ def apply_diffs(tokens, diffs):
             print new_tokens
     return new_tokens
 
-    # while i < (len(tokens)):
-    #     # 1. there is a deletion at line i
-    #     # 2. there is an addition at line j
-    #     # 3. there is an addition at i line 0
-    #     current = diffs[diff_index]
 
-    #     # there is a deletion at line i
-    #     while diff_index < len(diffs) and (i + 1) == diffs[diff_index].get("before_line"):
-    #         if current.get("cmd") == '-':
-    #             i += 1
-    #             diff_index += 1
-    #             print "\nSkipped line."
-    #             print "New text is..."
-    #             print new_tokens
+def test_apply_seed():
+    print "\n\nTake an empty string and add text."
 
-    #     print "Moving onto next line.\n"
-    # print "Finished looping. Returning new tokens..."
-    # print new_tokens
-    # return new_tokens
+    text = [""]
+    diffs = json.dumps([{"before_line": 1, "cmd": "+", "after_line": 1, "text": "This is a cat."}, {"before_line": 1, "cmd": "+", "after_line": 2, "text": "This is another cat."}])
 
-    # returns a list of tokens
-    # expect: ["A", "B", "C", "D", "E", "F", "X", "Z"]
+    expected_result = ["This is a cat.", "This is another cat."]
+    result = apply_diffs(text, diffs)
 
-        # while diff_index < len(diffs) and ((j + 1) == diffs[diff_index].get("after_line") or diffs[diff_index].get("before_line") == 0):
-        #     if current.get("cmd") == '+':
-        #         j += 1
-        #         diff_index += 1
-        #         new_tokens.append(current.get("text"))
-        #         print "\nAppended new text."
-        #         print "New text is..."
-        #         print new_tokens
-
-
-        # while diff_index < len(diffs) and ((i + 1) == diffs[diff_index].get("before_line") or (j + 1) == diffs[diff_index].get("after_line") or diffs[diff_index].get("before_line") == 0):
-        #     # current is a dictionary with diff instructions
-        #     current = diffs[diff_index]
-
-        #     # -: skip a line without copying
-        #     if current.get("cmd") == '-':
-        #         i += 1
-        #         diff_index += 1
-        #         print "\nSkipped line."
-        #         print "New text is..."
-        #         print new_tokens
-
-        #     # +: copy a line from original text
-        #     elif current.get("cmd") == '+':
-        #         j += 1
-        #         diff_index += 1
-        #         new_tokens.append(current.get("text"))
-        #         print "\nAppended new text."
-        #         print "New text is..."
-        #         print new_tokens
-
-        # # if we are still on a line within the original text and there are no diffs for that line, copy existing text
-        # if 0 <= i and i < len(tokens):
-        #     if tokens[i] == "":
-        #         print "\nWhitespace is stupid."
-        #     else:
-        #         new_tokens.append(tokens[i])
-        #         print "\nAppended existing text."
-        #         print "New text is..."
-        #         print new_tokens
-        #     i += 1
-        #     j += 1
-
-
-# def test_apply_seed():
-#     print "\n\nTake an empty string and add text."
-
-#     text = ""
-#     diffs = json.dumps([{"text": "Meow meow meow meow.", "line": 0, "cmd": "+"}, {"text": "Meow mama cat.", "line": 0, "cmd": "+"}])
-
-#     expected_result = ["Meow meow meow meow.", "Meow mama cat."]
-#     result = apply_diffs(text, diffs)
-
-#     if expected_result != result:
-#         print "Nope, test failed."
-#         print "Expected: ", expected_result
-#         print "Output: ", result
-#     else:
-#         print "Cool, test passed. Good job, you!"
+    if expected_result != result:
+        print "Nope, test failed."
+        print "Expected: ", expected_result
+        print "Output: ", result
+    else:
+        print "Cool, test passed. Good job, you!"
 
 # def test_apply_subtract():
 #     print "\n\nSubtract a token."
@@ -430,13 +370,13 @@ def main():
 
     print "---------------------------------------"
 
-    tokens = ["A", "B", "C", "G", "H", "I", "X", "Y", "Z"]
-    diffs = [{"before_line": 4, "cmd": "-", "after_line": 3, "text": None}, {"before_line": 5, "cmd": "-", "after_line": 3, "text": None}, {"before_line": 6, "cmd": "-", "after_line": 3, "text": None}, {"before_line": 6, "cmd": "+", "after_line": 4, "text": "D"}, {"before_line": 6, "cmd": "+", "after_line": 5, "text": "E"}, {"before_line": 6, "cmd": "+", "after_line": 6, "text": "F"}, {"before_line": 8, "cmd": "-", "after_line": 7, "text": None}]
-    diffs = json.dumps(diffs)
+    # tokens = ["A", "B", "C", "G", "H", "I", "X", "Y", "Z"]
+    # diffs = [{"before_line": 4, "cmd": "-", "after_line": 3, "text": None}, {"before_line": 5, "cmd": "-", "after_line": 3, "text": None}, {"before_line": 6, "cmd": "-", "after_line": 3, "text": None}, {"before_line": 6, "cmd": "+", "after_line": 4, "text": "D"}, {"before_line": 6, "cmd": "+", "after_line": 5, "text": "E"}, {"before_line": 6, "cmd": "+", "after_line": 6, "text": "F"}, {"before_line": 8, "cmd": "-", "after_line": 7, "text": None}]
+    # diffs = json.dumps(diffs)
 
-    apply_diffs(tokens, diffs)
+    # apply_diffs(tokens, diffs)
 
-    # test_apply_seed()
+    test_apply_seed()
     # test_apply_subtract()
     # test_apply_addition()
 
