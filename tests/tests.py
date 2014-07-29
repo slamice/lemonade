@@ -48,13 +48,20 @@ def generate_diffs(before_tokens, after_tokens):
         if ',' in before_lines:
             before_start = before_lines.split(',')[0][1:]
             before_end = before_lines.split(',')[1][0:]
-            print before_start
-            print before_end
         # if single-line diffs
         else:
             before_start = before_lines[1:]
             before_end = before_lines[1:]
+
+        after_lines = hunk_pieces[0].split(' ')[1]
         # +begin_line,end_line
+        if ',' in before_lines:
+            after_start = after_lines.split(',')[0][1:]
+            after_end = after_lines.split(',')[1][0:]
+        # if single-line diffs
+        else:
+            after_start = before_lines[1:]
+            after_end = before_lines[1:]
 
 #         beginning_lines = hunk_pieces[0].split(' ')[0]
 #         # if one line of diff, beginning_lines[1:] is where the diffs begin
