@@ -3,6 +3,10 @@ import difflib
 import operator
 import json
 
+# FOR APPLY_DIFFS
+import nltk
+tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+
 # ------------------------------------------#
 #                                           #
 #    generate_diffs takes 2 tokens lists    #
@@ -94,7 +98,7 @@ def test_diff_gen_seed():
         print "Expected: ", str(expected_result)
         print "Output: ", str(result)
     else:
-        print "Cool."
+        print "Cool, test passed. Good job, you!"
 
 def test_diff_gen_subtract():
     print "\n\nSubtracting tokens."
@@ -111,7 +115,7 @@ def test_diff_gen_subtract():
         print "Expected: ", str(expected_result)
         print "Output: ", str(result)
     else:
-        print "Cool."
+        print "Cool, test passed. Good job, you!"
 
 def test_diff_gen_addition():
     print "\n\nAdding tokens."
@@ -128,7 +132,7 @@ def test_diff_gen_addition():
         print "Expected: ", str(expected_result)
         print "Output: ", str(result)
     else:
-        print "Cool."
+        print "Cool, test passed. Good job, you!"
 
 def test_diff_gen_switch_token():
     print "\n\nSwitching tokens."
@@ -145,7 +149,7 @@ def test_diff_gen_switch_token():
         print "Expected: ", str(expected_result)
         print "Output: ", str(result)
     else:
-        print "Cool."
+        print "Cool, test passed. Good job, you!"
 
 def test_diff_gen_alternate():
     print "\n\nSwapping several tokens."
@@ -162,7 +166,7 @@ def test_diff_gen_alternate():
         print "Expected: ", str(expected_result)
         print "Output: ", str(result)
     else:
-        print "Cool."
+        print "Cool, test passed. Good job, you!"
 
 def test_diff_gen_delete_first():
     print "\n\nSubtracting the first from several tokens."
@@ -179,7 +183,7 @@ def test_diff_gen_delete_first():
         print "Expected: ", str(expected_result)
         print "Output: ", str(result)
     else:
-        print "Cool."
+        print "Cool, test passed. Good job, you!"
 
 def test_diff_gen_add_first():
     print "\n\nAdding one token in the beginning of a list of several tokens."
@@ -196,21 +200,76 @@ def test_diff_gen_add_first():
         print "Expected: ", str(expected_result)
         print "Output: ", str(result)
     else:
-        print "Cool."
+        print "Cool, test passed. Good job, you!"
 
 # ------------------------------------------#
 #                                           #
-#  construct_text takes a string and json   #
-#   object of diffs and creates new text    #
+#    apply_diffs takes a string and json    #
+#  object of diffs and creates new string   #
 #                                           #
 # ------------------------------------------#
 
 # ** Currently, it takes a string and json object of diffs,
-# ** but maybe it should take a list of tokens and output tokens
+# ** but maybe it should take a list of tokens, and output tokens,
 # ** and when text is needed as a string, i.e. displayed on editor,
 # ** it can be joined into a string in the controller.
 
+def apply_diffs(text, diffs):
+    print "APPLYING DIFFS..."
+    new_tokens = []
+    diffs = json.loads(diffs)
+    tokens = tokenizer.tokenize(text)
 
+    i = 0
+    diff_index = 0
+    # while there are still lines in the original text to loop through
+    while i < (len(tokens)):
+        # while 1. there are still diffs, and 2.1 the line number matches to a diff line number or 2.2. the diff line number is 0
+        while diff_index < len(diffs) and ((i + 1) == diffs[diff_index].get("line") or diffs[diff_index].get("line") == 0):
+            # current is a dictionary with diff instructions
+            current = diffs[diff_index]
+            # -: skip a line without copying
+            if current.get("cmd") == '-':
+                i += 1
+                diff_index += 1
+                print "Skipped line."
+                print "\nNew text is..."
+                print new_tokens
+            # +: copy a line from original text
+            elif current.get("cmd") == '+':
+                new_tokens.append(current.get("text"))
+                diff_index += 1
+                print "Appended new text."
+                print "\nNew text is..."
+                print new_tokens
+        # if we are still on a line within the original text and there are no diffs for that line, copy existing text
+        if 0 <= i < len(text):
+            new_tokens.append(tokens[i])
+            print "Appended existing text."
+            print "\nNew text is..."
+            print new_tokens
+        i += 1
+        print "Moving onto next line.\n"
+    print "Finished looping. Returning new tokens..."
+    print new_tokens
+    return new_tokens
+    # returns a list of tokens
+
+def test_apply_seed():
+    print "\n\nTake an empty string and add text."
+
+    text = ""
+    diffs = json.dumps([{"text": "Meow meow meow meow.", "line": 0, "cmd": "+"}, {"text": "Meow mama cat.", "line": 0, "cmd": "+"}])
+
+    expected_result = ["Meow meow meow meow.", "Meow mama cat."]
+    result = apply_diffs(text, diffs)
+
+    if expected_result != result:
+        print "Nope, test failed."
+        print "Expected: ", expected_result
+        print "Output: ", result
+    else:
+        print "Cool, test passed. Good job, you!"
 
 def main():
     test_diff_gen_seed()
@@ -222,6 +281,8 @@ def main():
     test_diff_gen_add_first()
 
     print "---------------------------------------"
+
+    test_apply_seed()
 
 
 
