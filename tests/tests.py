@@ -257,13 +257,23 @@ def apply_diffs(tokens, diffs):
     j = 0
     diff_index = 0
     # while there are still lines in the original text to loop through
-    while i < (len(tokens)):
-
-        current = diffs[diff_index]
-        print current
+    while i < len(tokens):
+        # if there are diffs
+        if diff_index < len(diffs):
+            current = diffs[diff_index]
+            print current
+        # if out of diffs
+        else:
+            print "\nOut of diffs. Appending existing text."
+            new_tokens.append(tokens[i])
+            print "New text is..."
+            print new_tokens
+            i += 1
 
         # there is no deletion or addition
         while i + 1 < current.get("before_line"):
+            print i
+            print j
             if tokens[i] == "":
                 print "\nWhitespace is stupid."
             else:
@@ -274,21 +284,25 @@ def apply_diffs(tokens, diffs):
             i += 1
             j += 1
 
-        if diff_index <= len(diffs):
-            if current.get("cmd") == "-":
-                i += 1
-                diff_index += 1
-                print "\nSkipped line."
-                print "New text is..."
-                print new_tokens
+        if current.get("cmd") == "-":
+            print i
+            print j
+            i += 1
+            diff_index += 1
+            print "\nSkipped line."
+            print "New text is..."
+            print new_tokens
 
-            elif current.get("cmd") == "+":
-                j += 1
-                diff_index += 1
-                new_tokens.append(current.get("text"))
-                print "\nAppended new text."
-                print "New text is..."
-                print new_tokens
+        elif current.get("cmd") == "+":
+            print i
+            print j
+            j += 1
+            diff_index += 1
+            new_tokens.append(current.get("text"))
+            print "\nAppended new text."
+            print "New text is..."
+            print new_tokens
+    return new_tokens
 
     # while i < (len(tokens)):
     #     # 1. there is a deletion at line i
