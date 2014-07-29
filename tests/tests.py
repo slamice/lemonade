@@ -3,6 +3,13 @@ import difflib
 import operator
 import json
 
+# ------------------------------------------#
+#                                           #
+#    generate_diffs takes 2 tokens lists    #
+#  and outputs a json list of dictionaries  #
+#                                           #
+# ------------------------------------------#
+
 def generate_diffs(before_tokens, after_tokens):
     print "DIFFING TOKENS..."
 
@@ -191,6 +198,20 @@ def test_diff_gen_add_first():
     else:
         print "Cool."
 
+# ------------------------------------------#
+#                                           #
+#  construct_text takes a string and json   #
+#   object of diffs and creates new text    #
+#                                           #
+# ------------------------------------------#
+
+# ** Currently, it takes a string and json object of diffs,
+# ** but maybe it should take a list of tokens and output tokens
+# ** and when text is needed as a string, i.e. displayed on editor,
+# ** it can be joined into a string in the controller.
+
+
+
 def main():
     test_diff_gen_seed()
     test_diff_gen_subtract()
@@ -199,6 +220,10 @@ def main():
     test_diff_gen_alternate()
     test_diff_gen_delete_first()
     test_diff_gen_add_first()
+
+    print "---------------------------------------"
+
+
 
 if __name__ == "__main__":
     main()
