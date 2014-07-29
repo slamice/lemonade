@@ -63,47 +63,58 @@ def generate_diffs(before_tokens, after_tokens):
             after_start = before_lines[1:]
             after_end = before_lines[1:]
 
-#         beginning_lines = hunk_pieces[0].split(' ')[0]
-#         # if one line of diff, beginning_lines[1:] is where the diffs begin
-#         if ',' not in beginning_lines:
-#             begin = beginning_lines[1:]
-#         # if more than one line of diff, there is a , so have to split and take first #
-#         else:
-#             begin = beginning_lines.split(',')[0][1:]
-#         differences = hunk_pieces[2:]
+        before_start = int(before_start)
+        before_end = int(before_end)
+        after_start = int(after_start)
+        after_end = int(after_end)
 
-#         # parsing lines of diffs for commands by looping through each line
-#         # and if there is a command, adding a dictionary of that command
-#         # and appending that dictionary to a list of commands
-#         line_num = int(begin) - 1
-#         for line in differences:
-#             diff_dict = {}
-#             if line[0] == ' ':
-#                 line_num += 1
-#             while line[0] == '-' or line[0] == '+':
-#                 if line[0] == '+':
-#                     diff_dict = {'line': line_num, 'cmd': '+', 'text': line[1:]}
-#                     diffs.append(diff_dict)
-#                     print "Detected addition."
-#                     break
-#                 elif line[0] == '-':
-#                     line_num += 1
+        differences = hunk_pieces[2:]
+        # this is a set of differences for one hunk
+        # ex: [' A', ' B', ' C', '-G', '-H', '-I', '+D', '+E', '+F', ' X', '-Y', ' Z']
 
-#                     # if it's deleting empty token
-#                     if line[1:]:
-#                         diff_dict = {'line': line_num, 'cmd': '-', 'text': None}
-#                         diffs.append(diff_dict)
-#                         print "Detected deletion."
-#                         break
-#                     else:
-#                         print "Whitespace is bullshit."
-#                         break
+        # parsing lines of diffs for commands by looping through each line
+        # if there is a command, adding a dictionary of that command
+        # and appending that dictionary to a list of commands
 
-#     # making sure + comes before - so that it doesn't skip lines before it's supposed to
-#     diffs = sorted(diffs, key=operator.itemgetter('line','cmd'))
-#     diffs = json.dumps(diffs)
+        i = before_start - 1
+        j = after_start - 1
 
-#     return diffs
+        for line in differences:
+            print line
+            diff_dict = {}
+
+            # increment both i and j
+            if line[0] == ' ':
+                i += 1
+                j += 1
+
+            # increment i
+            elif line[0] == '-':
+                print "Deletion detected."
+                # increments beforehand because line number is actually (i + 1)
+                i += 1
+
+                # text token being deleted
+                if line[1:]:
+                    diff_dict = {'after_line': j, 'before_line': i, 'cmd': '-', 'text': None}
+                    diffs.append(diff_dict)
+                    
+                # empty token being deleted
+                else:
+                    print "Whitespace is bullshit."
+
+            # increment j
+            elif line[0] == '+':
+                print "Addition detected."
+                # increments beforehand because line number is actually (j + 1)
+                j += 1
+
+                diff_dict = {'after_line': j, 'before_line': i, 'cmd': '+', 'text': line[1:]}
+                diffs.append(diff_dict)
+
+    # conversion of diffs into json object (list of dictionaries) to be stored in database
+    diffs = json.dumps(diffs)
+    return diffs
 
 # def test_diff_gen_seed():
 #     print "\n\nSeeding empty token, then adding tokens."
