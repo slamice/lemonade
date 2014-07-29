@@ -43,7 +43,17 @@ def generate_diffs(before_tokens, after_tokens):
 
         before_lines = hunk_pieces[0].split(' ')[0]
         # -begin_line,end_line
-        after_lines = hunk_pieces[0].split(' ')[1]
+
+        # if multi-line diffs
+        if ',' in before_lines:
+            before_start = before_lines.split(',')[0][1:]
+            before_end = before_lines.split(',')[1][0:]
+            print before_start
+            print before_end
+        # if single-line diffs
+        else:
+            before_start = before_lines[1:]
+            before_end = before_lines[1:]
         # +begin_line,end_line
 
 #         beginning_lines = hunk_pieces[0].split(' ')[0]
