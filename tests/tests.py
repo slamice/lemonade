@@ -26,20 +26,25 @@ def generate_diffs(before_tokens, after_tokens):
         diff_array.append(line)
     diff_str = '\n'.join(diff_array)
 
-    # # splitting into array of diff hunk
-    # # diff_hunks_array[0] is garbage formatting from unified_diff
-    # # each item after is a set of diffs for a hunk of diffs
-    # diff_hunks_array = diff_str.split('\n@@ ')
-    # diff_hunks_array = diff_hunks_array[1:]
+    # splitting into array of diff hunk
+    # diff_hunks_array[0] is garbage formatting from unified_diff
+    # each item after is a set of diffs for a hunk of diffs
+    diff_hunks_array = diff_str.split('\n@@ ')
+    diff_hunks_array = diff_hunks_array[1:]
 
     # # for each hunk, pull line numbers for hunks and append relevant diff lines to a list
-    # diffs = []
+    diffs = []
 
-#     for hunk in diff_hunks_array:
-#         hunk_pieces = hunk.split('\n')
-#         # hunk_pieces[0] has line numbers
-#         # hunk_pieces[1] has an empty line
-#         # hunk_pieces[2:] are lines of diffs
+    for hunk in diff_hunks_array:
+        hunk_pieces = hunk.split('\n')
+        # hunk_pieces[0] has line numbers
+        # hunk_pieces[1] has an empty line
+        # hunk_pieces[2:] are lines of diffs
+
+        before_lines = hunk_pieces[0].split(' ')[0]
+        # -begin_line,end_line
+        after_lines = hunk_pieces[0].split(' ')[1]
+        # +begin_line,end_line
 
 #         beginning_lines = hunk_pieces[0].split(' ')[0]
 #         # if one line of diff, beginning_lines[1:] is where the diffs begin
