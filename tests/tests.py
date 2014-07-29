@@ -55,13 +55,14 @@ def generate_diffs(before_tokens, after_tokens):
 
         after_lines = hunk_pieces[0].split(' ')[1]
         # +begin_line,end_line
-        if ',' in before_lines:
+        if ',' in after_lines:
+            # print after_lines
             after_start = after_lines.split(',')[0][1:]
             after_end = after_lines.split(',')[1][0:]
         # if single-line diffs
         else:
-            after_start = before_lines[1:]
-            after_end = before_lines[1:]
+            after_start = after_lines[1:]
+            after_end = after_lines[1:]
 
         before_start = int(before_start)
         before_end = int(before_end)
@@ -116,39 +117,39 @@ def generate_diffs(before_tokens, after_tokens):
     diffs = json.dumps(diffs)
     return diffs
 
-# def test_diff_gen_seed():
-#     print "\n\nSeeding empty token, then adding tokens."
-#     text1 = [""]
-#     text2 = ["This is a cat.", "This is another cat."]
+def test_diff_gen_seed():
+    print "\n\nSeeding empty token, then adding tokens."
+    text1 = [""]
+    text2 = ["This is a cat.", "This is another cat."]
 
-#     expected_result = [{"text": "This is a cat.", "line": 1, "cmd": "+"}, {"text": "This is another cat.", "line": 1, "cmd": "+"}]
-#     expected_result = json.dumps(expected_result)
+    expected_result = [{"before_line": 1, "cmd": "+", "after_line": 1, "text": "This is a cat."}, {"before_line": 1, "cmd": "+", "after_line": 2, "text": "This is another cat."}]
+    expected_result = json.dumps(expected_result)
 
-#     result = generate_diffs(text1, text2)
+    result = generate_diffs(text1, text2)
 
-#     if expected_result != result:
-#         print "Nope, test failed."
-#         print "Expected: ", str(expected_result)
-#         print "Output: ", str(result)
-#     else:
-#         print "Cool, test passed. Good job, you!"
+    if expected_result != result:
+        print "Nope, test failed."
+        print "Expected: ", str(expected_result)
+        print "Output: ", str(result)
+    else:
+        print "Cool, test passed. Good job, you!"
 
-# def test_diff_gen_subtract():
-#     print "\n\nSubtracting tokens."
-#     text1 = ["This is a cat.", "This is another cat."]
-#     text2 = ["This is a cat."]
+def test_diff_gen_subtract():
+    print "\n\nSubtracting tokens."
+    text1 = ["This is a cat.", "This is another cat."]
+    text2 = ["This is a cat."]
 
-#     expected_result = [{"text": None, "line": 2, "cmd": "-"}]
-#     expected_result = json.dumps(expected_result)
+    expected_result = [{"before_line": 2, "cmd": "-", "after_line": 1, "text": None}]
+    expected_result = json.dumps(expected_result)
 
-#     result = generate_diffs(text1, text2)
+    result = generate_diffs(text1, text2)
 
-#     if expected_result != result:
-#         print "Nope, test failed."
-#         print "Expected: ", str(expected_result)
-#         print "Output: ", str(result)
-#     else:
-#         print "Cool, test passed. Good job, you!"
+    if expected_result != result:
+        print "Nope, test failed."
+        print "Expected: ", str(expected_result)
+        print "Output: ", str(result)
+    else:
+        print "Cool, test passed. Good job, you!"
 
 # def test_diff_gen_addition():
 #     print "\n\nAdding tokens."
@@ -340,8 +341,8 @@ def generate_diffs(before_tokens, after_tokens):
 #         print "Cool, test passed. Good job, you!"
 
 def main():
-    # test_diff_gen_seed()
-    # test_diff_gen_subtract()
+    test_diff_gen_seed()
+    test_diff_gen_subtract()
     # test_diff_gen_addition()
     # test_diff_gen_switch_token()
     # test_diff_gen_alternate()
@@ -354,9 +355,9 @@ def main():
     # test_apply_subtract()
     # test_apply_addition()
 
-    before_tokens = ["A", "B", "C", "G", "H", "I", "X", "Y", "Z"]
-    after_tokens = ["A", "B", "C", "D", "E", "F", "X", "Z"]
-    generate_diffs(before_tokens, after_tokens)
+    # before_tokens = ["A", "B", "C", "G", "H", "I", "X", "Y", "Z"]
+    # after_tokens = ["A", "B", "C", "D", "E", "F", "X", "Z"]
+    # generate_diffs(before_tokens, after_tokens)
 
 if __name__ == "__main__":
     main()
