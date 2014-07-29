@@ -202,51 +202,51 @@ def test_diff_gen_alternate():
     else:
         print "Cool, test passed. Good job, you!"
 
-# def test_diff_gen_delete_first():
-#     print "\n\nSubtracting the first from several tokens."
-#     text1 = ["Mana likes to meow.", "Meow.", "Meow.", "Meow meow meow meow meow."]
-#     text2 = ["Meow.", "Meow.", "Meow meow meow meow meow."]
+def test_diff_gen_delete_first():
+    print "\n\nSubtracting the first from several tokens."
+    text1 = ["Mana likes to meow.", "Meow.", "Meow.", "Meow meow meow meow meow."]
+    text2 = ["Meow.", "Meow.", "Meow meow meow meow meow."]
 
-#     expected_result = [{"text": None, "line": 1, "cmd": "-"}]
-#     expected_result = json.dumps(expected_result)
+    expected_result = [{"before_line": 1, "cmd": "-", "after_line": 0, "text": None}]
+    expected_result = json.dumps(expected_result)
 
-#     result = generate_diffs(text1, text2)
+    result = generate_diffs(text1, text2)
 
-#     if expected_result != result:
-#         print "Nope, test failed."
-#         print "Expected: ", str(expected_result)
-#         print "Output: ", str(result)
-#     else:
-#         print "Cool, test passed. Good job, you!"
+    if expected_result != result:
+        print "Nope, test failed."
+        print "Expected: ", str(expected_result)
+        print "Output: ", str(result)
+    else:
+        print "Cool, test passed. Good job, you!"
 
-# def test_diff_gen_add_first():
-#     print "\n\nAdding one token in the beginning of a list of several tokens."
-#     text1 = ["Mana likes to meow.", "Meow.", "Meow.", "Meow meow meow meow meow."]
-#     text2 = ["Meow meow meow meow.", "Mana likes to meow.", "Meow.", "Meow.", "Meow meow meow meow meow."]
+def test_diff_gen_add_first():
+    print "\n\nAdding one token in the beginning of a list of several tokens."
+    text1 = ["Mana likes to meow.", "Meow.", "Meow.", "Meow meow meow meow meow."]
+    text2 = ["Meow meow meow meow.", "Mana likes to meow.", "Meow.", "Meow.", "Meow meow meow meow meow."]
 
-#     expected_result = [{"text": "Meow meow meow meow.", "line": 0, "cmd": "+"}]
-#     expected_result = json.dumps(expected_result)
+    expected_result = [{"before_line": 0, "cmd": "+", "after_line": 1, "text": "Meow meow meow meow."}]
+    expected_result = json.dumps(expected_result)
 
-#     result = generate_diffs(text1, text2)
+    result = generate_diffs(text1, text2)
 
-#     if expected_result != result:
-#         print "Nope, test failed."
-#         print "Expected: ", str(expected_result)
-#         print "Output: ", str(result)
-#     else:
-#         print "Cool, test passed. Good job, you!"
+    if expected_result != result:
+        print "Nope, test failed."
+        print "Expected: ", str(expected_result)
+        print "Output: ", str(result)
+    else:
+        print "Cool, test passed. Good job, you!"
 
-# # ------------------------------------------#
-# #                                           #
-# #    apply_diffs takes a string and json    #
-# #  object of diffs and creates new string   #
-# #                                           #
-# # ------------------------------------------#
+# ------------------------------------------#
+#                                           #
+#    apply_diffs takes a string and json    #
+#  object of diffs and creates new string   #
+#                                           #
+# ------------------------------------------#
 
-# # ** Currently, it takes a string and json object of diffs,
-# # ** but maybe it should take a list of tokens, and output tokens,
-# # ** and when text is needed as a string, i.e. displayed on editor,
-# # ** it can be joined into a string in the controller.
+# ** Currently, it takes a string and json object of diffs,
+# ** but maybe it should take a list of tokens, and output tokens,
+# ** and when text is needed as a string, i.e. displayed on editor,
+# ** it can be joined into a string in the controller.
 
 # def apply_diffs(text, diffs):
 #     print "APPLYING DIFFS..."
@@ -346,8 +346,8 @@ def main():
     test_diff_gen_addition()
     test_diff_gen_switch_token()
     test_diff_gen_alternate()
-    # test_diff_gen_delete_first()
-    # test_diff_gen_add_first()
+    test_diff_gen_delete_first()
+    test_diff_gen_add_first()
 
     # print "---------------------------------------"
 
