@@ -1,6 +1,7 @@
 import json
 import model
 import difflib
+import pdb
 
 # takes in tokens, json object, returns tokens
 def apply_diffs(tokens, diffs):
@@ -199,13 +200,20 @@ def retrieve_diffs(commit_id):
     # each json object represents one set of diffs for a specific version/commit
     diffs_list = []
     commit = model.session.query(model.Commit).filter_by(id = commit_id).one()
+    project_id = commit.project_id
+
+    commits = model.session.query(model.Commit).filter_by(project_id = project_id).all()
+    commits_dict = {}
+
+    for project_commit in commits:
+        commits_dict[project_commit.id] = project_commit
 
     # all commits before initial commit
     while commit.parent_id != None:
         diffs_set = commit.diffs
         diffs_list.append(diffs_set)
         commit_id = commit.parent_id
-        commit = model.session.query(model.Commit).filter_by(id = commit_id).one()
+        commit = commits_dict.get(commit_id)
 
     # very initial commit
     diffs_set = commit.diffs
