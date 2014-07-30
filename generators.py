@@ -1,12 +1,9 @@
 import json
 import model
-import nltk
 import difflib
 import operator
 from sqlalchemy import desc
 import pdb
-
-tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
 # takes in tokens, json object, returns tokens
 def apply_diffs(tokens, diffs):
@@ -64,6 +61,53 @@ def apply_diffs(tokens, diffs):
     return new_tokens
 
 
+def parse_hunk(hunk):
+    hunk_pieces = hunk.split('\n')
+    # hunk_pieces[0] has line numbers
+    # hunk_pieces[1] has an empty line
+    # hunk_pieces[2:] are lines of diffs
+
+    before_lines = hunk_pieces[0].split(' ')[0]
+    # -begin_line,end_line
+
+    # if multi-line diffs
+    if ',' in before_lines:
+        before_start = before_lines.split(',')[0][1:]
+        before_end = before_lines.split(',')[1][0:]
+    # if single-line diffs
+    else:
+        before_start = before_lines[1:]
+        before_end = before_lines[1:]
+
+    after_lines = hunk_pieces[0].split(' ')[1]
+    # +begin_line,end_line
+    if ',' in after_lines:
+        # print after_lines
+        after_start = after_lines.split(',')[0][1:]
+        after_end = after_lines.split(',')[1][0:]
+    # if single-line diffs
+    else:
+        after_start = after_lines[1:]
+        after_end = after_lines[1:]
+
+    before_start = int(before_start)
+    before_end = int(before_end)
+    after_start = int(after_start)
+    after_end = int(after_end)
+    differences = hunk_pieces[2:]
+    # this is a set of differences for one hunk
+    # ex: [' A', ' B', ' C', '-G', '-H', '-I', '+D', '+E', '+F', ' X', '-Y', ' Z']
+
+    hunk_dict = { 
+        "before_start"  : before_start, 
+        "before_end"    : before_end, 
+        "after_start"   : after_start, 
+        "after_end"     : after_end,
+        "differences"   : differences
+        }
+    
+    return hunk_dict
+
 # takes in tokens, returns json object
 def generate_diffs(before_tokens, after_tokens):
     print "DIFFING TOKENS..."
@@ -82,42 +126,13 @@ def generate_diffs(before_tokens, after_tokens):
     diffs = []
 
     for hunk in diff_hunks_array:
-        hunk_pieces = hunk.split('\n')
-        # hunk_pieces[0] has line numbers
-        # hunk_pieces[1] has an empty line
-        # hunk_pieces[2:] are lines of diffs
+        hunk_dict = parse_hunk(hunk)
 
-        before_lines = hunk_pieces[0].split(' ')[0]
-        # -begin_line,end_line
-
-        # if multi-line diffs
-        if ',' in before_lines:
-            before_start = before_lines.split(',')[0][1:]
-            before_end = before_lines.split(',')[1][0:]
-        # if single-line diffs
-        else:
-            before_start = before_lines[1:]
-            before_end = before_lines[1:]
-
-        after_lines = hunk_pieces[0].split(' ')[1]
-        # +begin_line,end_line
-        if ',' in after_lines:
-            # print after_lines
-            after_start = after_lines.split(',')[0][1:]
-            after_end = after_lines.split(',')[1][0:]
-        # if single-line diffs
-        else:
-            after_start = after_lines[1:]
-            after_end = after_lines[1:]
-
-        before_start = int(before_start)
-        before_end = int(before_end)
-        after_start = int(after_start)
-        after_end = int(after_end)
-
-        differences = hunk_pieces[2:]
-        # this is a set of differences for one hunk
-        # ex: [' A', ' B', ' C', '-G', '-H', '-I', '+D', '+E', '+F', ' X', '-Y', ' Z']
+        before_start = hunk_dict.get("before_start")
+        before_end = hunk_dict.get("before_end")
+        after_start = hunk_dict.get("after_start")
+        after_end = hunk_dict.get("after_end")
+        differences = hunk_dict.get("differences")
 
         # parsing lines of diffs for commands by looping through each line
         # if there is a command, adding a dictionary of that command
