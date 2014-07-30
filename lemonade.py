@@ -3,6 +3,8 @@ import model
 import datetime
 import generators
 import json
+import nltk
+tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
 app = Flask(__name__)
 
@@ -35,19 +37,6 @@ def create_project():
 
 
     project_id = project.id
-
-    # diffs = json.dumps([])
-    # return_commit = model.Commit(project_id = project_id,
-    #                 parent_id = None,
-    #                 timestamp = datetime.datetime.now(),
-    #                 message = "created a project",
-    #                 diffs = diffs)
-
-    # model.session.add(return_commit)
-
-    # after the project & commit objects are added, set the current project & commit
-    model.session.commit()
-    
     session['project_id'] = project_id
     session['commit_id'] = None
 
@@ -61,11 +50,12 @@ def show_editor():
     project_id = session['project_id']
     commit_id = session['commit_id']
     project = model.session.query(model.Project).filter_by(id = project_id).one()
-    commits = model.session.query(model.Commit).filter_by(project_id = project_id).all()
+
     if commit_id == None:
         translation = ""
     else:
-        translation = generators.construct_text_from_commit_id(commit_id)
+        tokens = generators.construct_commit_id(commit_id)
+        translation = ' '.join(tokens)
 
     return render_template('translate.html', project = project,
                                              translation = translation)
@@ -83,7 +73,12 @@ def save_commit():
 
     # compare translated to generated text to generate diffs
     translated = request.form.get('translated')
-    diffs = generators.generate_new_diffs(translated, project_id)
+    after_tokens = tokenizer.tokenize(translated)
+    if parent_id == None:
+        before_tokens = [""]
+    else:
+        before_tokens = generators.construct_commit_id(parent_id)
+    diffs = generators.generate_diffs(before_tokens, after_tokens)
 
     #id, project_id, parent_id, timestamp, message, diffs
     commit = model.Commit(project_id = project_id,
