@@ -33,45 +33,41 @@ def create_project():
     model.session.add(project)
     model.session.commit()
 
-    # ADDING AN INITIAL COMMIT OBJECT
-    project_id = project.id
-    diffs = json.dumps([])
-    return_commit = model.Commit(project_id = project_id,
-                    parent_id = None,
-                    timestamp = datetime.datetime.now(),
-                    message = "created a project",
-                    diffs = diffs)
 
-    model.session.add(return_commit)
+    project_id = project.id
+
+    # diffs = json.dumps([])
+    # return_commit = model.Commit(project_id = project_id,
+    #                 parent_id = None,
+    #                 timestamp = datetime.datetime.now(),
+    #                 message = "created a project",
+    #                 diffs = diffs)
+
+    # model.session.add(return_commit)
 
     # after the project & commit objects are added, set the current project & commit
     model.session.commit()
+    
     session['project_id'] = project_id
-    session['commit_id'] = return_commit.id
+    session['commit_id'] = None
 
     return redirect('/translate')
 
 # show translation page for current project/commit
 @app.route('/translate', methods=['GET'])
 def show_editor():
+
     #takes project_id from either projects list, commit list, or created project
     project_id = session['project_id']
     commit_id = session['commit_id']
     project = model.session.query(model.Project).filter_by(id = project_id).one()
     commits = model.session.query(model.Commit).filter_by(project_id = project_id).all()
-    translation = generators.construct_text_from_commit_id(commit_id)
-
-    #if requesting text from commit list
-    if 'commit_id' in session:
-        commit_id = session['commit_id']
-        return_commit = model.session.query(model.Commit).filter_by(id = commit_id).one()
-
-    # loads latest commit by default
+    if commit_id == None:
+        translation = ""
     else:
-        return_commit = commits[-1]
+        translation = generators.construct_text_from_commit_id(commit_id)
 
     return render_template('translate.html', project = project,
-                                             return_commit = return_commit,
                                              translation = translation)
 
 # add a new commit to db
