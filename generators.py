@@ -1,7 +1,6 @@
 import json
 import model
 import difflib
-import pdb
 
 # takes in tokens, json object, returns tokens
 def apply_diffs(tokens, diffs):
@@ -179,7 +178,7 @@ def generate_diffs(before_tokens, after_tokens):
         diffs_list += diffs
 
     # conversion of diffs into json object (list of dictionaries) to be stored in database
-    diffs_list = json.dumps(diffs)
+    diffs_list = json.dumps(diffs_list)
     return diffs_list
 
 # takes a commit_id, returns tokens
