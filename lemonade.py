@@ -50,7 +50,7 @@ def show_editor():
     #takes project_id from either projects list, commit list, or created project
     project_id = session['project_id']
     commit_id = session['commit_id']
-    project = model.session.query(model.Project).filter_by(id = project_id).one()
+    project = model.Commit.query_commits_by_proj_id(project_id)
 
     if commit_id == None:
         translation = ""
@@ -99,7 +99,7 @@ def save_commit():
 # show all existing projects
 @app.route('/projects', methods=['GET'])
 def show_projects():
-    projects = model.session.query(model.Project).all()
+    projects = model.Project.query_all_projects()
     return render_template('view_projects.html', projects = projects)
 
 # display latest version on translate page for selected project
@@ -107,7 +107,7 @@ def show_projects():
 def process_select_project(id):
     project_id = id
 
-    commits = model.session.query(model.Commit).filter_by(project_id = project_id).all()
+    commits = model.Commit.query_commits_by_proj_id(project_id)
     session['project_id'] = project_id
     session['commit_id'] = commits[-1].id
 
@@ -117,7 +117,7 @@ def process_select_project(id):
 @app.route('/commits', methods=['GET'])
 def show_commits():
     project_id = session['project_id']
-    commits = model.session.query(model.Commit).filter_by(project_id = project_id).all()
+    commits = model.Commit.query_commits_by_proj_id(project_id)
 
     return render_template('view_commits.html', commits = commits)
 

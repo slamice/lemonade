@@ -198,10 +198,10 @@ def retrieve_diffs(commit_id):
     # takes a commit_id, chases the parent_id, and returns a list of json objects (list of dicts)
     # each json object represents one set of diffs for a specific version/commit
     diffs_list = []
-    commit = model.session.query(model.Commit).filter_by(id = commit_id).one()
+    commit = model.Commit.query_commit_by_id(commit_id)
     project_id = commit.project_id
 
-    commits = model.session.query(model.Commit).filter_by(project_id = project_id).all()
+    commits = model.Commit.query_commits_by_proj_id(project_id)
     commits_dict = {}
 
     for project_commit in commits:
