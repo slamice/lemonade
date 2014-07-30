@@ -68,14 +68,9 @@ def apply_diffs(tokens, diffs):
 def generate_diffs(before_tokens, after_tokens):
     print "DIFFING TOKENS..."
 
-    # creates diff generator
+    # creates diff generator, converts into str
     diff = difflib.unified_diff(before_tokens, after_tokens)
-
-    # conversion to array to string
-    diff_array = []
-    for line in diff:
-        diff_array.append(line)
-    diff_str = '\n'.join(diff_array)
+    diff_str = '\n'.join(diff)
 
     # splitting into array of diff hunk
     # diff_hunks_array[0] is garbage formatting from unified_diff
