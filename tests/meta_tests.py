@@ -26,7 +26,7 @@ def retrieve_diffs(commit_id):
     commit = model.session.query(model.Commit).filter_by(id = commit_id).one()
 
     # all commits before initial commit
-    while commit.parent != None:
+    while commit.parent_id != None:
         diffs_set = commit.diffs
         diffs_list.append(diffs_set)
         commit_id = commit.parent_id
@@ -42,7 +42,6 @@ def retrieve_diffs(commit_id):
     return diffs_list
 
 def main():
-
     # testing construct_commit_id, but change commit_id to pass diffs_list and set diffs_list to diffs_list
     # before_tokens = ["Hi.", "I am a cat!", "MRRRROWWWW." "HEYO."]
     # after_tokens = ["Hi.", "MRRRROWWWW.", "HEYO.", "MEOW MEOW!"]
@@ -53,6 +52,7 @@ def main():
     # diffs3 = generate_diffs(after_after_tokens, after_after_after_tokens)
     # diffs_list = [diffs1, diffs2, diffs3]
     # print construct_commit_id(diffs_list)
+    pass
 
 if __name__ == "__main__":
     main()
