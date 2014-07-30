@@ -1,10 +1,11 @@
-import json
-
 # IMPORTING FUNCTIONS
 import sys
 sys.path.append("../")
 from generators import generate_diffs
 from generators import apply_diffs
+
+import json
+import unittest
 
 # ------------------------------------------#
 #                                           #
@@ -13,124 +14,80 @@ from generators import apply_diffs
 #                                           #
 # ------------------------------------------#
 
-def test_diff_gen_seed():
-    print "\n\nSeeding empty token, then adding tokens."
-    text1 = [""]
-    text2 = ["This is a cat.", "This is another cat."]
+class TestDG(unittest.TestCase):
 
-    expected_result = [{"before_line": 1, "cmd": "+", "after_line": 1, "text": "This is a cat."}, {"before_line": 1, "cmd": "+", "after_line": 2, "text": "This is another cat."}]
-    expected_result = json.dumps(expected_result)
+    def setUp(self):
+        pass
 
-    result = generate_diffs(text1, text2)
+    def test_diff_gen_seed(self):
+        print "\n\nSeeds an empty token."
+        text1 = [""]
+        text2 = ["This is a cat.", "This is another cat."]
 
-    if expected_result != result:
-        print "Nope, test failed."
-        print "Expected: ", str(expected_result)
-        print "Output: ", str(result)
-    else:
-        print "Cool, test passed. Good job, you!"
+        expected_result = [{"before_line": 1, "cmd": "+", "after_line": 1, "text": "This is a cat."}, {"before_line": 1, "cmd": "+", "after_line": 2, "text": "This is another cat."}]
+        expected_result = json.dumps(expected_result)
 
-def test_diff_gen_subtract():
-    print "\n\nSubtracting tokens."
-    text1 = ["This is a cat.", "This is another cat."]
-    text2 = ["This is a cat."]
+        self.assertEqual(generate_diffs(text1, text2), expected_result)
 
-    expected_result = [{"before_line": 2, "cmd": "-", "after_line": 1, "text": None}]
-    expected_result = json.dumps(expected_result)
+    def test_diff_gen_subtract(self):
+        print "\n\nDeletes a token."
+        text1 = ["This is a cat.", "This is another cat."]
+        text2 = ["This is a cat."]
 
-    result = generate_diffs(text1, text2)
+        expected_result = [{"before_line": 2, "cmd": "-", "after_line": 1, "text": None}]
+        expected_result = json.dumps(expected_result)
 
-    if expected_result != result:
-        print "Nope, test failed."
-        print "Expected: ", str(expected_result)
-        print "Output: ", str(result)
-    else:
-        print "Cool, test passed. Good job, you!"
+        self.assertEqual(generate_diffs(text1, text2), expected_result)
 
-def test_diff_gen_addition():
-    print "\n\nAdding tokens."
-    text1 = ["This is a cat."]
-    text2 = ["This is a cat.", "I am a cat."]
+    def test_diff_gen_addition(self):
+        print "\n\nAdds a token to the end."
+        text1 = ["This is a cat."]
+        text2 = ["This is a cat.", "I am a cat."]
 
-    expected_result = [{"before_line": 1, "cmd": "+", "after_line": 2, "text": "I am a cat."}]
-    expected_result = json.dumps(expected_result)
+        expected_result = [{"before_line": 1, "cmd": "+", "after_line": 2, "text": "I am a cat."}]
+        expected_result = json.dumps(expected_result)
 
-    result = generate_diffs(text1, text2)
+        self.assertEqual(generate_diffs(text1, text2), expected_result)
 
-    if expected_result != result:
-        print "Nope, test failed."
-        print "Expected: ", str(expected_result)
-        print "Output: ", str(result)
-    else:
-        print "Cool, test passed. Good job, you!"
+    def test_diff_gen_switch_token(self):
+        print "\n\nSwitching tokens."
+        text1 = ["This is a cat.", "I am a cat."]
+        text2 = ["This is a cat.", "I am not a cat."]
 
-def test_diff_gen_switch_token():
-    print "\n\nSwitching tokens."
-    text1 = ["This is a cat.", "I am a cat."]
-    text2 = ["This is a cat.", "I am not a cat."]
+        expected_result = [{"before_line": 2, "cmd": "-", "after_line": 1, "text": None}, {"before_line": 2, "cmd": "+", "after_line": 2, "text": "I am not a cat."}]
+        expected_result = json.dumps(expected_result)
 
-    expected_result = [{"before_line": 2, "cmd": "-", "after_line": 1, "text": None}, {"before_line": 2, "cmd": "+", "after_line": 2, "text": "I am not a cat."}]
-    expected_result = json.dumps(expected_result)
+        self.assertEqual(generate_diffs(text1, text2), expected_result)
 
-    result = generate_diffs(text1, text2)
+    def test_diff_gen_alternate(self):
+        print "\n\nSwapping several tokens."
+        text1 = ["I have a cat.", "Her name is Mana.", "My other cat's name is Jiji.", "Jiji sheds a lot.", "Jiji is also fat."]
+        text2 = ["Her name is Mana.", "Not the test, my cat.", "Jiji sheds a lot.", "She's my cat."]
 
-    if expected_result != result:
-        print "Nope, test failed."
-        print "Expected: ", str(expected_result)
-        print "Output: ", str(result)
-    else:
-        print "Cool, test passed. Good job, you!"
+        expected_result = [{"before_line": 1, "cmd": "-", "after_line": 0, "text": None}, {"before_line": 3, "cmd": "-", "after_line": 1, "text": None}, {"before_line": 3, "cmd": "+", "after_line": 2, "text": "Not the test, my cat."}, {"before_line": 5, "cmd": "-", "after_line": 3, "text": None}, {"before_line": 5, "cmd": "+", "after_line": 4, "text": "She's my cat."}]
+        expected_result = json.dumps(expected_result)
 
-def test_diff_gen_alternate():
-    print "\n\nSwapping several tokens."
-    text1 = ["I have a cat.", "Her name is Mana.", "My other cat's name is Jiji.", "Jiji sheds a lot.", "Jiji is also fat."]
-    text2 = ["Her name is Mana.", "Not the test, my cat.", "Jiji sheds a lot.", "She's my cat."]
+        self.assertEqual(generate_diffs(text1, text2), expected_result)
 
-    expected_result = [{"before_line": 1, "cmd": "-", "after_line": 0, "text": None}, {"before_line": 3, "cmd": "-", "after_line": 1, "text": None}, {"before_line": 3, "cmd": "+", "after_line": 2, "text": "Not the test, my cat."}, {"before_line": 5, "cmd": "-", "after_line": 3, "text": None}, {"before_line": 5, "cmd": "+", "after_line": 4, "text": "She's my cat."}]
-    expected_result = json.dumps(expected_result)
+    def test_diff_gen_delete_first(self):
+        print "\n\nSubtracting the first from several tokens."
+        text1 = ["Mana likes to meow.", "Meow.", "Meow.", "Meow meow meow meow meow."]
+        text2 = ["Meow.", "Meow.", "Meow meow meow meow meow."]
 
-    result = generate_diffs(text1, text2)
+        expected_result = [{"before_line": 1, "cmd": "-", "after_line": 0, "text": None}]
+        expected_result = json.dumps(expected_result)
 
-    if expected_result != result:
-        print "Nope, test failed."
-        print "Expected: ", str(expected_result)
-        print "Output: ", str(result)
-    else:
-        print "Cool, test passed. Good job, you!"
+        self.assertEqual(generate_diffs(text1, text2), expected_result)
 
-def test_diff_gen_delete_first():
-    print "\n\nSubtracting the first from several tokens."
-    text1 = ["Mana likes to meow.", "Meow.", "Meow.", "Meow meow meow meow meow."]
-    text2 = ["Meow.", "Meow.", "Meow meow meow meow meow."]
+    def test_diff_gen_add_first(self):
+        print "\n\nAdding one token in the beginning of a list of several tokens."
+        text1 = ["Mana likes to meow.", "Meow.", "Meow.", "Meow meow meow meow meow."]
+        text2 = ["Meow meow meow meow.", "Mana likes to meow.", "Meow.", "Meow.", "Meow meow meow meow meow."]
 
-    expected_result = [{"before_line": 1, "cmd": "-", "after_line": 0, "text": None}]
-    expected_result = json.dumps(expected_result)
+        expected_result = [{"before_line": 0, "cmd": "+", "after_line": 1, "text": "Meow meow meow meow."}]
+        expected_result = json.dumps(expected_result)
 
-    result = generate_diffs(text1, text2)
-
-    if expected_result != result:
-        print "Nope, test failed."
-        print "Expected: ", str(expected_result)
-        print "Output: ", str(result)
-    else:
-        print "Cool, test passed. Good job, you!"
-
-def test_diff_gen_add_first():
-    print "\n\nAdding one token in the beginning of a list of several tokens."
-    text1 = ["Mana likes to meow.", "Meow.", "Meow.", "Meow meow meow meow meow."]
-    text2 = ["Meow meow meow meow.", "Mana likes to meow.", "Meow.", "Meow.", "Meow meow meow meow meow."]
-
-    expected_result = [{"before_line": 0, "cmd": "+", "after_line": 1, "text": "Meow meow meow meow."}]
-    expected_result = json.dumps(expected_result)
-
-    result = generate_diffs(text1, text2)
-
-    if expected_result != result:
-        print "Nope, test failed."
-        print "Expected: ", str(expected_result)
-        print "Output: ", str(result)
-    else:
-        print "Cool, test passed. Good job, you!"
+        self.assertEqual(generate_diffs(text1, text2), expected_result)
 
 # ------------------------------------------#
 #                                           #
@@ -284,4 +241,4 @@ def main():
     # apply_diffs(tokens, diffs)
 
 if __name__ == "__main__":
-    main()
+    unittest.main()
