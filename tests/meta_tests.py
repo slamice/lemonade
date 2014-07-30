@@ -1,4 +1,5 @@
-import tests
+from tests import generate_diffs
+from tests import apply_diffs
 
 # ---------------------------------------------- #
 #                                                #
@@ -14,7 +15,7 @@ def construct_commit_id(commit_id):
     diffs_list = retrieve_diffs(commit_id)
 
     for diff_set in diffs_list:
-        tokens = apply_diffs(tokens, diffs)
+        tokens = apply_diffs(tokens, diff_set)
 
     return tokens
 
@@ -41,7 +42,17 @@ def retrieve_diffs(commit_id):
     return diffs_list
 
 def main():
-    pass
+
+    # testing construct_commit_id, but change commit_id to pass diffs_list and set diffs_list to diffs_list
+    # before_tokens = ["Hi.", "I am a cat!", "MRRRROWWWW." "HEYO."]
+    # after_tokens = ["Hi.", "MRRRROWWWW.", "HEYO.", "MEOW MEOW!"]
+    # after_after_tokens = ["Kya kya!!", "MRRRROWWWW.", "Nope.", "MEOW MEOW!"]
+    # after_after_after_tokens = ["OH HAYYYYYYYY"]
+    # diffs1 = generate_diffs(before_tokens, after_tokens)
+    # diffs2 = generate_diffs(after_tokens, after_after_tokens)
+    # diffs3 = generate_diffs(after_after_tokens, after_after_after_tokens)
+    # diffs_list = [diffs1, diffs2, diffs3]
+    # print construct_commit_id(diffs_list)
 
 if __name__ == "__main__":
     main()
