@@ -31,7 +31,7 @@ class Commit(Base):
     parent_id   = Column(Integer, nullable = True)
     timestamp   = Column(DateTime, nullable = False)
     message     = Column(String(140), nullable = False)
-    diffs       = Column(Text, nullable = False)
+    diffs       = Column(Text, nullable = True)
     # diffs: a list of dictionaries
 
     project = relationship("Project", backref=backref("Commit"))
