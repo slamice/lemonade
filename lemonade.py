@@ -2,8 +2,9 @@ from flask import Flask, render_template, redirect, request, session
 import model
 import datetime
 import generators
-import json
 import nltk
+import keys
+
 tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
 app = Flask(__name__)
@@ -126,7 +127,7 @@ def process_select_commit(id):
     session['commit_id'] = id
     return redirect('/translate')
 
-app.secret_key = 'Omgwassuuuuuuup'
+app.secret_key = keys.app_secret_key
 
 if __name__ == '__main__':
     app.run(debug = True)
