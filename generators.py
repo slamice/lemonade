@@ -208,9 +208,8 @@ def retrieve_diffs(commit_id):
         commit = model.session.query(model.Commit).filter_by(id = commit_id).one()
 
     # very initial commit
-    if commit.parent_id == None:
-        diffs_set = commit.diffs
-        diffs_list.append(diffs_set)
+    diffs_set = commit.diffs
+    diffs_list.append(diffs_set)
     
     diffs_list = diffs_list[::-1]
 
