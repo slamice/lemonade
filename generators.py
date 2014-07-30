@@ -1,9 +1,6 @@
 import json
 import model
 import difflib
-import operator
-from sqlalchemy import desc
-import pdb
 
 # takes in tokens, json object, returns tokens
 def apply_diffs(tokens, diffs):
@@ -60,7 +57,6 @@ def apply_diffs(tokens, diffs):
     print new_tokens
     return new_tokens
 
-
 def parse_hunk(hunk):
     hunk_pieces = hunk.split('\n')
     # hunk_pieces[0] has line numbers
@@ -108,6 +104,50 @@ def parse_hunk(hunk):
     
     return hunk_dict
 
+def parse_diff_lines(before_start, after_start, differences):
+    # parsing lines of diffs for commands by looping through each line
+    # if there is a command, adding a dictionary of that command
+    # and appending that dictionary to a list of commands
+    i = before_start - 1
+    j = after_start - 1
+
+    diffs = []
+
+    for line in differences:
+        print line
+        diff_dict = {}
+
+        # increment both i and j
+        if line[0] == ' ':
+            i += 1
+            j += 1
+
+        # increment i
+        elif line[0] == '-':
+            print "Deletion detected."
+            # increments beforehand because line number is actually (i + 1)
+            i += 1
+
+            # text token being deleted
+            if line[1:]:
+                diff_dict = {'after_line': j, 'before_line': i, 'cmd': '-', 'text': None}
+                diffs.append(diff_dict)
+                
+            # empty token being deleted
+            else:
+                print "Say no to whitespace."
+
+        # increment j
+        elif line[0] == '+':
+            print "Addition detected."
+            # increments beforehand because line number is actually (j + 1)
+            j += 1
+
+            diff_dict = {'after_line': j, 'before_line': i, 'cmd': '+', 'text': line[1:]}
+            diffs.append(diff_dict)
+
+    return diffs
+
 # takes in tokens, returns json object
 def generate_diffs(before_tokens, after_tokens):
     print "DIFFING TOKENS..."
@@ -123,7 +163,7 @@ def generate_diffs(before_tokens, after_tokens):
     diff_hunks_array = diff_hunks_array[1:]
 
     # # for each hunk, pull line numbers for hunks and append relevant diff lines to a list
-    diffs = []
+    diffs_list = []
 
     for hunk in diff_hunks_array:
         hunk_dict = parse_hunk(hunk)
@@ -134,49 +174,12 @@ def generate_diffs(before_tokens, after_tokens):
         after_end = hunk_dict.get("after_end")
         differences = hunk_dict.get("differences")
 
-        # parsing lines of diffs for commands by looping through each line
-        # if there is a command, adding a dictionary of that command
-        # and appending that dictionary to a list of commands
-
-        i = before_start - 1
-        j = after_start - 1
-
-        for line in differences:
-            print line
-            diff_dict = {}
-
-            # increment both i and j
-            if line[0] == ' ':
-                i += 1
-                j += 1
-
-            # increment i
-            elif line[0] == '-':
-                print "Deletion detected."
-                # increments beforehand because line number is actually (i + 1)
-                i += 1
-
-                # text token being deleted
-                if line[1:]:
-                    diff_dict = {'after_line': j, 'before_line': i, 'cmd': '-', 'text': None}
-                    diffs.append(diff_dict)
-                    
-                # empty token being deleted
-                else:
-                    print "Say no to whitespace."
-
-            # increment j
-            elif line[0] == '+':
-                print "Addition detected."
-                # increments beforehand because line number is actually (j + 1)
-                j += 1
-
-                diff_dict = {'after_line': j, 'before_line': i, 'cmd': '+', 'text': line[1:]}
-                diffs.append(diff_dict)
+        diffs = parse_diff_lines(before_start, after_start, differences)
+        diffs_list += diffs
 
     # conversion of diffs into json object (list of dictionaries) to be stored in database
-    diffs = json.dumps(diffs)
-    return diffs
+    diffs_list = json.dumps(diffs)
+    return diffs_list
 
 # takes a commit_id, returns tokens
 def construct_commit_id(commit_id):
