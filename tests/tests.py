@@ -24,7 +24,10 @@ class Test_Diff_Gen(unittest.TestCase):
         text1 = [""]
         text2 = ["This is a cat.", "This is another cat."]
 
-        expected_result = [{"before_line": 1, "cmd": "+", "after_line": 1, "text": "This is a cat."}, {"before_line": 1, "cmd": "+", "after_line": 2, "text": "This is another cat."}]
+        expected_result = [
+            {"before_line": 1, "cmd": "+", "after_line": 1, "text": "This is a cat."}, 
+            {"before_line": 1, "cmd": "+", "after_line": 2, "text": "This is another cat."}
+        ]
         expected_result = json.dumps(expected_result)
 
         self.assertEqual(generate_diffs(text1, text2), expected_result)
@@ -54,7 +57,10 @@ class Test_Diff_Gen(unittest.TestCase):
         text1 = ["This is a cat.", "I am a cat."]
         text2 = ["This is a cat.", "I am not a cat."]
 
-        expected_result = [{"before_line": 2, "cmd": "-", "after_line": 1, "text": None}, {"before_line": 2, "cmd": "+", "after_line": 2, "text": "I am not a cat."}]
+        expected_result = [
+            {"before_line": 2, "cmd": "-", "after_line": 1, "text": None}, 
+            {"before_line": 2, "cmd": "+", "after_line": 2, "text": "I am not a cat."}
+        ]
         expected_result = json.dumps(expected_result)
 
         self.assertEqual(generate_diffs(text1, text2), expected_result)
@@ -64,7 +70,13 @@ class Test_Diff_Gen(unittest.TestCase):
         text1 = ["I have a cat.", "Her name is Mana.", "My other cat's name is Jiji.", "Jiji sheds a lot.", "Jiji is also fat."]
         text2 = ["Her name is Mana.", "Not the test, my cat.", "Jiji sheds a lot.", "She's my cat."]
 
-        expected_result = [{"before_line": 1, "cmd": "-", "after_line": 0, "text": None}, {"before_line": 3, "cmd": "-", "after_line": 1, "text": None}, {"before_line": 3, "cmd": "+", "after_line": 2, "text": "Not the test, my cat."}, {"before_line": 5, "cmd": "-", "after_line": 3, "text": None}, {"before_line": 5, "cmd": "+", "after_line": 4, "text": "She's my cat."}]
+        expected_result = [
+            {"before_line": 1, "cmd": "-", "after_line": 0, "text": None}, 
+            {"before_line": 3, "cmd": "-", "after_line": 1, "text": None}, 
+            {"before_line": 3, "cmd": "+", "after_line": 2, "text": "Not the test, my cat."}, 
+            {"before_line": 5, "cmd": "-", "after_line": 3, "text": None}, 
+            {"before_line": 5, "cmd": "+", "after_line": 4, "text": "She's my cat."}
+        ]
         expected_result = json.dumps(expected_result)
 
         self.assertEqual(generate_diffs(text1, text2), expected_result)
@@ -104,7 +116,10 @@ class Test_Diff_Gen(unittest.TestCase):
         print "\n\nTake an empty string and add text."
 
         tokens = [""]
-        diffs = json.dumps([{"before_line": 1, "cmd": "+", "after_line": 1, "text": "This is a cat."}, {"before_line": 1, "cmd": "+", "after_line": 2, "text": "This is another cat."}])
+        diffs = json.dumps([
+            {"before_line": 1, "cmd": "+", "after_line": 1, "text": "This is a cat."}, 
+            {"before_line": 1, "cmd": "+", "after_line": 2, "text": "This is another cat."}
+            ])
 
         expected_result = ["This is a cat.", "This is another cat."]
 
@@ -134,7 +149,10 @@ class Test_Diff_Gen(unittest.TestCase):
         print "\n\nSwitching tokens."
 
         tokens = ["This is a cat.", "I am a cat."]
-        diffs = json.dumps([{"before_line": 2, "cmd": "-", "after_line": 1, "text": None}, {"before_line": 2, "cmd": "+", "after_line": 2, "text": "I am not a cat."}])
+        diffs = json.dumps([
+            {"before_line": 2, "cmd": "-", "after_line": 1, "text": None}, 
+            {"before_line": 2, "cmd": "+", "after_line": 2, "text": "I am not a cat."}
+            ])
         
         expected_result = ["This is a cat.", "I am not a cat."]
         
@@ -144,7 +162,13 @@ class Test_Diff_Gen(unittest.TestCase):
         print "\n\nSwapping several tokens."
 
         tokens = ["I have a cat.", "Her name is Mana.", "My other cat's name is Jiji.", "Jiji sheds a lot.", "Jiji is also fat."]
-        diffs = json.dumps([{"before_line": 1, "cmd": "-", "after_line": 0, "text": None}, {"before_line": 3, "cmd": "-", "after_line": 1, "text": None}, {"before_line": 3, "cmd": "+", "after_line": 2, "text": "Not the test, my cat."}, {"before_line": 5, "cmd": "-", "after_line": 3, "text": None}, {"before_line": 5, "cmd": "+", "after_line": 4, "text": "She's my cat."}])
+        diffs = json.dumps([
+            {"before_line": 1, "cmd": "-", "after_line": 0, "text": None}, 
+            {"before_line": 3, "cmd": "-", "after_line": 1, "text": None}, 
+            {"before_line": 3, "cmd": "+", "after_line": 2, "text": "Not the test, my cat."}, 
+            {"before_line": 5, "cmd": "-", "after_line": 3, "text": None}, 
+            {"before_line": 5, "cmd": "+", "after_line": 4, "text": "She's my cat."}
+            ])
 
         expected_result = ["Her name is Mana.", "Not the test, my cat.", "Jiji sheds a lot.", "She's my cat."]
         
