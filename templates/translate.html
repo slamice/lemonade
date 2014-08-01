@@ -1,30 +1,52 @@
 <html>
 	<head>
+		<!-- Stylesheets -->
 		<link rel="stylesheet" type="text/css" href="/static/css/main.css" />
 		<link rel="stylesheet" type="text/css" href="/static/css/layouts/translate.css" />
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
+		<!-- Fonts -->
+		<script type="text/javascript" src="//use.typekit.net/wur7jah.js"></script>
+		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+		<!-- JavaScript -->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
 		<script src="/static/js/translate.js"></script>
 	</head>
 	<body>
+		<!-- border -->
+		<div id="v-bar"></div>
+		<!-- header -->
+
+		<!-- sidebar -->
+		<div id="sidebar">
+			<div id="nav_close"><h1>&times;</h1></div>
+			<h1>lemonade</h1>
+			<div><a href="/projects">projects</a></div>
+			<div><a href="/commits">commits</a></div>
+			<ul>
+				<li>hi
+				</li>
+			</ul>
+		</div>
+		<div id="sidebar-border"></div>
 		<header>
+			<div id="nav_open"><img src="http://placekitten.com/100/100" /></div>
+			<h2 id="header-left">source text</h2>
+			<h2 id="header-right">translation</h2>
 		</header>
 		<main>
 			<div id="source">{{ project.source_text }}</div>
 			<div id="translation">
 				<form>
-					<textarea placeholder="This is the translation text" name="translated">{{ translation }}</textarea>
-					<input type="text" name="message" placeholder="commit message here"></input>
-					<input type="submit"></input>
+					<textarea placeholder="What does this mean?" name="translated">{{ translation }}</textarea>
+					<input type="text" name="message" placeholder="Tell me of your adventures and progress."></input>
+					<button id="cat-button">m</button>
+					<input type="submit" value="save"></input>
 				</form>
 			</div>
 		</main>
-		<footer>
-			<div>
-				<a href="/commits">View commits</a>
-			</div>
-			<div>
-				<a href="/projects">View projects</a>
-			</div>
-		</footer>
+		<div id="cat-walk">
+			<div id="cat"></div>
+		</div>
 	</body>
 </html>

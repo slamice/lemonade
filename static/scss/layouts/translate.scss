@@ -1,37 +1,135 @@
 @import 'base/all';
+$font-stack: "franklin-gothic-urw", sans-serif;
+$font-size: 18px;
+$line-height: 28px;
+$header-color: #ccc;
+
+// vertical bar splitting source & editor
+#v-bar {
+	position: fixed;
+	width: 1px;
+	height: 100%;
+	border-right: 1px #ddd dotted;
+	background-color: white;
+	margin: 0 47.3%;
+}
+
+#header-left, #header-right {
+	width: 47.5%;
+	text-align: center;
+	font-family: "ff-meta-serif-web-pro", serif;
+	// font-style: italic;
+}
 
 header {
-	height: 5px;
-	background-color: $red-red;
-	width: 100%;
+	h2 {
+		display: inline-block;
+		color: $header-color;
+		font-family: $font-stack;
+		margin-top: 20px;
+	}
 }
 
 main {
 	background-color: #fff;
+	margin-bottom: 15px;
 	overflow: auto;
-	padding: 30px;
+	padding: 15px 30px;
 
 	#source {
 		float: left;
 		width: 45%;
+		margin: 0;
+		font-family: $font-stack;
+		font-size: $font-size;
+		line-height: $line-height;
 		white-space: pre-line;
-		padding: 10px;
+		-webkit-font-smoothing: antialiased;
 	}
+
 	#translation {
 		float: right;
 		text-align: left;
 		width: 50%;
-		padding: 10px;
 
 		textarea {
 			width: 100%;
 			height: 500px;
+			margin: 0;
+			padding: 0;
+			font-family: $font-stack;
+			font-size: $font-size;
+			line-height: $line-height;
+			white-space: pre-line;
+			-webkit-font-smoothing: antialiased;
+		}
+
+		input[type="text"] {
+			display: inline-block;
+			width: 70%;
+			font-family: $font-stack;
+			font-size: 13px;
+			-webkit-font-smoothing: antialiased;
+		}
+		input[type="submit"] {
+			display: inline-block;
+			width: 70px;
+			border-radius: 999em;
+			background-color: green;
+			font-family: $font-stack;
+			font-size: 13px;
+			margin-left: 5px;
+			text-decoration: none;
+			text-transform: uppercase;
+			-webkit-font-smoothing: antialiased;
+
+			&:hover {
+				background-color: darkgreen;
+			}
+
+			&:focus {
+				border-color: none;
+				box-shadow: none;
+				outline: none;
+			}
+		}
+
+		button {
+			display: inline-block;
+			border-radius: 999em;
+			background-color: red;
+			font-size: 13px;
+			margin-right: 5px;
+			-webkit-font-smoothing: antialiased;
+
+			&:hover {
+				background-color: darkred;
+			}
+
+			&:focus {
+			border-color: none;
+			box-shadow: none;
+			outline: none;
+			}
 		}
 	}
 }
 
-footer {
-	background-color: $red-red;
-	height: 75px;
+$cat-height: 25px;
+#cat-walk {
+	height: $cat-height;
+	padding: 0;
+	margin: 0 auto;
 	width: 100%;
+
+	#cat {
+		position: relative;
+		width: 10px;
+		padding: 0;
+		margin: 0;
+		height: $cat-height;
+		background-color: blue;
+		margin-bottom: 15px;
+		z-index: 100;
+	}
 }

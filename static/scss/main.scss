@@ -2,13 +2,46 @@
 @import 'vendor/base/base';
 @import 'base/all';
 
+$sidebar-color: gray;
+$sidebar-closed-width: 5px;
+
+#nav_open {
+  display: inline-block;
+  position: absolute;
+  padding: 10px 15px;
+}
+
+#nav_close {
+  display: block;
+  margin-right: 20px;
+  text-align: right;
+}
+
+#sidebar-border {
+  position: fixed;
+  width: $sidebar-closed-width;
+  background-color: $sidebar-color;
+  height: 100%; 
+  z-index: 500;
+}
+
+#sidebar {
+  display: none;
+  position: fixed;
+  width: 300px;
+  height: 100%; 
+  background-color: $sidebar-color;
+  z-index: 1000;
+  overflow-y: scroll;
+}
+
 html body {
+  height: 100%;
+  width: 100%;
 	margin: 0;
 	padding: 0;
 	color: $dark-brown;
-
-	a {
-	}
+  overflow-x: none;
 }
 
 textarea,
@@ -23,12 +56,12 @@ select[multiple=multiple] {
   color: $dark-brown;
   font-family: $form-font-family;
   font-size: $form-font-size;
+  margin-top: $base-line-height / 2;
   margin-bottom: $base-line-height / 2;
-  padding: ($base-line-height / 3) ($base-line-height / 3);
+  padding: 0;
   width: 100%;
 
   &:hover {
-    // border-color: $form-border-color-hover;
   }
 
   &:focus {
@@ -38,20 +71,20 @@ select[multiple=multiple] {
   }
 }
 
-%button {
-  -webkit-font-smoothing: antialiased;
-  background-color: $red-red;
-  border-radius: $base-border-radius;
-  color: white;
-  display: inline-block;
-  font-size: $base-font-size;
-  font-weight: bold;
-  line-height: 1;
-  padding: .5em .75em;
-  text-decoration: none;
+// %button {
+//   -webkit-font-smoothing: antialiased;
+//   background-color: green;
+//   border-radius: $base-border-radius;
+//   color: white;
+//   display: inline-block;
+//   font-size: $base-font-size;
+//   font-weight: bold;
+//   line-height: 1;
+//   padding: .5em .75em;
+//   text-decoration: none;
 
-  &:hover {
-    background-color: $washed-red;
-    color: white;
-  }
-}
+//   &:hover {
+//     background-color: darkgreen;
+//     color: white;
+//   }
+// }

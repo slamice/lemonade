@@ -1,27 +1,98 @@
-header {
-  height: 5px;
-  background-color: #dd1b3d;
-  width: 100%; }
+#v-bar {
+  position: fixed;
+  width: 1px;
+  height: 100%;
+  border-right: 1px #ddd dotted;
+  background-color: white;
+  margin: 0 47.3%; }
+
+#header-left, #header-right {
+  width: 47.5%;
+  text-align: center;
+  font-family: "ff-meta-serif-web-pro", serif; }
+
+header h2 {
+  display: inline-block;
+  color: #cccccc;
+  font-family: "franklin-gothic-urw", sans-serif;
+  margin-top: 20px; }
 
 main {
   background-color: #fff;
+  margin-bottom: 15px;
   overflow: auto;
-  padding: 30px; }
+  padding: 15px 30px; }
   main #source {
     float: left;
     width: 45%;
+    margin: 0;
+    font-family: "franklin-gothic-urw", sans-serif;
+    font-size: 18px;
+    line-height: 28px;
     white-space: pre-line;
-    padding: 10px; }
+    -webkit-font-smoothing: antialiased; }
   main #translation {
     float: right;
     text-align: left;
-    width: 50%;
-    padding: 10px; }
+    width: 50%; }
     main #translation textarea {
       width: 100%;
-      height: 500px; }
+      height: 500px;
+      margin: 0;
+      padding: 0;
+      font-family: "franklin-gothic-urw", sans-serif;
+      font-size: 18px;
+      line-height: 28px;
+      white-space: pre-line;
+      -webkit-font-smoothing: antialiased; }
+    main #translation input[type="text"] {
+      display: inline-block;
+      width: 70%;
+      font-family: "franklin-gothic-urw", sans-serif;
+      font-size: 13px;
+      -webkit-font-smoothing: antialiased; }
+    main #translation input[type="submit"] {
+      display: inline-block;
+      width: 70px;
+      border-radius: 999em;
+      background-color: green;
+      font-family: "franklin-gothic-urw", sans-serif;
+      font-size: 13px;
+      margin-left: 5px;
+      text-decoration: none;
+      text-transform: uppercase;
+      -webkit-font-smoothing: antialiased; }
+      main #translation input[type="submit"]:hover {
+        background-color: darkgreen; }
+      main #translation input[type="submit"]:focus {
+        border-color: none;
+        box-shadow: none;
+        outline: none; }
+    main #translation button {
+      display: inline-block;
+      border-radius: 999em;
+      background-color: red;
+      font-size: 13px;
+      margin-right: 5px;
+      -webkit-font-smoothing: antialiased; }
+      main #translation button:hover {
+        background-color: darkred; }
+      main #translation button:focus {
+        border-color: none;
+        box-shadow: none;
+        outline: none; }
 
-footer {
-  background-color: #dd1b3d;
-  height: 75px;
+#cat-walk {
+  height: 25px;
+  padding: 0;
+  margin: 0 auto;
   width: 100%; }
+  #cat-walk #cat {
+    position: relative;
+    width: 10px;
+    padding: 0;
+    margin: 0;
+    height: 25px;
+    background-color: blue;
+    margin-bottom: 15px;
+    z-index: 100; }
