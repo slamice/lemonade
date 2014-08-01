@@ -2,10 +2,7 @@ from flask import Flask, render_template, redirect, request, session
 import model
 import datetime
 import generators
-import nltk
 import keys
-
-tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
 app = Flask(__name__)
 
@@ -50,7 +47,7 @@ def show_editor():
     #takes project_id from either projects list, commit list, or created project
     project_id = session['project_id']
     commit_id = session['commit_id']
-    project = model.Commit.query_commits_by_proj_id(project_id)
+    project = model.Project.query_project_by_id(project_id)
 
     if commit_id == None:
         translation = ""
@@ -74,7 +71,7 @@ def save_commit():
 
     # compare translated to generated text to generate diffs
     translated = request.form.get('translated')
-    after_tokens = tokenizer.tokenize(translated)
+    after_tokens = generators.tokenize(translated)
     if parent_id == None:
         before_tokens = [""]
     else:
@@ -109,7 +106,9 @@ def process_select_project(id):
 
     commits = model.Commit.query_commits_by_proj_id(project_id)
     session['project_id'] = project_id
-    session['commit_id'] = commits[-1].id
+    if commits:
+        session['commit_id'] = commits[-1].id
+    else: session['commit_id'] = None
 
     return redirect('/translate')
 

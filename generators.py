@@ -1,6 +1,20 @@
 import json
 import model
 import difflib
+import nltk
+
+tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+
+# whitespace-saving tokenizer
+def tokenize(string):
+    positions = tokenizer.span_tokenize(string)
+    tokens = []
+    for position in positions:
+        start_pos = position[0]
+        end_pos = position[1]
+        token = string[start_pos:end_pos]
+        tokens.append(token)
+    return tokens
 
 # takes in tokens, json object, returns tokens
 def apply_diffs(tokens, diffs):
