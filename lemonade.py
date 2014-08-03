@@ -48,6 +48,7 @@ def show_editor():
     project_id = session['project_id']
     commit_id = session['commit_id']
     project = model.Project.query_project_by_id(project_id)
+    commits = model.Commit.query_commits_by_proj_id(project_id)[::-1]
 
     if commit_id == None:
         translation = ""
@@ -56,7 +57,8 @@ def show_editor():
         translation = ' '.join(tokens)
 
     return render_template('translate.html', project = project,
-                                             translation = translation)
+                                             translation = translation,
+                                             commits = commits)
 
 # add a new commit to db
 @app.route('/translate', methods=['POST'])

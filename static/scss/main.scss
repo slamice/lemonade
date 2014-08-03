@@ -2,6 +2,7 @@
 @import 'vendor/base/base';
 @import 'base/all';
 
+$font-stack: "franklin-gothic-urw", serif;
 $sidebar-color: gray;
 $sidebar-closed-width: 5px;
 
@@ -31,8 +32,17 @@ $sidebar-closed-width: 5px;
   width: 300px;
   height: 100%; 
   background-color: $sidebar-color;
-  z-index: 1000;
   overflow-y: scroll;
+  padding: 15px;
+  z-index: 1000;
+
+  h1 {
+    font-family: "Arial";
+  }
+
+  a {
+    // font-familiy: "";
+  }
 }
 
 html body {
@@ -42,6 +52,11 @@ html body {
 	padding: 0;
 	color: $dark-brown;
   overflow-x: none;
+  font-family: $font-stack;
+
+  h1, a {
+    font-family: $font-stack;
+  }
 }
 
 textarea,

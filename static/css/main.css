@@ -226,8 +226,11 @@ input[type="submit"] {
   width: 300px;
   height: 100%;
   background-color: gray;
-  z-index: 1000;
-  overflow-y: scroll; }
+  overflow-y: scroll;
+  padding: 15px;
+  z-index: 1000; }
+  #sidebar h1 {
+    font-family: "Arial"; }
 
 html body {
   height: 100%;
@@ -235,7 +238,10 @@ html body {
   margin: 0;
   padding: 0;
   color: #3e3135;
-  overflow-x: none; }
+  overflow-x: none;
+  font-family: "franklin-gothic-urw", serif; }
+  html body h1, html body a {
+    font-family: "franklin-gothic-urw", serif; }
 
 textarea,
 input[type="email"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="url"], input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="time"], input[type="week"],
