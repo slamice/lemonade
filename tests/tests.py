@@ -3,6 +3,7 @@ import sys
 sys.path.append("../")
 from generators import generate_diffs
 from generators import apply_diffs
+from generators import tokenize
 
 import json
 import unittest
@@ -14,7 +15,7 @@ import unittest
 #                                           #
 # ------------------------------------------#
 
-class Test_Diff_Gen(unittest.TestCase):
+class Tests(unittest.TestCase):
 
     def setUp(self):
         pass
@@ -193,6 +194,21 @@ class Test_Diff_Gen(unittest.TestCase):
         expected_result = ["Meow meow meow meow.", "Mana likes to meow.", "Meow.", "Meow.", "Meow meow meow meow meow."]
         
         self.assertEqual(apply_diffs(tokens, diffs), expected_result)
+
+# ------------------------------------------#
+#                                           #
+#   tokenizer is a replacement for nltk's   #
+#    tokenizer that preserves whitespace    #
+#                                           #
+# ------------------------------------------#
+
+    def test_tokenize(self):
+        print "\n\nSeparating a string into tokens."
+
+        string = "Meow meow meow meow. Mana likes to meow. Meow. Meow. Meow meow meow meow meow."
+        expected_result = ["Meow meow meow meow.", "Mana likes to meow.", "Meow.", "Meow.", "Meow meow meow meow meow."]
+        
+        self.assertEqual(tokenize(string), expected_result)
 
 if __name__ == "__main__":
     unittest.main()
