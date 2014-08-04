@@ -1,17 +1,17 @@
+main #display-commits {
+  padding: 50px;
+  margin-left: 315px;
+  color: #3e3135; }
 main #project-title h1 {
   font-weight: 100; }
 main #description {
   font-style: italic;
   margin: 0px 30px; }
-main #display-commits {
-  padding: 50px;
-  margin-left: 315px;
-  color: #3e3135; }
 main .commit-log {
   margin: 35px 0;
   padding: 0 30px;
   border-left: solid 3px #fff491;
-  width: 500px; }
+  max-width: 500px; }
   main .commit-log a {
     color: #3e3135;
     -webkit-transition: color 0.15s ease-in;

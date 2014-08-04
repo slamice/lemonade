@@ -4,6 +4,12 @@
 $sidebar-width: 300px;
 
 main {
+	#display-commits {
+		padding: 50px;
+		margin-left: $sidebar-width + 15px;
+		color: $dark-brown;
+	}
+
 	#project-title {
 		h1 {
 			font-weight: 100;
@@ -15,17 +21,11 @@ main {
 		margin: 0px 30px;
 	}
 
-	#display-commits {
-		padding: 50px;
-		margin-left: $sidebar-width + 15px;
-		color: $dark-brown;
-	}
-
 	.commit-log {
 		margin: 35px 0;
 		padding: 0 30px;
 		border-left: solid 3px $yellow1;
-		width: 500px;
+		max-width: 500px;
 
 		a {
 			color: $dark-brown;
