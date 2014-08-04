@@ -1,0 +1,25 @@
+main #display-projects {
+  padding: 50px;
+  margin-left: 315px;
+  color: #3e3135; }
+  main #display-projects h1 {
+    font-weight: 100; }
+  main #display-projects .project {
+    margin: 35px 0;
+    max-width: 500px;
+    padding: 0 30px;
+    border-left: solid 3px #fff491; }
+    main #display-projects .project a {
+      color: #3e3135;
+      -webkit-transition: color 0.15s ease-in;
+      -moz-transition: color 0.15s ease-in;
+      transition: color 0.15s ease-in; }
+      main #display-projects .project a:hover {
+        color: #775e66; }
+    main #display-projects .project .project-title {
+      font-size: 18px; }
+    main #display-projects .project .timestamp {
+      font-size: 14px; }
+main .source-text {
+  font-size: 14px;
+  font-style: italic; }

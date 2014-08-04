@@ -1,0 +1,45 @@
+@import 'vendor/bourbon/bourbon';
+@import 'base/all';
+
+$sidebar-width: 300px;
+
+main {
+    #display-projects {
+        padding: 50px;
+        margin-left: $sidebar-width + 15px;
+        color: $dark-brown;
+
+        h1 {
+            font-weight: 100;
+        }
+
+        .project {
+        margin: 35px 0;
+        max-width: 500px;
+        padding: 0 30px;
+        border-left: solid 3px $yellow1;
+
+            a {
+                color: $dark-brown;
+                @include transition(color 0.15s ease-in);
+
+                &:hover {
+                    color: lighten($dark-brown, 20%);
+                }
+            }
+
+            .project-title {
+                font-size: 18px;
+            }
+            .description {
+            }
+            .timestamp {
+                font-size: 14px;
+            }
+        }
+    }
+    .source-text {
+        font-size: 14px;
+        font-style: italic;
+    }
+}

@@ -1,22 +1,39 @@
 <html>
 	<head>
+		<!-- Stylesheets -->
 		<link rel="stylesheet" type="text/css" href="/static/css/main.css" />
-		<!-- <link rel="stylesheet" type="text/css" href="/static/css/layouts/view_projects.css" /> -->
+		<link rel="stylesheet" type="text/css" href="/static/css/layouts/view_projects.css" />
+		<!-- Fonts -->
+		<script type="text/javascript" src="//use.typekit.net/wur7jah.js"></script>
+		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+		<!-- Javascript -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+		<script src="/static/js/jquery.timeago.js" type="text/javascript"></script>
+		<script src="/static/js/view_projects.js"></script>
 	</head>
 	<body>
+		{% include 'editor_sidebar.html' %}
 		<header>
 		</header>
+		<main>
+			<div id="display-projects">
+				<h1>Projects you've created</h1>
+				<div id="subtitle">Which project would you like to work on?</div>
+				<!-- Or how about a <a href="/create">new project</a>? -->
 
-		<h1>Look at all these projects!</h1>
-		Or how about a <a href="/create">new project</a>?
-		{% for project in projects %}
-			<div class="project">
-				<div class="project-title"><a href="/select_project/{{ project.id }}">{{ project.title }}</a></div>
-				<div class="description">{{project.description}}</div>
+				{% for project in projects %}
+				<div class="project">
+					<a href="/select_project/{{ project.id }}">
+						<div class="project-title">{{ project.title }}</div>
+						<div class="description">{{project.description}}</div>
+						<div class="timestamp">Updated <abbr class="timeago" title="{{ last_timestamps.get(project.id) }}"></abbr></div>
+					</a>
+				</div>
 				<div class="source-text">{{project.source_text}}</div>
+				{% endfor %}
 			</div>
-		{% endfor %}
-
+		</main>
 		<footer>
 		</footer>
 	</body>
