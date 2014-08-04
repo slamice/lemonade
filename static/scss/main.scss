@@ -3,19 +3,55 @@
 @import 'base/all';
 
 $font-stack: "franklin-gothic-urw", serif;
-$sidebar-color: gray;
+$sidebar-color: $yellow2;
 $sidebar-closed-width: 5px;
+$sidebar-divider: 1px dotted rgba(0, 0, 0, 0.14);
 
 #nav_open {
-  display: inline-block;
   position: absolute;
-  padding: 10px 15px;
+  margin: 10px;
+
+  #hamburger {
+    display: block;
+    background-color: #fff;
+    margin: 0px 20px;
+    height: 24px;
+
+    &:hover {
+      cursor: pointer;
+
+      .bar {
+        background-color: #888;
+      }
+    }
+  }
+
+  .bar {
+    width: 25px;
+    height: 4px;
+    background-color: #ccc;
+    margin-bottom: 4px;
+    border-radius: 4px;
+    @include transition(background-color 0.15s ease-in);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
 
 #nav_close {
   display: block;
   margin-right: 20px;
-  text-align: right;
+  float: right;
+  font-size: 36px;
+  width: 20px;
+  @include transition(color 0.15s ease-in);
+
+  &:hover {
+    color: lighten($dark-brown, 40%);
+    cursor: pointer;
+  }
 }
 
 #sidebar-border {
@@ -33,16 +69,62 @@ $sidebar-closed-width: 5px;
   height: 100%; 
   background-color: $sidebar-color;
   overflow-y: scroll;
-  padding: 15px;
   z-index: 1000;
 
   h1 {
-    font-family: "Arial";
+    color: rgba(0, 0, 0, 0.6);
+    font-weight: 100;
+    margin-bottom: 10px;
+    text-align: center;
+    clear: both;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-variant: small-caps;
+    margin: 30px 0 10px 0;
+    padding: 0 15px;
+  }
+
+  li {
+    @include transition(background-color 0.15s ease-in);
+    border-bottom: $sidebar-divider;
+   
+    &:first-child {
+      border-top: $sidebar-divider;
+    }
+
+    &:hover {
+      background-color: lighten($sidebar-color, 6%);
+    }
+
+    a {
+      color: darken($dark-brown, 10%);
+      display: block;
+      padding: 5px 15px;
+    }
+
+    abbr {
+      color: rgba(0, 0, 0, 0.4);
+      font-size: 13px;
+    }
   }
 
   a {
     // font-familiy: "";
   }
+}
+
+#overlay {
+  background: rgba(0, 0, 0, 0.2);
+  display: none;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2;
 }
 
 html body {
@@ -85,21 +167,3 @@ select[multiple=multiple] {
     outline: none;
   }
 }
-
-// %button {
-//   -webkit-font-smoothing: antialiased;
-//   background-color: green;
-//   border-radius: $base-border-radius;
-//   color: white;
-//   display: inline-block;
-//   font-size: $base-font-size;
-//   font-weight: bold;
-//   line-height: 1;
-//   padding: .5em .75em;
-//   text-decoration: none;
-
-//   &:hover {
-//     background-color: darkgreen;
-//     color: white;
-//   }
-// }

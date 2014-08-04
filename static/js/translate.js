@@ -1,12 +1,28 @@
 $(document).ready(function(){
 
+    var source_height = $("#source").height();
+    var footer_height = $("#footer").height();
+
+    // $("#translation textarea").get(0).style.height=text_height;
+
+    // timestamper
+    $("abbr.timeago").timeago();
+
     // toggle sidebar
     $("#nav_open").click(function(){
         $("#sidebar").toggle('slide', 500);
+        $("#overlay").show().animate({
+            opacity: 1
+        }, 150);
     });
 
     $("#nav_close").click(function(){
         $("#sidebar").toggle('slide', 500);
+        $("#overlay").animate({
+            opacity: 0
+        }, 150, function(){
+            $(this).hide();
+        });
     });
 
     // focus on textarea + move cursor to end of text
@@ -20,17 +36,29 @@ $(document).ready(function(){
     // magicat!
     $("#cat-button").click(function(e){
         e.preventDefault();
+        console.log("RUN MANA, RUN!");
+        
         var width = $(window).width();
-        var cat_width = $("#cat").width();
-        $("#cat").animate({left: width-cat_width}, 1000);
+        var cat_width = $("#cat img").width();
+        var duration = 20000; // 20 seconds
+
+        $("#cat").animate({
+            left: width+cat_width
+        }, {
+            duration : duration,
+            easing   : 'linear',
+            complete : function() {
+                $('#cat').css('left', cat_width * -1);
+            }
+        });
     });
 
     // save commit + prevent refresh
     $("#translation").submit(function(e){
         $.ajax({
-            type: "POST",
-            url: "/translate",
-            data: $("form").serialize()
+            type : "POST",
+            url  : "/translate",
+            data : $("form").serialize()
         });
         e.preventDefault();
         $("input[name*='message']").val('');

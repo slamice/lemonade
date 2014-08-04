@@ -1,50 +1,55 @@
+@import 'vendor/bourbon/bourbon';
+// @import 'vendor/base/base';
 @import 'base/all';
+
 $font-stack: "franklin-gothic-urw", sans-serif;
 $font-size: 18px;
 $line-height: 28px;
-$header-color: #ccc;
+$header-color: #aaa;
+$border-color: #ddd;
+$footer-height: 50px;
 
 // vertical bar splitting source & editor
 #v-bar {
 	position: fixed;
 	width: 1px;
 	height: 100%;
-	border-right: 1px #ddd dotted;
+	border-right: 1px $border-color dotted;
 	background-color: white;
 	margin: 0 47.3%;
 }
 
 #header-left, #header-right {
-	width: 47.5%;
-	text-align: center;
-	font-family: "ff-meta-serif-web-pro", serif;
-	// font-style: italic;
+	color: $header-color;
+	display: inline-block;
+	text-align: left;
+	font-family: "ronnia-condensed", sans-serif;
+	font-variant: small-caps;
+	font-size: 24px;
+	border-bottom: 1px solid #ccc;
+	margin: 20px 0 10px 0;
+	padding: 0;
 }
 
 header {
-	h2 {
-		display: inline-block;
-		color: $header-color;
-		font-family: $font-stack;
-		margin-top: 20px;
-	}
 }
 
 main {
 	background-color: #fff;
-	margin-bottom: 15px;
+	margin-bottom: 50px + $footer-height;
 	overflow: auto;
 	padding: 15px 30px;
 
 	#source {
 		float: left;
 		width: 45%;
-		margin: 0;
 		font-family: $font-stack;
 		font-size: $font-size;
 		line-height: $line-height;
-		white-space: pre-line;
 		-webkit-font-smoothing: antialiased;
+		#source-text {
+			white-space: pre-line;
+		}
 	}
 
 	#translation {
@@ -63,6 +68,24 @@ main {
 			white-space: pre-line;
 			-webkit-font-smoothing: antialiased;
 		}
+	}
+}
+
+footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+
+	#ft-wrapper {
+		background-color: white;
+		border-top: 1px $border-color dotted;
+		height: $footer-height;
+		padding: 15px;
+	}
+
+	#save {
+		width: 50%;
+		margin-left: 50%;
 
 		input[type="text"] {
 			display: inline-block;
@@ -71,11 +94,12 @@ main {
 			font-size: 13px;
 			-webkit-font-smoothing: antialiased;
 		}
-		input[type="submit"] {
+
+		button[type="submit"] {
 			display: inline-block;
 			width: 70px;
 			border-radius: 999em;
-			background-color: green;
+			background-color: lighten($go-green, 10%);
 			font-family: $font-stack;
 			font-size: 13px;
 			margin-left: 5px;
@@ -84,7 +108,7 @@ main {
 			-webkit-font-smoothing: antialiased;
 
 			&:hover {
-				background-color: darkgreen;
+				background-color: $go-green;
 			}
 
 			&:focus {
@@ -94,42 +118,25 @@ main {
 			}
 		}
 
-		button {
+		img {
 			display: inline-block;
-			border-radius: 999em;
-			background-color: red;
-			font-size: 13px;
-			margin-right: 5px;
-			-webkit-font-smoothing: antialiased;
+			margin: 0 5px 0 5px;
+			vertical-align: middle;
 
 			&:hover {
-				background-color: darkred;
-			}
-
-			&:focus {
-			border-color: none;
-			box-shadow: none;
-			outline: none;
+				@include transform(rotate(10deg));
 			}
 		}
 	}
-}
 
-$cat-height: 25px;
-#cat-walk {
-	height: $cat-height;
-	padding: 0;
-	margin: 0 auto;
-	width: 100%;
-
+	$cat-height: 50px;
+	$cat-width: 66px;
 	#cat {
 		position: relative;
-		width: 10px;
 		padding: 0;
 		margin: 0;
+		left: -$cat-width;
 		height: $cat-height;
-		background-color: blue;
-		margin-bottom: 15px;
 		z-index: 100;
 	}
 }

@@ -10,43 +10,52 @@
 		<!-- JavaScript -->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+		<script src="/static/js/jquery.timeago.js" type="text/javascript"></script>
 		<script src="/static/js/translate.js"></script>
+
 	</head>
 	<body>
 		<!-- border -->
 		<div id="v-bar"></div>
-		<!-- header -->
-
 		<!-- sidebar -->
-		<div id="sidebar">
-			<div id="nav_close"><h1>&times;</h1></div>
-			<h1>lemonade</h1>
-			<div><a href="/projects">projects</a></div>
-			<div><a href="/commits">commits</a></div>
-			<ul>
-				<li>hi
-				</li>
-			</ul>
-		</div>
-		<div id="sidebar-border"></div>
+		{% include 'editor_sidebar.html' %}
+		<!-- header -->
 		<header>
-			<div id="nav_open"><img src="http://placekitten.com/100/100" /></div>
-			<h2 id="header-left">source text</h2>
-			<h2 id="header-right">translation</h2>
+			<div id="nav_open">
+				<div id="hamburger">
+					<div class="bar"></div>
+					<div class="bar"></div>
+					<div class="bar"></div>
+				</div>
+				<!-- <div id="lemonade"></div> -->
+			</div>
 		</header>
+		<!-- main -->
 		<main>
-			<div id="source">{{ project.source_text }}</div>
+			<div id="source">
+				<h2 id="header-left">source text</h2>
+				<div id="source-text">{{ project.source_text }}</div>
+			</div>
 			<div id="translation">
-				<form>
+				<form id="editor">
+					<h2 id="header-right">translation</h2>
 					<textarea placeholder="What does this mean?" name="translated">{{ translation }}</textarea>
-					<input type="text" name="message" placeholder="Tell me of your adventures and progress."></input>
-					<button id="cat-button">m</button>
-					<input type="submit" value="save"></input>
+					
 				</form>
 			</div>
 		</main>
-		<div id="cat-walk">
-			<div id="cat"></div>
-		</div>
+		<!-- footer -->
+		<footer>
+			<div id="cat">
+				<img src="/static/imgs/mana-run-small.gif" />
+			</div>
+			<div id="ft-wrapper">
+				<div id="save">
+					<input form="editor" type="text" name="message" placeholder="Tell me of your adventures and progress." required></input>
+					<img src="/static/imgs/cat-button.png" id="cat-button" />
+					<button form="editor" type="submit">save</input>
+				</div>
+			</div>
+		</footer>
 	</body>
 </html>

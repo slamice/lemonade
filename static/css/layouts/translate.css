@@ -2,35 +2,35 @@
   position: fixed;
   width: 1px;
   height: 100%;
-  border-right: 1px #ddd dotted;
+  border-right: 1px #dddddd dotted;
   background-color: white;
   margin: 0 47.3%; }
 
 #header-left, #header-right {
-  width: 47.5%;
-  text-align: center;
-  font-family: "ff-meta-serif-web-pro", serif; }
-
-header h2 {
+  color: #aaaaaa;
   display: inline-block;
-  color: #cccccc;
-  font-family: "franklin-gothic-urw", sans-serif;
-  margin-top: 20px; }
+  text-align: left;
+  font-family: "ronnia-condensed", sans-serif;
+  font-variant: small-caps;
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  margin: 20px 0 10px 0;
+  padding: 0; }
 
 main {
   background-color: #fff;
-  margin-bottom: 15px;
+  margin-bottom: 100px;
   overflow: auto;
   padding: 15px 30px; }
   main #source {
     float: left;
     width: 45%;
-    margin: 0;
     font-family: "franklin-gothic-urw", sans-serif;
     font-size: 18px;
     line-height: 28px;
-    white-space: pre-line;
     -webkit-font-smoothing: antialiased; }
+    main #source #source-text {
+      white-space: pre-line; }
   main #translation {
     float: right;
     text-align: left;
@@ -45,54 +45,56 @@ main {
       line-height: 28px;
       white-space: pre-line;
       -webkit-font-smoothing: antialiased; }
-    main #translation input[type="text"] {
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%; }
+  footer #ft-wrapper {
+    background-color: white;
+    border-top: 1px #dddddd dotted;
+    height: 50px;
+    padding: 15px; }
+  footer #save {
+    width: 50%;
+    margin-left: 50%; }
+    footer #save input[type="text"] {
       display: inline-block;
       width: 70%;
       font-family: "franklin-gothic-urw", sans-serif;
       font-size: 13px;
       -webkit-font-smoothing: antialiased; }
-    main #translation input[type="submit"] {
+    footer #save button[type="submit"] {
       display: inline-block;
       width: 70px;
       border-radius: 999em;
-      background-color: green;
+      background-color: #54b37e;
       font-family: "franklin-gothic-urw", sans-serif;
       font-size: 13px;
       margin-left: 5px;
       text-decoration: none;
       text-transform: uppercase;
       -webkit-font-smoothing: antialiased; }
-      main #translation input[type="submit"]:hover {
-        background-color: darkgreen; }
-      main #translation input[type="submit"]:focus {
+      footer #save button[type="submit"]:hover {
+        background-color: #419365; }
+      footer #save button[type="submit"]:focus {
         border-color: none;
         box-shadow: none;
         outline: none; }
-    main #translation button {
+    footer #save img {
       display: inline-block;
-      border-radius: 999em;
-      background-color: red;
-      font-size: 13px;
-      margin-right: 5px;
-      -webkit-font-smoothing: antialiased; }
-      main #translation button:hover {
-        background-color: darkred; }
-      main #translation button:focus {
-        border-color: none;
-        box-shadow: none;
-        outline: none; }
-
-#cat-walk {
-  height: 25px;
-  padding: 0;
-  margin: 0 auto;
-  width: 100%; }
-  #cat-walk #cat {
+      margin: 0 5px 0 5px;
+      vertical-align: middle; }
+      footer #save img:hover {
+        -webkit-transform: rotate(10deg);
+        -moz-transform: rotate(10deg);
+        -ms-transform: rotate(10deg);
+        -o-transform: rotate(10deg);
+        transform: rotate(10deg); }
+  footer #cat {
     position: relative;
-    width: 10px;
     padding: 0;
     margin: 0;
-    height: 25px;
-    background-color: blue;
-    margin-bottom: 15px;
+    left: -66px;
+    height: 50px;
     z-index: 100; }

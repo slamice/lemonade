@@ -1,14 +1,28 @@
 <div id="sidebar">
-    <div id="nav_close">mew</div>
+    <div id="nav_close">&times;</div>
     <h1>lemonade</h1>
-    <div><a href="/projects">projects</a></div>
-    <div><a href="/commits">commits</a></div>
+
+    <ul>
+        <li>
+            <a href="/projects">projects</a>
+        </li>
+        <li>
+            <a href="/commits">commits</a>
+        </li>
+    </ul>
+
+    <h3>current project</h3>
     <ul>
         {% for commit in commits %}
-        <li><a href="/select_commit/{{ commit.id }}">{{ commit.message }}</a><br>
-        {{ commit.timestamp }}</li>
+        <li>
+            <a href="/select_commit/{{ commit.id }}">
+                <div>{{ commit.message }}</div>
+                <abbr class="timeago" title="{{ commit.timestamp }}"></abbr>
+            </a>
+        </li>
         {% endfor %}
     </ul>
 </div>
 
 <div id="sidebar-border"></div>
+<div id="overlay"></div>
