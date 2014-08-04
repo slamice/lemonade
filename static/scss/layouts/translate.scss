@@ -1,5 +1,4 @@
 @import 'vendor/bourbon/bourbon';
-// @import 'vendor/base/base';
 @import 'base/all';
 
 $font-stack: "franklin-gothic-urw", sans-serif;
@@ -106,6 +105,7 @@ footer {
 			text-decoration: none;
 			text-transform: uppercase;
 			-webkit-font-smoothing: antialiased;
+			@include transition(background-color 0.15s ease-in);
 
 			&:hover {
 				background-color: $go-green;
@@ -125,6 +125,7 @@ footer {
 
 			&:hover {
 				@include transform(rotate(10deg));
+				cursor: pointer;
 			}
 		}
 	}

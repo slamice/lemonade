@@ -1,9 +1,8 @@
 $(document).ready(function(){
 
-    var source_height = $("#source").height();
+    var source_height = $("#source-text").height();
     var footer_height = $("#footer").height();
-
-    // $("#translation textarea").get(0).style.height=text_height;
+    $("#translation textarea").css("height", source_height-footer_height);
 
     // timestamper
     $("abbr.timeago").timeago();
