@@ -98,7 +98,7 @@ def save_commit():
 # show all existing projects
 @app.route('/projects', methods=['GET'])
 def show_projects():
-    projects = model.Project.query_all_projects()
+    projects = model.Project.query_all_projects()[::-1]
     return render_template('view_projects.html', projects = projects)
 
 # display latest version on translate page for selected project
@@ -118,9 +118,17 @@ def process_select_project(id):
 @app.route('/commits', methods=['GET'])
 def show_commits():
     project_id = session['project_id']
-    commits = model.Commit.query_commits_by_proj_id(project_id)
+    commits = model.Commit.query_commits_by_proj_id(project_id)[::-1]
 
-    return render_template('view_commits.html', commits = commits)
+    previews = {}
+    for commit in commits:
+        text = generators.construct_commit_id(commit.id)
+        text = ' '.join(text)
+        previews[commit.id] = text[-140:]
+
+    return render_template('view_commits.html',
+                            commits = commits,
+                            previews = previews)
 
 # display version associated with requested commit
 @app.route('/select_commit/<int:id>')
