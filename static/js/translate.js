@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+    // edit height of editor
     var source_height = $("#source-text").height();
     var footer_height = $("#footer").height();
     $("#translation textarea").css("height", source_height-footer_height);
