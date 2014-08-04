@@ -99,7 +99,15 @@ def save_commit():
 @app.route('/projects', methods=['GET'])
 def show_projects():
     projects = model.Project.query_all_projects()[::-1]
-    return render_template('view_projects.html', projects = projects)
+
+    last_timestamps = {}
+    for project in projects:
+        last_commit = model.Commit.query_commits_by_proj_id(project.id)[::-1][0]
+        last_timestamps[project.id] = last_commit.timestamp
+
+    return render_template('view_projects.html', 
+                            projects = projects,
+                            last_timestamps = last_timestamps)
 
 # display latest version on translate page for selected project
 @app.route('/select_project/<int:id>')
@@ -123,8 +131,8 @@ def show_commits():
     previews = {}
     for commit in commits:
         text = generators.construct_commit_id(commit.id)
-        text = ' '.join(text)
-        previews[commit.id] = text[-140:]
+        # displays last 2 sentences
+        previews[commit.id] = ' '.join(text[-2:])
 
     return render_template('view_commits.html',
                             commits = commits,
