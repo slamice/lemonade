@@ -1,24 +1,36 @@
 <html>
 	<head>
+		<!-- Stylesheets -->
 		<link rel="stylesheet" type="text/css" href="/static/css/main.css" />
 		<link rel="stylesheet" type="text/css" href="/static/css/layouts/view_commits.css" />
+		<!-- Fonts -->
+		<script type="text/javascript" src="//use.typekit.net/wur7jah.js"></script>
+		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+		<!-- Javascript -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+		<script src="/static/js/jquery.timeago.js" type="text/javascript"></script>
+		<script src="/static/js/view_commits.js"></script>
 	</head>
 	<body>
+		{% include 'editor_sidebar.html' %}
 		<header>
-			Yay yay yay some sort of header
 		</header>
-
-		<p>All the commits for</p>
-		<div class="project-title"><h1>{{commits[0].project.title}}</h1></div>
-		{% for commit in commits %}
-		<div class="commit-log">
-			<div class="commit-message"><a href="/select_commit/{{commit.id}}">{{commit.message}}</a></div>
-			<div class="commit-datetime">{{commit.timestamp}}</div>
-			<!-- For now, the diffs are whole versions of the translation
-			Maybe make a separate page for the diffs later? -->
-			<div class="diffs">{{commit.translation}}</div>
-		</div>
-		{% endfor %}
+		<main>
+			<div id="display-commits">
+				<div id="project-title"><h1>{{commits[0].project.title}}</h1></div>
+				<div id="description">{{commits[0].project.description}}</div>
+				{% for commit in commits %}
+				<div class="commit-log">
+					<a href="/select_commit/{{commit.id}}">
+					<div class="commit-message">{{commit.message}}</div>
+					<div class="timestamp"><abbr class="timeago" title="{{commit.timestamp}}"></abbr></div>
+					<div class="preview">{{previews.get(commit.id)}}</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+		</main>
 		<footer>
 		</footer>
 	</body>

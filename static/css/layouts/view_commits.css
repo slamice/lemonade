@@ -1,2 +1,27 @@
-.commit-log {
-  padding: 20px; }
+main #project-title h1 {
+  font-weight: 100; }
+main #description {
+  font-style: italic;
+  margin: 0px 30px; }
+main #display-commits {
+  padding: 50px;
+  margin-left: 315px;
+  color: #3e3135; }
+main .commit-log {
+  margin: 35px 0;
+  padding: 0 30px;
+  border-left: solid 3px #fff491;
+  width: 500px; }
+  main .commit-log a {
+    color: #3e3135;
+    -webkit-transition: color 0.15s ease-in;
+    -moz-transition: color 0.15s ease-in;
+    transition: color 0.15s ease-in; }
+    main .commit-log a:hover {
+      color: #775e66; }
+  main .commit-log .commit-message {
+    font-size: 18px; }
+  main .commit-log .timestamp {
+    font-size: 14px; }
+  main .commit-log .preview {
+    font-size: 14px; }

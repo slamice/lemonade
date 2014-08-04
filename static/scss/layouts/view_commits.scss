@@ -1,16 +1,49 @@
-.commit-log {
-	padding: 20px;
+@import 'vendor/bourbon/bourbon';
+@import 'base/all';
 
-	.project-title {
+$sidebar-width: 300px;
 
+main {
+	#project-title {
+		h1 {
+			font-weight: 100;
+		}
 	}
-	.commit-datetime {
 
+	#description {
+		font-style: italic;
+		margin: 0px 30px;
 	}
-	.commit-message {
 
+	#display-commits {
+		padding: 50px;
+		margin-left: $sidebar-width + 15px;
+		color: $dark-brown;
 	}
-	.diffs {
-		
+
+	.commit-log {
+		margin: 35px 0;
+		padding: 0 30px;
+		border-left: solid 3px $yellow1;
+		width: 500px;
+
+		a {
+			color: $dark-brown;
+			@include transition(color 0.15s ease-in);
+
+			&:hover {
+				color: lighten($dark-brown, 20%);
+			}
+		}
+
+		.commit-message {
+			font-size: 18px;
+		}
+		.timestamp {
+			font-size: 14px;
+		}
+		.preview {
+			font-size: 14px;
+		}
 	}
 }
