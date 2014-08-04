@@ -98,16 +98,23 @@ def save_commit():
 # show all existing projects
 @app.route('/projects', methods=['GET'])
 def show_projects():
+    project_id = session['project_id']
     projects = model.Project.query_all_projects()[::-1]
+    commits = []
 
     last_timestamps = {}
     for project in projects:
-        last_commit = model.Commit.query_commits_by_proj_id(project.id)[::-1][0]
+        proj_commits = model.Commit.query_commits_by_proj_id(project.id)[::-1]
+        if project.id == project_id:
+            commits = proj_commits
+
+        last_commit = commits[0]
         last_timestamps[project.id] = last_commit.timestamp
 
     return render_template('view_projects.html', 
                             projects = projects,
-                            last_timestamps = last_timestamps)
+                            last_timestamps = last_timestamps,
+                            commits = commits)
 
 # display latest version on translate page for selected project
 @app.route('/select_project/<int:id>')
