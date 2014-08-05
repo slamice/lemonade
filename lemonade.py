@@ -108,8 +108,11 @@ def show_projects():
         if project.id == project_id:
             commits = proj_commits
 
-        last_commit = commits[0]
-        last_timestamps[project.id] = last_commit.timestamp
+        if commits:
+            last_commit = commits[0]
+            last_timestamps[project.id] = last_commit.timestamp
+        else:
+            last_timestamps[project.id] = None
 
     return render_template('view_projects.html', 
                             projects = projects,
