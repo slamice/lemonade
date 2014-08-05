@@ -1,4 +1,4 @@
-#!/bin/bash/
+#!/bin/bash -eux
 
 # virtual environment
 virtualenv env
