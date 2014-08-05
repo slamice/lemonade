@@ -3,7 +3,8 @@ import model
 import difflib
 import nltk
 
-tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+# tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+tokenizer = nltk.data.load("nltk:english.pickle")
 
 # whitespace-saving tokenizer
 def tokenize(string):
