@@ -1,7 +1,6 @@
 @import 'vendor/bourbon/bourbon';
 @import 'base/all';
 
-$font-stack: "franklin-gothic-urw", sans-serif;
 $font-size: 18px;
 $line-height: 28px;
 $header-color: #aaa;
@@ -10,134 +9,137 @@ $footer-height: 50px;
 
 // vertical bar splitting source & editor
 #v-bar {
-	position: fixed;
-	width: 1px;
-	height: 100%;
-	border-right: 1px $border-color dotted;
-	background-color: white;
-	margin: 0 47.3%;
+  position: fixed;
+  width: 1px;
+  height: 100%;
+  border-right: 1px $border-color dotted;
+  background-color: white;
+  margin: 0 47.3%;
 }
 
 #header-left, #header-right {
-	color: $header-color;
-	display: inline-block;
-	text-align: left;
-	font-family: "ronnia-condensed", sans-serif;
-	font-variant: small-caps;
-	font-size: 24px;
-	border-bottom: 1px solid #ccc;
-	margin: 20px 0 10px 0;
-	padding: 0;
+  color: $header-color;
+  display: inline-block;
+  text-align: left;
+  font-family: "ronnia-condensed", sans-serif;
+  font-variant: small-caps;
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  margin: 20px 0 10px 0;
+  padding: 0;
 }
 
 header {
 }
 
 main {
-	background-color: #fff;
-	margin-bottom: 50px + $footer-height;
-	overflow: auto;
-	padding: 15px 30px;
+  background-color: #fff;
+  margin-bottom: 50px + $footer-height;
+  overflow: auto;
+  padding: 15px 30px;
 
-	#source {
-		float: left;
-		width: 45%;
-		font-family: $font-stack;
-		font-size: $font-size;
-		line-height: $line-height;
-		-webkit-font-smoothing: antialiased;
-		#source-text {
-			white-space: pre-line;
-		}
-	}
+  #source {
+    float: left;
+    width: 45%;
+    font-family: $font-stack;
+    font-size: $font-size;
+    line-height: $line-height;
+    -webkit-font-smoothing: antialiased;
+    #source-text {
+      white-space: pre-line;
+    }
+  }
 
-	#translation {
-		float: right;
-		text-align: left;
-		width: 50%;
+  #translation {
+    float: right;
+    text-align: left;
+    width: 50%;
 
-		textarea {
-			width: 100%;
-			height: 500px;
-			margin: 0;
-			padding: 0;
-			font-family: $font-stack;
-			font-size: $font-size;
-			line-height: $line-height;
-			white-space: pre-line;
-			-webkit-font-smoothing: antialiased;
-		}
-	}
+    textarea {
+      width: 100%;
+      height: 500px;
+      margin: 0;
+      padding: 0;
+      color: $dark-brown;
+      font-family: $font-stack;
+      font-size: $font-size;
+      line-height: $line-height;
+      white-space: pre-line;
+      -webkit-font-smoothing: antialiased;
+    }
+  }
 }
 
 footer {
-	position: fixed;
-	bottom: 0;
-	width: 100%;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 
-	#ft-wrapper {
-		background-color: white;
-		border-top: 1px $border-color dotted;
-		height: $footer-height;
-		padding: 15px;
-	}
+  #ft-wrapper {
+    background-color: white;
+    border-top: 1px $border-color dotted;
+    height: $footer-height;
+    padding: 15px;
+  }
 
-	#save {
-		width: 50%;
-		margin-left: 50%;
+  #save {
+    width: 50%;
+    margin-left: 50%;
 
-		input[type="text"] {
-			display: inline-block;
-			width: 70%;
-			font-family: $font-stack;
-			font-size: 13px;
-			-webkit-font-smoothing: antialiased;
-		}
+    
 
-		button[type="submit"] {
-			display: inline-block;
-			width: 70px;
-			border-radius: 999em;
-			background-color: lighten($go-green, 10%);
-			font-family: $font-stack;
-			font-size: 13px;
-			margin-left: 5px;
-			text-decoration: none;
-			text-transform: uppercase;
-			-webkit-font-smoothing: antialiased;
-			@include transition(background-color 0.15s ease-in);
+    input[type="text"] {
+      display: inline-block;
+      width: 70%;
+      font-family: $font-stack;
+      font-size: 13px;
+      -webkit-font-smoothing: antialiased;
+    }
 
-			&:hover {
-				background-color: $go-green;
-			}
+    button[type="submit"] {
+      display: inline-block;
+      width: 70px;
+      border-radius: 999em;
+      background-color: lighten($go-green, 10%);
+      font-family: $font-stack;
+      font-size: 13px;
+      margin-left: 5px;
+      text-decoration: none;
+      text-transform: uppercase;
+      -webkit-font-smoothing: antialiased;
+      @include transition(background-color 0.15s ease-in);
 
-			&:focus {
-				border-color: none;
-				box-shadow: none;
-				outline: none;
-			}
-		}
+      &:hover {
+        background-color: $go-green;
+      }
 
-		img {
-			display: inline-block;
-			margin: 0 5px 0 5px;
-			vertical-align: middle;
+      &:focus {
+        border-color: none;
+        box-shadow: none;
+        outline: none;
+      }
+    }
 
-			&:hover {
-				@include transform(rotate(10deg));
-				cursor: pointer;
-			}
-		}
-	}
+    img {
+      display: inline-block;
+      margin: 0 5px 0 5px;
+      vertical-align: middle;
 
-	$cat-height: 50px;
-	$cat-width: 66px;
-	#cat {
-		position: relative;
-		padding: 0;
-		margin: 0;
-		left: -$cat-width;
-		height: $cat-height;
-		z-index: 100;
-	}
+      &:hover {
+        @include transform(rotate(10deg));
+        cursor: pointer;
+      }
+    }
+  }
+
+  $cat-height: 50px;
+  $cat-width: 66px;
+  #cat {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    left: -$cat-width;
+    height: $cat-height;
+    z-index: 100;
+  }
 }

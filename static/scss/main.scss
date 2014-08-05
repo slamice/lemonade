@@ -124,7 +124,6 @@ $sidebar-divider: 1px dotted rgba(0, 0, 0, 0.14);
 }
 
 html body {
-  height: 100%;
   width: 100%;
 	margin: 0;
 	padding: 0;
@@ -137,29 +136,20 @@ html body {
   }
 }
 
-textarea,
-#{$all-text-inputs},
-select[multiple=multiple] {
-  @include box-sizing(border-box);
-  @include transition(border-color);
-  background-color: white;
-  border-radius: $form-border-radius;
-  border: 0;
+textarea, #{$all-text-inputs}, select[multiple=multiple] {
+  background-color: #fff;
+  border: none;
+  border-radius: 0;
   box-shadow: none;
-  color: $dark-brown;
-  font-family: $form-font-family;
-  font-size: $form-font-size;
-  margin-top: $base-line-height / 2;
-  margin-bottom: $base-line-height / 2;
-  padding: 0;
-  width: 100%;
+  font-family: $font-stack;
+  -webkit-font-smoothing: antialiased;
 
   &:hover {
-  }
-
-  &:focus {
-    border-color: none;
+    border: none;
     box-shadow: none;
-    outline: none;
+  }
+  &:focus {
+    border: none;
+    box-shadow: none;
   }
 }

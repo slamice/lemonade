@@ -1,9 +1,13 @@
 $(document).ready(function(){
 
     // edit height of editor
+    var window_height = $(window).height();
     var source_height = $("#source-text").height();
     var footer_height = $("#footer").height();
-    $("#translation textarea").css("height", source_height-footer_height);
+    $("#translation textarea").css({
+        "height"     : source_height-footer_height,
+        "min-height" : window_height-footer_height-200
+    });
 
     // timestamper
     $("abbr.timeago").timeago();
@@ -36,11 +40,9 @@ $(document).ready(function(){
     // magicat!
     $("#cat-button").click(function(e){
         e.preventDefault();
-        console.log("RUN MANA, RUN!");
-        
         var width = $(window).width();
         var cat_width = $("#cat img").width();
-        var duration = 20000; // 20 seconds
+        var duration = 10000; // 10 seconds
 
         $("#cat").animate({
             left: width+cat_width

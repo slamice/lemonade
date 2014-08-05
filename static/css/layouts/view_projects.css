@@ -1,3 +1,6 @@
+main span {
+  display: inline-block;
+  border-bottom: 1px solid #fbe876; }
 main #display-projects {
   padding: 50px;
   margin-left: 315px;

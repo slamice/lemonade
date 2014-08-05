@@ -1,16 +1,100 @@
-header {
-  height: 5px;
-  background-color: #dd1b3d;
-  width: 100%; }
-
-main {
-  width: 50%;
-  margin: 30px auto; }
-  main form {
-    width: 600px; }
-    main form textarea {
-      height: 400px; }
-
-footer {
-  background-color: #dd1b3d;
-  height: 75px; }
+main #create {
+  max-width: 600px;
+  margin-left: 315px;
+  padding: 50px 0 0 50px;
+  color: #3e3135; }
+  main #create h1 {
+    font-weight: 100; }
+  main #create form {
+    padding: 15px 0; }
+    main #create form textarea, main #create form input[type="email"], main #create form input[type="number"], main #create form input[type="password"], main #create form input[type="search"], main #create form input[type="tel"], main #create form input[type="text"], main #create form input[type="url"], main #create form input[type="color"], main #create form input[type="date"], main #create form input[type="datetime"], main #create form input[type="datetime-local"], main #create form input[type="month"], main #create form input[type="time"], main #create form input[type="week"], main #create form select[multiple=multiple] {
+      -webkit-transition: all 0.15s ease-in;
+      -moz-transition: all 0.15s ease-in;
+      transition: all 0.15s ease-in;
+      background-color: #fff;
+      border: none;
+      border-bottom: 2px solid #fff9c4;
+      border-radius: 0;
+      box-shadow: none;
+      color: #3e3135;
+      font-color: #3e3135;
+      font-family: "franklin-gothic-urw", sans-serif;
+      font-size: 18px;
+      margin-bottom: 30px;
+      padding: 5px;
+      -webkit-font-smoothing: antialiased; }
+      main #create form textarea::-webkit-input-placeholder, main #create form input[type="email"]::-webkit-input-placeholder, main #create form input[type="number"]::-webkit-input-placeholder, main #create form input[type="password"]::-webkit-input-placeholder, main #create form input[type="search"]::-webkit-input-placeholder, main #create form input[type="tel"]::-webkit-input-placeholder, main #create form input[type="text"]::-webkit-input-placeholder, main #create form input[type="url"]::-webkit-input-placeholder, main #create form input[type="color"]::-webkit-input-placeholder, main #create form input[type="date"]::-webkit-input-placeholder, main #create form input[type="datetime"]::-webkit-input-placeholder, main #create form input[type="datetime-local"]::-webkit-input-placeholder, main #create form input[type="month"]::-webkit-input-placeholder, main #create form input[type="time"]::-webkit-input-placeholder, main #create form input[type="week"]::-webkit-input-placeholder, main #create form select[multiple=multiple]::-webkit-input-placeholder {
+        -webkit-transition: all 0.15s ease-in;
+        -moz-transition: all 0.15s ease-in;
+        transition: all 0.15s ease-in;
+        color: #9e848c;
+        font-family: "franklin-gothic-urw", sans-serif;
+        font-size: 16px;
+        font-weight: 200;
+        -webkit-font-smoothing: antialiased; }
+      main #create form textarea::-moz-placeholder, main #create form input[type="email"]::-moz-placeholder, main #create form input[type="number"]::-moz-placeholder, main #create form input[type="password"]::-moz-placeholder, main #create form input[type="search"]::-moz-placeholder, main #create form input[type="tel"]::-moz-placeholder, main #create form input[type="text"]::-moz-placeholder, main #create form input[type="url"]::-moz-placeholder, main #create form input[type="color"]::-moz-placeholder, main #create form input[type="date"]::-moz-placeholder, main #create form input[type="datetime"]::-moz-placeholder, main #create form input[type="datetime-local"]::-moz-placeholder, main #create form input[type="month"]::-moz-placeholder, main #create form input[type="time"]::-moz-placeholder, main #create form input[type="week"]::-moz-placeholder, main #create form select[multiple=multiple]::-moz-placeholder {
+        -webkit-transition: all 0.15s ease-in;
+        -moz-transition: all 0.15s ease-in;
+        transition: all 0.15s ease-in;
+        color: #9e848c;
+        font-family: "franklin-gothic-urw", sans-serif;
+        font-size: 16px;
+        font-weight: 200;
+        -webkit-font-smoothing: antialiased; }
+      main #create form textarea:-moz-placeholder, main #create form input[type="email"]:-moz-placeholder, main #create form input[type="number"]:-moz-placeholder, main #create form input[type="password"]:-moz-placeholder, main #create form input[type="search"]:-moz-placeholder, main #create form input[type="tel"]:-moz-placeholder, main #create form input[type="text"]:-moz-placeholder, main #create form input[type="url"]:-moz-placeholder, main #create form input[type="color"]:-moz-placeholder, main #create form input[type="date"]:-moz-placeholder, main #create form input[type="datetime"]:-moz-placeholder, main #create form input[type="datetime-local"]:-moz-placeholder, main #create form input[type="month"]:-moz-placeholder, main #create form input[type="time"]:-moz-placeholder, main #create form input[type="week"]:-moz-placeholder, main #create form select[multiple=multiple]:-moz-placeholder {
+        -webkit-transition: all 0.15s ease-in;
+        -moz-transition: all 0.15s ease-in;
+        transition: all 0.15s ease-in;
+        color: #9e848c;
+        font-family: "franklin-gothic-urw", sans-serif;
+        font-size: 16px;
+        font-weight: 200;
+        -webkit-font-smoothing: antialiased; }
+      main #create form textarea:-ms-input-placeholder, main #create form input[type="email"]:-ms-input-placeholder, main #create form input[type="number"]:-ms-input-placeholder, main #create form input[type="password"]:-ms-input-placeholder, main #create form input[type="search"]:-ms-input-placeholder, main #create form input[type="tel"]:-ms-input-placeholder, main #create form input[type="text"]:-ms-input-placeholder, main #create form input[type="url"]:-ms-input-placeholder, main #create form input[type="color"]:-ms-input-placeholder, main #create form input[type="date"]:-ms-input-placeholder, main #create form input[type="datetime"]:-ms-input-placeholder, main #create form input[type="datetime-local"]:-ms-input-placeholder, main #create form input[type="month"]:-ms-input-placeholder, main #create form input[type="time"]:-ms-input-placeholder, main #create form input[type="week"]:-ms-input-placeholder, main #create form select[multiple=multiple]:-ms-input-placeholder {
+        -webkit-transition: all 0.15s ease-in;
+        -moz-transition: all 0.15s ease-in;
+        transition: all 0.15s ease-in;
+        color: #9e848c;
+        font-family: "franklin-gothic-urw", sans-serif;
+        font-size: 16px;
+        font-weight: 200;
+        -webkit-font-smoothing: antialiased; }
+      main #create form textarea:hover, main #create form input[type="email"]:hover, main #create form input[type="number"]:hover, main #create form input[type="password"]:hover, main #create form input[type="search"]:hover, main #create form input[type="tel"]:hover, main #create form input[type="text"]:hover, main #create form input[type="url"]:hover, main #create form input[type="color"]:hover, main #create form input[type="date"]:hover, main #create form input[type="datetime"]:hover, main #create form input[type="datetime-local"]:hover, main #create form input[type="month"]:hover, main #create form input[type="time"]:hover, main #create form input[type="week"]:hover, main #create form select[multiple=multiple]:hover {
+        border-bottom: 2px solid #fff491; }
+        main #create form textarea:hover::-webkit-input-placeholder, main #create form input[type="email"]:hover::-webkit-input-placeholder, main #create form input[type="number"]:hover::-webkit-input-placeholder, main #create form input[type="password"]:hover::-webkit-input-placeholder, main #create form input[type="search"]:hover::-webkit-input-placeholder, main #create form input[type="tel"]:hover::-webkit-input-placeholder, main #create form input[type="text"]:hover::-webkit-input-placeholder, main #create form input[type="url"]:hover::-webkit-input-placeholder, main #create form input[type="color"]:hover::-webkit-input-placeholder, main #create form input[type="date"]:hover::-webkit-input-placeholder, main #create form input[type="datetime"]:hover::-webkit-input-placeholder, main #create form input[type="datetime-local"]:hover::-webkit-input-placeholder, main #create form input[type="month"]:hover::-webkit-input-placeholder, main #create form input[type="time"]:hover::-webkit-input-placeholder, main #create form input[type="week"]:hover::-webkit-input-placeholder, main #create form select[multiple=multiple]:hover::-webkit-input-placeholder {
+          color: #69535a; }
+        main #create form textarea:hover::-moz-placeholder, main #create form input[type="email"]:hover::-moz-placeholder, main #create form input[type="number"]:hover::-moz-placeholder, main #create form input[type="password"]:hover::-moz-placeholder, main #create form input[type="search"]:hover::-moz-placeholder, main #create form input[type="tel"]:hover::-moz-placeholder, main #create form input[type="text"]:hover::-moz-placeholder, main #create form input[type="url"]:hover::-moz-placeholder, main #create form input[type="color"]:hover::-moz-placeholder, main #create form input[type="date"]:hover::-moz-placeholder, main #create form input[type="datetime"]:hover::-moz-placeholder, main #create form input[type="datetime-local"]:hover::-moz-placeholder, main #create form input[type="month"]:hover::-moz-placeholder, main #create form input[type="time"]:hover::-moz-placeholder, main #create form input[type="week"]:hover::-moz-placeholder, main #create form select[multiple=multiple]:hover::-moz-placeholder {
+          color: #69535a; }
+        main #create form textarea:hover:-moz-placeholder, main #create form input[type="email"]:hover:-moz-placeholder, main #create form input[type="number"]:hover:-moz-placeholder, main #create form input[type="password"]:hover:-moz-placeholder, main #create form input[type="search"]:hover:-moz-placeholder, main #create form input[type="tel"]:hover:-moz-placeholder, main #create form input[type="text"]:hover:-moz-placeholder, main #create form input[type="url"]:hover:-moz-placeholder, main #create form input[type="color"]:hover:-moz-placeholder, main #create form input[type="date"]:hover:-moz-placeholder, main #create form input[type="datetime"]:hover:-moz-placeholder, main #create form input[type="datetime-local"]:hover:-moz-placeholder, main #create form input[type="month"]:hover:-moz-placeholder, main #create form input[type="time"]:hover:-moz-placeholder, main #create form input[type="week"]:hover:-moz-placeholder, main #create form select[multiple=multiple]:hover:-moz-placeholder {
+          color: #69535a; }
+        main #create form textarea:hover:-ms-input-placeholder, main #create form input[type="email"]:hover:-ms-input-placeholder, main #create form input[type="number"]:hover:-ms-input-placeholder, main #create form input[type="password"]:hover:-ms-input-placeholder, main #create form input[type="search"]:hover:-ms-input-placeholder, main #create form input[type="tel"]:hover:-ms-input-placeholder, main #create form input[type="text"]:hover:-ms-input-placeholder, main #create form input[type="url"]:hover:-ms-input-placeholder, main #create form input[type="color"]:hover:-ms-input-placeholder, main #create form input[type="date"]:hover:-ms-input-placeholder, main #create form input[type="datetime"]:hover:-ms-input-placeholder, main #create form input[type="datetime-local"]:hover:-ms-input-placeholder, main #create form input[type="month"]:hover:-ms-input-placeholder, main #create form input[type="time"]:hover:-ms-input-placeholder, main #create form input[type="week"]:hover:-ms-input-placeholder, main #create form select[multiple=multiple]:hover:-ms-input-placeholder {
+          color: #69535a; }
+      main #create form textarea:focus, main #create form input[type="email"]:focus, main #create form input[type="number"]:focus, main #create form input[type="password"]:focus, main #create form input[type="search"]:focus, main #create form input[type="tel"]:focus, main #create form input[type="text"]:focus, main #create form input[type="url"]:focus, main #create form input[type="color"]:focus, main #create form input[type="date"]:focus, main #create form input[type="datetime"]:focus, main #create form input[type="datetime-local"]:focus, main #create form input[type="month"]:focus, main #create form input[type="time"]:focus, main #create form input[type="week"]:focus, main #create form select[multiple=multiple]:focus {
+        border-bottom: 2px solid #ffef5e; }
+        main #create form textarea:focus::-webkit-input-placeholder, main #create form input[type="email"]:focus::-webkit-input-placeholder, main #create form input[type="number"]:focus::-webkit-input-placeholder, main #create form input[type="password"]:focus::-webkit-input-placeholder, main #create form input[type="search"]:focus::-webkit-input-placeholder, main #create form input[type="tel"]:focus::-webkit-input-placeholder, main #create form input[type="text"]:focus::-webkit-input-placeholder, main #create form input[type="url"]:focus::-webkit-input-placeholder, main #create form input[type="color"]:focus::-webkit-input-placeholder, main #create form input[type="date"]:focus::-webkit-input-placeholder, main #create form input[type="datetime"]:focus::-webkit-input-placeholder, main #create form input[type="datetime-local"]:focus::-webkit-input-placeholder, main #create form input[type="month"]:focus::-webkit-input-placeholder, main #create form input[type="time"]:focus::-webkit-input-placeholder, main #create form input[type="week"]:focus::-webkit-input-placeholder, main #create form select[multiple=multiple]:focus::-webkit-input-placeholder {
+          color: #bfafb4; }
+        main #create form textarea:focus::-moz-placeholder, main #create form input[type="email"]:focus::-moz-placeholder, main #create form input[type="number"]:focus::-moz-placeholder, main #create form input[type="password"]:focus::-moz-placeholder, main #create form input[type="search"]:focus::-moz-placeholder, main #create form input[type="tel"]:focus::-moz-placeholder, main #create form input[type="text"]:focus::-moz-placeholder, main #create form input[type="url"]:focus::-moz-placeholder, main #create form input[type="color"]:focus::-moz-placeholder, main #create form input[type="date"]:focus::-moz-placeholder, main #create form input[type="datetime"]:focus::-moz-placeholder, main #create form input[type="datetime-local"]:focus::-moz-placeholder, main #create form input[type="month"]:focus::-moz-placeholder, main #create form input[type="time"]:focus::-moz-placeholder, main #create form input[type="week"]:focus::-moz-placeholder, main #create form select[multiple=multiple]:focus::-moz-placeholder {
+          color: #bfafb4; }
+        main #create form textarea:focus:-moz-placeholder, main #create form input[type="email"]:focus:-moz-placeholder, main #create form input[type="number"]:focus:-moz-placeholder, main #create form input[type="password"]:focus:-moz-placeholder, main #create form input[type="search"]:focus:-moz-placeholder, main #create form input[type="tel"]:focus:-moz-placeholder, main #create form input[type="text"]:focus:-moz-placeholder, main #create form input[type="url"]:focus:-moz-placeholder, main #create form input[type="color"]:focus:-moz-placeholder, main #create form input[type="date"]:focus:-moz-placeholder, main #create form input[type="datetime"]:focus:-moz-placeholder, main #create form input[type="datetime-local"]:focus:-moz-placeholder, main #create form input[type="month"]:focus:-moz-placeholder, main #create form input[type="time"]:focus:-moz-placeholder, main #create form input[type="week"]:focus:-moz-placeholder, main #create form select[multiple=multiple]:focus:-moz-placeholder {
+          color: #bfafb4; }
+        main #create form textarea:focus:-ms-input-placeholder, main #create form input[type="email"]:focus:-ms-input-placeholder, main #create form input[type="number"]:focus:-ms-input-placeholder, main #create form input[type="password"]:focus:-ms-input-placeholder, main #create form input[type="search"]:focus:-ms-input-placeholder, main #create form input[type="tel"]:focus:-ms-input-placeholder, main #create form input[type="text"]:focus:-ms-input-placeholder, main #create form input[type="url"]:focus:-ms-input-placeholder, main #create form input[type="color"]:focus:-ms-input-placeholder, main #create form input[type="date"]:focus:-ms-input-placeholder, main #create form input[type="datetime"]:focus:-ms-input-placeholder, main #create form input[type="datetime-local"]:focus:-ms-input-placeholder, main #create form input[type="month"]:focus:-ms-input-placeholder, main #create form input[type="time"]:focus:-ms-input-placeholder, main #create form input[type="week"]:focus:-ms-input-placeholder, main #create form select[multiple=multiple]:focus:-ms-input-placeholder {
+          color: #bfafb4; }
+    main #create form input[type="submit"] {
+      right: 0;
+      width: 85px;
+      border-radius: 999em;
+      background-color: #54b37e;
+      font-family: "franklin-gothic-urw", sans-serif;
+      font-size: 13px;
+      text-decoration: none;
+      text-transform: uppercase;
+      -webkit-font-smoothing: antialiased;
+      -webkit-transition: background-color 0.15s ease-in;
+      -moz-transition: background-color 0.15s ease-in;
+      transition: background-color 0.15s ease-in; }
+      main #create form input[type="submit"]:hover {
+        background-color: #419365; }
+      main #create form input[type="submit"]:focus {
+        border-color: none;
+        box-shadow: none;
+        outline: none; }

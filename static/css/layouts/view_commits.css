@@ -17,11 +17,18 @@ main .commit-log {
     -webkit-transition: color 0.15s ease-in;
     -moz-transition: color 0.15s ease-in;
     transition: color 0.15s ease-in; }
+    main .commit-log a .commit-message {
+      -webkit-transition: color 0.15s ease-in;
+      -moz-transition: color 0.15s ease-in;
+      transition: color 0.15s ease-in;
+      font-size: 18px;
+      color: #419365; }
     main .commit-log a:hover {
       color: #775e66; }
-  main .commit-log .commit-message {
-    font-size: 18px; }
+      main .commit-log a:hover .commit-message {
+        color: #54b37e; }
   main .commit-log .timestamp {
     font-size: 14px; }
   main .commit-log .preview {
-    font-size: 14px; }
+    font-size: 14px;
+    font-style: italic; }

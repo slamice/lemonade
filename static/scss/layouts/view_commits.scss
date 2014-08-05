@@ -1,8 +1,6 @@
 @import 'vendor/bourbon/bourbon';
 @import 'base/all';
 
-$sidebar-width: 300px;
-
 main {
 	#display-commits {
 		padding: 50px;
@@ -31,19 +29,26 @@ main {
 			color: $dark-brown;
 			@include transition(color 0.15s ease-in);
 
+			.commit-message {
+				@include transition(color 0.15s ease-in);
+				font-size: 18px;
+				color: $go-green;
+			}
+
 			&:hover {
 				color: lighten($dark-brown, 20%);
+				.commit-message {
+					color: lighten($go-green, 10%);
+				}
 			}
 		}
 
-		.commit-message {
-			font-size: 18px;
-		}
 		.timestamp {
 			font-size: 14px;
 		}
 		.preview {
 			font-size: 14px;
+			font-style: italic;
 		}
 	}
 }

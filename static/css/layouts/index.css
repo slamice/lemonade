@@ -1,10 +1,62 @@
 body {
-  background: url("/static/imgs/mana.jpg");
-  background-size: 100%;
-  width: 100%; }
-  body h1 {
-    color: #fff; }
+  background: -webkit-linear-gradient(#fff491, #419365);
+  background: linear-gradient(#fff491, #419365); }
+  body #title {
+    color: #fff;
+    font-weight: 100;
+    font-size: 72px;
+    text-shadow: 1px 1px 2px #888;
+    margin-bottom: 20px; }
+  body .card {
+    background-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 1px 1px 2px #aaa;
+    border-radius: 20px;
+    padding: 30px;
+    margin: 15px auto;
+    -webkit-font-smoothing: antialiased; }
+    body .card div {
+      padding-bottom: 15px;
+      color: #69535a;
+      margin: 10px; }
+    body .card button {
+      display: inline-block;
+      border-radius: 999em;
+      background-color: #77c398;
+      font-family: "franklin-gothic-urw", sans-serif;
+      font-size: 13px;
+      letter-spacing: .15em;
+      margin: 10px;
+      margin-top: 0;
+      text-decoration: none;
+      text-transform: uppercase;
+      -webkit-font-smoothing: antialiased;
+      -webkit-transition: background-color 0.15s ease-in;
+      -moz-transition: background-color 0.15s ease-in;
+      transition: background-color 0.15s ease-in; }
+      body .card button a {
+        color: #fff;
+        letter-spacing: 0.15em; }
+      body .card button:hover {
+        background-color: #54b37e; }
+      body .card button:focus {
+        border-color: none;
+        box-shadow: none;
+        outline: none; }
+  body #mini-card {
+    display: block;
+    font-size: 14px;
+    padding: 8px;
+    color: #69535a; }
+    body #mini-card a {
+      -webkit-transition: all 0.15s ease-in;
+      -moz-transition: all 0.15s ease-in;
+      transition: all 0.15s ease-in;
+      color: #9e848c;
+      border-bottom: 1px solid #9e848c; }
+      body #mini-card a:hover {
+        color: #54b37e; }
 
 #wrapper {
-  margin: 250px auto;
-  text-align: center; }
+  margin: 150px auto 0px auto;
+  text-align: center;
+  max-width: 650px; }

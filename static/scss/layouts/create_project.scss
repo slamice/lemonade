@@ -1,25 +1,83 @@
-@import 'base/all';
-
-header {
-	height: 5px;
-	background-color: $red-red;
-	width: 100%;
-}
+@import "vendor/bourbon/bourbon";
+@import "base/all";
 
 main {
-	width: 50%;
-	margin: 30px auto;
+  #create {
+    max-width: 600px;
+    margin-left: $sidebar-width + 15px;
+    padding: 50px 0 0 50px;
+    color: $dark-brown;
 
-	form {
-		width: 600px;
+    h1 {
+      font-weight: 100;
+    }
 
-		textarea {
-			height: 400px;
-		}
-	}
-}
+    form {
+      padding: 15px 0;
 
-footer {
-	background-color: $red-red;
-	height: 75px;
+      textarea, #{$all-text-inputs}, select[multiple=multiple] {
+        @include transition(all 0.15s ease-in);
+        background-color: #fff;
+        border: none;
+        border-bottom: 2px solid lighten($yellow1, 10%);
+        border-radius: 0;
+        box-shadow: none;
+        color: $dark-brown;
+        font-color: $dark-brown;
+        font-family: $font-stack;
+        font-size: 18px;
+        margin-bottom: 30px;
+        padding: 5px;
+        -webkit-font-smoothing: antialiased;
+
+        @include placeholder {
+          @include transition(all 0.15s ease-in);
+          color: lighten($dark-brown, 35%);
+          font-family: $font-stack;
+          font-size: 16px;
+          font-weight:200;
+          -webkit-font-smoothing: antialiased;
+        }
+
+        &:hover {
+          border-bottom: 2px solid $yellow1;
+
+          @include placeholder {
+            color: lighten($dark-brown, 15%);
+          }
+        }
+
+        &:focus {
+          border-bottom: 2px solid darken($yellow1, 10%);
+
+          @include placeholder {
+            color: lighten($dark-brown, 50%);
+          }
+        }
+      }
+
+      input[type="submit"] {
+        right: 0;
+        width: 85px;
+        border-radius: 999em;
+        background-color: lighten($go-green, 10%);
+        font-family: $font-stack;
+        font-size: 13px;
+        text-decoration: none;
+        text-transform: uppercase;
+        -webkit-font-smoothing: antialiased;
+        @include transition(background-color 0.15s ease-in);
+
+        &:hover {
+          background-color: $go-green;
+        }
+
+        &:focus {
+            border-color: none;
+            box-shadow: none;
+            outline: none;
+        }
+      }
+    }
+  }
 }
