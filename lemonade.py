@@ -98,6 +98,7 @@ def save_commit():
 # show all existing projects
 @app.route('/projects', methods=['GET'])
 def show_projects():
+    # catch for situation in which project is not selected (for sidebar)
     if 'project_id' in session:
         project_id = session['project_id']
     else:
@@ -111,6 +112,7 @@ def show_projects():
         if project.id == project_id:
             commits = proj_commits
 
+        # catch for situation in which there are no commits
         if commits:
             last_commit = commits[0]
             last_timestamps[project.id] = last_commit.timestamp
@@ -138,6 +140,7 @@ def process_select_project(id):
 # show all commits
 @app.route('/commits', methods=['GET'])
 def show_commits():
+    # catch for situation in which there is no current project for sidebar
     if 'project_id' in session:
         project_id = session['project_id']
     else:
@@ -151,6 +154,7 @@ def show_commits():
         # displays last 2 sentences
         previews[commit.id] = ' '.join(text[-2:])
 
+    # if there are commits
     if commits:
         title = commits[0].project.title
         description = commits[0].project.description
@@ -160,6 +164,8 @@ def show_commits():
                                 description = description,
                                 commits = commits,
                                 previews = previews)
+        
+    # if there are no commits to display
     else:
         title = "Uh oh, you need to get workin'."
 
