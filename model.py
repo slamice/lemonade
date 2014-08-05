@@ -56,7 +56,7 @@ class Commit(Base):
         return commits
 
 def main():
-    pass
+    Base.metadata.create_all(engine)
 
 if __name__ == "__main___":
     main()
