@@ -17,6 +17,14 @@ main {
 	#description {
 		font-style: italic;
 		margin: 0px 30px;
+		a {
+			color: $dark-brown;
+			border-bottom: 1px solid $yellow2;
+			@include transition(color 0.15s ease-in);
+			&:hover {
+				color: lighten($dark-brown, 20%);
+			}
+		}
 	}
 
 	.commit-log {

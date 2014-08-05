@@ -98,7 +98,10 @@ def save_commit():
 # show all existing projects
 @app.route('/projects', methods=['GET'])
 def show_projects():
-    project_id = session['project_id']
+    if 'project_id' in session:
+        project_id = session['project_id']
+    else:
+        project_id = None
     projects = model.Project.query_all_projects()[::-1]
     commits = []
 
@@ -135,7 +138,11 @@ def process_select_project(id):
 # show all commits
 @app.route('/commits', methods=['GET'])
 def show_commits():
-    project_id = session['project_id']
+    if 'project_id' in session:
+        project_id = session['project_id']
+    else:
+        project_id = None
+
     commits = model.Commit.query_commits_by_proj_id(project_id)[::-1]
 
     previews = {}
@@ -144,7 +151,20 @@ def show_commits():
         # displays last 2 sentences
         previews[commit.id] = ' '.join(text[-2:])
 
+    if commits:
+        title = commits[0].project.title
+        description = commits[0].project.description
+
+        return render_template('view_commits.html',
+                                title = title,
+                                description = description,
+                                commits = commits,
+                                previews = previews)
+    else:
+        title = "Uh oh, you need to get workin'."
+
     return render_template('view_commits.html',
+                            title = title,
                             commits = commits,
                             previews = previews)
 

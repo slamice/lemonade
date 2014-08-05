@@ -7,6 +7,14 @@ main #project-title h1 {
 main #description {
   font-style: italic;
   margin: 0px 30px; }
+  main #description a {
+    color: #3e3135;
+    border-bottom: 1px solid #fbe876;
+    -webkit-transition: color 0.15s ease-in;
+    -moz-transition: color 0.15s ease-in;
+    transition: color 0.15s ease-in; }
+    main #description a:hover {
+      color: #775e66; }
 main .commit-log {
   margin: 35px 0;
   padding: 0 30px;

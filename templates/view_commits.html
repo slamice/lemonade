@@ -18,14 +18,23 @@
 		</header>
 		<main>
 			<div id="display-commits">
-				<div id="project-title"><h1>{{commits[0].project.title}}</h1></div>
-				<div id="description">{{commits[0].project.description}}</div>
+				<div id="project-title"><h1>{{ title }}</h1></div>
+				<div id="description">
+					{% if description is defined %}
+						{{ description }}
+					{% else %}
+						<div>Perhaps you should <a href="/create">create a project</a>?</div>
+						<div>Or maybe <a href="/projects">select a project</a>?</div>
+					{% endif %}
+				</div>
 				{% for commit in commits %}
 				<div class="commit-log">
 					<a href="/select_commit/{{commit.id}}">
-					<div class="commit-message">{{commit.message}}</div>
+					<div class="commit-message">
+						{{ commit.message }}
+					</div>
 					<div class="timestamp"><abbr class="timeago" title="{{commit.timestamp}}"></abbr></div>
-					<div class="preview">{{previews.get(commit.id)}}</div>
+					<div class="preview">{{ previews.get(commit.id) }}</div>
 					</a>
 				</div>
 				{% endfor %}
