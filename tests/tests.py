@@ -16,10 +16,7 @@ import unittest
 # ------------------------------------------#
 
 class Tests(unittest.TestCase):
-
-    def setUp(self):
-        pass
-
+    
     def test_diff_gen_seed(self):
         print "\n\nSeeds an empty token."
         text1 = [""]
