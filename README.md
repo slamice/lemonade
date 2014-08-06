@@ -13,6 +13,6 @@ virtualenv env
 source env/bin/activate
 ```
 4. Run ```./run.sh```.
-5. Congratulations, Lemonade is now be running on localhost:5000!
+5. Congratulations, Lemonade is now running on localhost:5000!
 
 ## How does it actually go?
