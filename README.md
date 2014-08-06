@@ -2,7 +2,8 @@
 
 Lemonade is a version control system for translations and gives translators a clean space to keep track of their progress for their projects. Inspired by Git, Lemonade is a backend-focused project that detects minor changes in text and stores them as a series of differences between a current and previous version, which are used to regenerate text from different points in time. Storing as diffs reduces redundancy in data and optimizes database storage.
 
-Lemonade is a Python application built on Flask and a SQLite database. Python modules used include: difflib, NLTK, unittest, and JSON, and the frontend uses HTML5, CSS3/Sass, Bourbon, and JavaScript/jQuery.
+Lemonade is a Python application built on Flask and a SQLite database. Python modules used include: difflib, NLTK, unittest, and JSON. The frontend is built on HTML5, CSS3/Sass, Bourbon, and JavaScript/jQuery.
+
 
 ## How do I make it go?
 1. Download/clone the Lemonade repo on Github.
@@ -12,7 +13,12 @@ Lemonade is a Python application built on Flask and a SQLite database. Python mo
 virtualenv env
 source env/bin/activate
 ```
-4. Run ```./run.sh```.
+4. Run ```./setup.sh```.
 5. Congratulations, Lemonade is now running on localhost:5000!
 
+After setup, simply run ```./setup.sh``` to open Lemonade.
+
+
 ## How does it actually go?
+Magic and lemonade.
+
