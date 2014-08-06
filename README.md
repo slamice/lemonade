@@ -19,7 +19,21 @@ source env/bin/activate
 
 After setup, simply run ```./setup.sh``` to open Lemonade.
 
+## How do I use it?
+
+You studious polygot, you. Let's say you have a short-medium length translation to complete for school or work. As long as your text is in Unicode, you can create a project and input your source text.
+
+The text editor allows you to view your source text and current translation side-by-side. As you work on your translation, be sure to save your progress, also known as a commit, with a message to remind yourself of your work thus far.
+
+You can revert to previous versions of your text in the commits page or switch into another project, both options accessible in the sidebar.
+
+In case of emergency, you can summon Mana the black cat with the cat button next to the save button.
+
 ## How does it actually go?
 
 Magic and lemonade.
+
+There are 4 key features in Lemonade, implemented through the backend: saving a commit, constructing text from a commit, generating diffs, and applying diffs. These are all found in ```generators.py```.
+
+1. Saving a commit
 
