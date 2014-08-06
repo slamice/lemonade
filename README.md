@@ -34,6 +34,3 @@ In case of emergency, you can summon Mana the black cat with the cat button next
 Magic and lemonade.
 
 There are 4 key features in Lemonade, implemented through the backend: saving a commit, constructing text from a commit, generating diffs, and applying diffs. These are all found in ```generators.py```.
-
-1. Saving a commit
-
