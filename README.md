@@ -8,8 +8,10 @@ Lemonade is a Python application built on Flask and a SQLite database. Python mo
 1. Download/clone the Lemonade repo on Github.
 2. In shell, cd into the root of your new lemonade directory. 
 3. Set up your virtual environment. In shell, input:
-	virtualenv env
-	source env/bin/activate
+```shell
+virtualenv env
+source env/bin/activate
+```
 4. Run ./run.sh.
 5. Congratulations, Lemonade is now be running on localhost:5000!
 
