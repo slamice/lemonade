@@ -14,10 +14,10 @@ Lemonade is a Python application built on Flask and a SQLite database. Python mo
 virtualenv env
 source env/bin/activate
 ```
-4. Run ```./setup.sh```.
+4. In the root directory, run ```./setup.sh```.
 5. Congratulations, Lemonade is now running on localhost:5000!
 
-After setup, simply run ```./run.sh``` to open Lemonade.
+After setup, simply run ```source env/bin/activate``` and ```./run.sh``` in the root directory to open Lemonade.
 
 ## How do I use it?
 
