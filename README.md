@@ -17,7 +17,7 @@ source env/bin/activate
 4. In the root directory, run ```./setup.sh```.
 5. Congratulations, Lemonade is now running on localhost:5000!
 
-After setup, simply run ```source env/bin/activate``` and ```./setup.sh``` in the root directory to open Lemonade.
+After setup, simply run ```source env/bin/activate``` and ```./run.sh``` in the root directory to open Lemonade.
 
 ## How do I use it?
 
